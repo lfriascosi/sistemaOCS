@@ -25,3 +25,4 @@ mix.styles([
     'resources/plantilla/js/template.js',
     'resources/plantilla/js/sweetalert2.all.js'
 ], 'public/js/plantilla.js')
+.js('resources/js/app.js','public/js/app.js');
