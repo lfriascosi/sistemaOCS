@@ -18,8 +18,8 @@ class CreateConvocatoriasTable extends Migration
             $table->string('iduser',11);
             $table->string('titulo',100);
             $table->string('codigo',50);
-            $table->string('descripcion',500);
-            $table->string('estado',20);
+            $table->string('descripcion',1000);
+            $table->string('estado',30);
             $table->timestamps();
         });
     }

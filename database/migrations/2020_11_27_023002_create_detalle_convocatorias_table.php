@@ -14,6 +14,7 @@ class CreateDetalleConvocatoriasTable extends Migration
     public function up()
     {
         Schema::create('detalle_convocatorias', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('idconvocatoria')->unsigned();
             $table->foreign('idconvocatoria')->references('id')->on('convocatorias')->onDelete('cascade');
             $table->string('iduser',11);
