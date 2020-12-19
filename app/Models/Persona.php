@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Persona extends Model
 {
+    //protected $connection = 'mysqlocs';
+    //protected $table = 'v_usuarios_SYS_OCS';
     protected $connection = 'mysql2';
-    protected $table = 'vista_personas';
-    protected $fillable = ['nombre','tipo_documento','num_documento','direccion','telefono','email'];
+    protected $table = 'v_usuarios_sys_ocs';
+    protected $fillable = ['numeroIdentificacion','apellidos','nombres','EMail','perfil'];
 }

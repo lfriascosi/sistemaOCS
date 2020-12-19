@@ -89,9 +89,9 @@ class ConvocatoriaController extends Controller
         $buscar = $request->buscar;
         $criterio = $request->criterio;
         if($buscar==''){
-            $personas = Persona::whereNotNull('email')->orderBy('id','desc')->get();
+            $personas = Persona::orderBy('apellidos','asc')->get();
         }else{
-            $personas = Persona::where('vista_personas.'.$criterio,'like','%'.$buscar.'%')->orderBy('id','desc')->get();
+            $personas = Persona::where('t_usuarios_sys_ocs.'.$criterio,'like','%'.$buscar.'%')->orderBy('id','desc')->get();
         }
         return ['personas'=>$personas];
     }
