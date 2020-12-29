@@ -36,21 +36,21 @@
                         <thead>
                             <tr>
                                 <th>Opciones</th>
-                                <th>Usuario</th>
+                                <th>Redactor</th>
                                 <th>Titulo</th>
                                 <th>Codigo</th>
                                 <th>Descripcion</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="arrayConvocatoria.length">
                             <tr v-for="convocatoria in arrayConvocatoria" :key="convocatoria.id">
                                 <td>
                                     <button type="button" @click="verConvocatoria(convocatoria.id)" class="btn btn-success btn-sm">
                                         <i class="icon-eye"></i>
                                     </button>
                                 </td>
-                                <td v-text="convocatoria.iduser"></td>
+                                <td v-text="convocatoria.apellidos+' '+convocatoria.nombres"></td>
                                 <td v-text="convocatoria.titulo"></td>
                                 <td v-text="convocatoria.codigo"></td>
                                 <td v-text="convocatoria.descripcion"></td>
@@ -61,6 +61,13 @@
                                     <div v-else>
                                         <span class="badge badge-warning" v-text="convocatoria.estado"></span>
                                     </div>                                     
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
+                            <tr>
+                                <td colspan="6">
+                                    No hay convocatorias agregadas
                                 </td>
                             </tr>
                         </tbody>
@@ -89,7 +96,7 @@
                         <div class="form-group row border">
                             <div class="col-md-9">
                                 <label for="">Título<span style="color:red;" v-show="titulo==''">(*Ingrese)</span></label>
-                                <input type="text" placeholder="Ingrese titulo de la convocatoria" class="form-control" v-model="titulo">
+                                <input type="text" placeholder="Ingrese título de la convocatoria" class="form-control" v-model="titulo">
                             </div>
                             <div class="col-md-3">
                                 <label for="">Código<span style="color:red;" v-show="codigo==''">(*Ingrese)</span></label>
@@ -129,6 +136,7 @@
                                             <th>Cédula</th>
                                             <th>Nombre</th>
                                             <th>Correo</th>
+                                            <th>Perfil</th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayPersona.length">
@@ -141,12 +149,13 @@
                                             </td>
                                             <td v-text="persona.cedula"></td>
                                             <td v-text="persona.nombre"></td>
-                                            <td v-text="persona.email"></td>
+                                            <td v-text="persona.EMail"></td>
+                                            <td v-text="persona.perfil"></td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
                                         <tr>
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 No hay personas agregadas
                                             </td>
                                         </tr>
@@ -159,7 +168,7 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Nombre <span style="color:red;" v-show="nombre==''">(*Ingrese)</span></label>
-                                    <input type="text" placeholder="Ingrese nombre de la orden dia" class="form-control" v-model="nombre">
+                                    <input type="text" @keyup.enter="agregarOrdendia()" placeholder="Ingrese nombre de la orden dia" class="form-control" v-model="nombre">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -174,24 +183,31 @@
                                     <thead>
                                         <tr>
                                             <th>Opciones</th>
-                                            <th>Nombre</th>                                       
+                                            <th>Nro</th>
+                                            <th>Nombre</th>
+                                            <th>Invitado</th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayOrdenDia.length">
                                         <tr v-for="(detalle,index) in arrayOrdenDia" :key="detalle.id">
                                             <td>
-                                                <button @click="eliminarOrdendia(index)" type="button" class="btn btn-danger btn-sm">
+                                                <button @click="eliminarOrdendia(index)" type="button" class="btn btn-danger btn-sm" title="Eliminar">
                                                     <i class="icon-close"></i>
+                                                </button>&nbsp;
+                                                <button @click="abrirModalInvitado(index)" type="button" class="btn btn-success btn-sm" title="Agregar invitado">
+                                                    <i class="icon-plus"></i>
                                                 </button>
                                             </td>
+                                            <td v-text="detalle.nro"></td>
                                             <td>
                                                 <input v-model="detalle.nombre" type="text" value="" class="form-control">
                                             </td>
+                                            <td v-text="detalle.invitado"></td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
                                         <tr>
-                                            <td colspan="2">
+                                            <td colspan="4">
                                                 No hay orden del dia agregada
                                             </td>
                                         </tr>
@@ -243,6 +259,9 @@
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
+                                            <th colspan="2"><b>Orden día</b></th>
+                                        </tr>
+                                        <tr>
                                             <th><b>Nro</b></th>
                                             <th><b>Nombre</b></th>                                       
                                         </tr>
@@ -264,22 +283,62 @@
                             </div>
                         </div>
                         <div class="form-group row border">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for=""><b>Redactado por :</b></label>
-                                    <p v-text="userRedacto"></p>
-                                </div>
-                            </div>
-                            <div class="table-responsive col-md-4">
+                            <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th><b>Usuarios Dirigidos</b></th>                                  
+                                            <th colspan="1"><b>Orden Dia</b></th>
+                                            <th colspan="5"><b>Usuarios Invitados</b></th>
+                                        </tr>
+                                        <tr>
+                                            <th><b>Nro</b></th>
+                                            <th><b>Cédula</b></th>
+                                            <th><b>Apellidos</b></th>
+                                            <th><b>Nombres</b></th>
+                                            <th><b>Correo</b></th>
+                                            <th><b>Perfil</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-if="arrayDetalleInvitado.length">
+                                        <tr v-for="detalleInv in arrayDetalleInvitado" :key="detalleInv.numeroIdentificacion">
+                                            <td v-text="detalleInv.numerador"/>
+                                            <td v-text="detalleInv.numeroIdentificacion"/>
+                                            <td v-text="detalleInv.apellidos"/>
+                                            <td v-text="detalleInv.nombres"/>
+                                            <td v-text="detalleInv.EMail"/>
+                                            <td v-text="detalleInv.perfil"/>
+                                        </tr>
+                                    </tbody>
+                                    <tbody v-else>
+                                        <tr>
+                                            <td colspan="6">
+                                                No hay Usuarios enviados
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group row border">
+                            <div class="table-responsive col-md-12">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4"><b>Usuarios Dirigidos</b></th>
+                                        </tr>
+                                        <tr>
+                                            <th><b>Cédula</b></th>
+                                            <th><b>Nombre</b></th>
+                                            <th><b>Correo</b></th>
+                                            <th><b>Perfil</b></th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalleEnvio.length">
                                         <tr v-for="detalleEnv in arrayDetalleEnvio" :key="detalleEnv.iduser">
                                             <td v-text="detalleEnv.iduser"/>
+                                            <td v-text="detalleEnv.apellidos+' '+detalleEnv.nombres"/>
+                                            <td v-text="detalleEnv.EMail"/>
+                                            <td v-text="detalleEnv.perfil"/>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -287,6 +346,33 @@
                                             <td colspan="4">
                                                 No hay Usuarios enviados
                                             </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group row border">
+                            <div class="table-responsive col-md-12">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="5"><b>Redactado por:</b></th>
+                                        </tr>
+                                        <tr>
+                                            <th><b>Cédula</b></th>
+                                            <th><b>Apellido</b></th>
+                                            <th><b>Nombre</b></th>
+                                            <th><b>Correo</b></th>
+                                            <th><b>Perfil</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td v-text="cedulaRedactor"/>
+                                            <td v-text="apellidoRedactor"/>
+                                            <td v-text="nombreRedactor"/>
+                                            <td v-text="emailRedactor"/>
+                                            <td v-text="perfilRedactor"/>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -319,8 +405,10 @@
                             <div class="col-md-8">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterioA">
-                                        <option value="nombre">Nombre</option>
-                                        <option value="email">Correo</option>
+                                        <option value="apellidos">Apellido</option>
+                                        <option value="nombres">Nombre</option>
+                                        <option value="EMail">Correo</option>
+                                        <option value="perfil">Perfil</option>
                                     </select>
                                     <input type="text" v-model="buscarA" @keyup.enter="listarPersona(buscarA,criterioA)" class="form-control"
                                         placeholder="Texto a buscar">
@@ -334,21 +422,28 @@
                                 <thead>
                                     <tr>
                                         <th>Opciones</th>
-                                        <th>Cedula</th>
-                                        <th>Nombre</th>
+                                        <th>Cédula</th>
+                                        <th>Apellidos</th>
+                                        <th>Nombres</th>
                                         <th>Correo</th>
+                                        <th>Perfil</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="persona in arrayPersonaB" :key="persona.id">
                                         <td>
-                                            <button type="button" @click="agregarPersonaModal(persona)" class="btn btn-success btn-sm">
+                                            <button type="button"  v-if="tipoAccionInv==0" @click="agregarPersonaModal(persona)" class="btn btn-success btn-sm">
+                                                <i class="icon-check"></i>
+                                            </button>
+                                            <button type="button"  v-if="tipoAccionInv==1" @click="agregarInvitado(persona)" class="btn btn-warning btn-sm">
                                                 <i class="icon-check"></i>
                                             </button>
                                         </td>
-                                        <td v-text="persona.num_documento"></td>
-                                        <td v-text="persona.nombre"></td>
-                                        <td v-text="persona.email"></td>
+                                        <td v-text="persona.numeroIdentificacion"></td>
+                                        <td v-text="persona.apellidos"></td>
+                                        <td v-text="persona.nombres"></td>
+                                        <td v-text="persona.EMail"></td>
+                                        <td v-text="persona.perfil"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -369,49 +464,42 @@
 </template>
 
 <script>
-    import vSelect from 'vue-select';
     export default {
         data (){
             return {
                 //Inicio
                 arrayConvocatoria :[],
                 arrayDetalleEnvio :[],
+                arrayDetalleInvitado :[],
                 arrayOrdenDia : [],
                 arrayUser:[],
                 arrayPersona:[],
                 arrayPersonaB:[],
+                arrayPersonaInv:[],
                 codigo :'',
                 titulo :'',
                 descripcion :'',
                 estado :'',
-                userRedacto:'',
+                cedulaRedactor:'',
+                apellidoRedactor:'',
+                nombreRedactor:'',
+                emailRedactor:'',
+                perfilRedactor:'',
                 nombre :'',
                 docUser:'',
                 personaUser:'',
                 emailPersona:'',
+                perfilPersona:'',
                 errorConvocatoria : 0,
                 errorMostrarMsjConvocatoria : [],
+                tipoAccionInv : 0,
+                idordendia:0,
                 //Fin
-                ingreso_id : 0,
-                idproveedor : 0,
-                proveedor: '',
-                nombre : '',
-                tipo_comprobante : 'BOLETA',
-                serie_comprobante : '',
-                num_comprobante : '',
-                impuesto : 0.18,
-                total : 0.0,
-                totalImpuesto : 0.0,
-                totalParcial : 0.0,
-                arrayIngreso : [],
-                arrayDetalle : [],
-                arrayProveedor: [],
+                
                 listado: 1,
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorIngreso : 0,
-                errorMostrarMsjIngreso : [],
                 pagination : {
                     'total' :0,
                     'current_page' :0,
@@ -423,18 +511,9 @@
                 offset :3,
                 criterio : 'codigo',
                 buscar : '',
-                criterioA:'nombre',
-                buscarA:'',
-                arrayArticulo :[],
-                idarticulo : 0,
-                codigo : '',
-                articulo : '',
-                precio : 0,
-                cantidad : 0
+                criterioA:'apellidos',
+                buscarA:''
             }
-        },
-        components: {
-            vSelect
         },
         computed : {
             isActived : function(){
@@ -507,12 +586,12 @@
                     me.arrayUser=respuesta.personas;
 
                     if (me.arrayUser.length>0) {
-                        me.personaUser=me.arrayUser[0]['nombre'];
-                        me.docUser=me.arrayUser[0]['num_documento'];
-                        me.emailPersona=me.arrayUser[0]['email'];
+                        me.docUser=me.arrayUser[0]['numeroIdentificacion'];
+                        me.personaUser=me.arrayUser[0]['apellidos']+' '+me.arrayUser[0]['nombres'];
+                        me.perfilPersona=me.arrayUser[0]['perfil'];
+                        me.emailPersona=me.arrayUser[0]['EMail'];
                     }else{
                         me.personaUser='No existe persona';
-                        me.docUser='';
                     }
                 })
                 .catch(function (error){
@@ -533,10 +612,19 @@
                 }
                 return sw;
             },
-            encuentraPersona(nombre){
+            encuentraPersona(cedula){
                 var sw=0;
                 for (var i = 0; i < this.arrayPersona.length; i++) {
-                    if (this.arrayPersona[i].nombre==nombre) {
+                    if (this.arrayPersona[i].cedula==cedula) {
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            encuentraPersonaInv(cedula){
+                var sw=0;
+                for (var i = 0; i < this.arrayPersonaInv.length; i++) {
+                    if (this.arrayPersonaInv[i].cedula==cedula && this.arrayPersonaInv[i].idordendia==this.idordendia) {
                         sw=true;
                     }
                 }
@@ -545,10 +633,17 @@
             eliminarOrdendia(index){
                 let me=this;
                 me.arrayOrdenDia.splice(index,1);
+                for (var i = 0; i < this.arrayOrdenDia.length; i++) {
+                    this.arrayOrdenDia[i].nro=i+1;
+                }
             },
             eliminarPersona(index){
                 let me=this;
                 me.arrayPersona.splice(index,1);
+            },
+            eliminarPersonaInv(){
+                let me=this;
+                me.arrayPersonaInv=[];
             },
             agregarOrdendia(){
                 let me=this;
@@ -562,21 +657,52 @@
                             icon: 'error',
                             confirmButtonText: 'OK'
                         });
-                        me.nombre="";
                     }else{
                         me.arrayOrdenDia.push({
-                        nombre: me.nombre
+                        nro: me.arrayOrdenDia.length+1,
+                        nombre: me.nombre,
+                        invitado: 'Ninguno'
                         });
                         me.nombre="";
                     }                    
                 }
             },
+            agregarInvitado(data = []){
+                let me=this;
+                if(me.encuentraPersonaInv(data['numeroIdentificacion'])){
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'La perona ya se encuentra invitada a este punto de la orden del dia!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }else{
+                    me.arrayPersonaInv.push({
+                    idordendia: me.idordendia,
+                    cedula: data['numeroIdentificacion'],
+                    nombre: data['apellidos']+' '+data['nombres'],
+                    EMail: data['EMail'],
+                    perfil: data['perfil']
+                    });
+                    var invitados='';
+                    for (var i = 0; i < me.arrayOrdenDia.length; i++) {
+                        if (me.arrayOrdenDia[i].nro==me.idordendia) {
+                            if(me.arrayOrdenDia[i].invitado!='Ninguno'){
+                                invitados+=', '+data['apellidos']+' '+data['nombres'];
+                                me.arrayOrdenDia[i].invitado+=invitados;
+                            }else{
+                                invitados=data['apellidos']+' '+data['nombres'];
+                                me.arrayOrdenDia[i].invitado=invitados;
+                            }
+                            break;
+                        }
+                    }
+                } 
+            },
             agregarPersona(){
                 let me=this;
-                if(me.personaUser==''){
-
-                }else{
-                    if(me.encuentraPersona(me.personaUser)){
+                if(me.personaUser!=''){
+                    if(me.encuentraPersona(me.docUser)){
                         Swal.fire({
                             title: 'Error...',
                             text: 'La persona ya se encuentra agregado!',
@@ -588,8 +714,9 @@
                     }else{
                         me.arrayPersona.push({
                         nombre: me.personaUser,
-                        email: me.emailPersona,
-                        cedula: me.docUser
+                        EMail: me.emailPersona,
+                        cedula: me.docUser,
+                        perfil: me.perfilPersona
                         });
                         me.docUser="";
                         me.personaUser="";
@@ -598,21 +725,22 @@
             },
             agregarPersonaModal( data = []){
                 let me=this;
-                if(me.encuentraPersona(data['nombre'])){
-                        Swal.fire({
-                            title: 'Error...',
-                            text: 'La perona ya se encuentra agregado!',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                        me.buscarA="";
-                    }else{
-                        me.arrayPersona.push({
-                        cedula: data['num_documento'],
-                        nombre: data['nombre'],
-                        email: data['email']
-                        });
-                    }      
+                if(me.encuentraPersona(data['numeroIdentificacion'])){
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'La perona ya se encuentra agregado!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    me.buscarA="";
+                }else{
+                    me.arrayPersona.push({
+                    cedula: data['numeroIdentificacion'],
+                    nombre: data['apellidos']+' '+data['nombres'],
+                    EMail: data['EMail'],
+                    perfil: data['perfil']
+                    });
+                }      
             },
             listarPersona (buscar,criterio){
                 let me=this;
@@ -635,15 +763,18 @@
                     'codigo' : this.codigo,
                     'descripcion' : this.descripcion,
                     'data_ordendia' : this.arrayOrdenDia,
-                    'data_persona' : this.arrayPersona
+                    'data_persona' : this.arrayPersona,
+                    'data_persona_invitada' : this.arrayPersonaInv,
                 }).then(function (response) {
                     me.listado=1;
                     me.listarConvocatoria(1,'','codigo');
                     me.titulo = '';
                     me.codigo = '';
                     me.descripcion = '';
+                    me.arrayConvocatoria=[];
                     me.arrayOrdenDia=[];
                     me.arrayPersona=[];
+                    me.arrayPersonaInv=[];
                 }).catch(function (error) {
                     console.log(error);
                 })
@@ -670,8 +801,62 @@
             },
             ocultarDetalleConvocatoria(){
                 this.listado=1;
+                this.arrayDetalle=[];
+                this.arrayDetalleEnvio=[];
+                this.arrayDetalleInvitado=[];
+                this.titulo='';
+                this.codigo='';
+                this.descripcion='';
+                this.estado='';
+                this.cedulaRedactor='';
+                this.apellidoRedactor='';
+                this.nombreRedactor='';
+                this.emailRedactor='';
+                this.perfilRedactor='';
+            },
+            ordenarPersonaInv(){
+                let me=this;
+                var arrayTemp=[];
+                var cont=0;
+                var text='';
+                for (var i = 0; i < me.arrayDetalleInvitado.length; i++) {
+                    cont=0;
+                    text='';
+                    for (var j = 0; j < me.arrayDetalleInvitado.length; j++) {
+                        if(me.arrayDetalleInvitado[i].numeroIdentificacion==me.arrayDetalleInvitado[j].numeroIdentificacion){
+                            if(cont>0){
+                                text+=', ';
+                            }
+                            cont++;
+                            text+=me.arrayDetalleInvitado[j].numerador;
+                        }
+                    }
+                    if(!me.encuentraPuntoInv(me.arrayDetalleInvitado[i].numeroIdentificacion,arrayTemp)){
+                        arrayTemp.push({
+                            numerador: text,
+                            numeroIdentificacion: me.arrayDetalleInvitado[i].numeroIdentificacion,
+                            apellidos: me.arrayDetalleInvitado[i].apellidos,
+                            nombres: me.arrayDetalleInvitado[i].nombres,
+                            EMail: me.arrayDetalleInvitado[i].EMail,
+                            perfil: me.arrayDetalleInvitado[i].perfil
+                        });
+                    }
+                }
+                me.arrayDetalleInvitado=arrayTemp;
+            },
+            encuentraPuntoInv(numeroIdentificacion,array=[]){
+                var sw=0;
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i].numeroIdentificacion==numeroIdentificacion) {
+                        sw=true;
+                    }
+                }
+                return sw;
             },
             verConvocatoria(id){
+                this.arrayDetalle=[];
+                this.arrayDetalleEnvio=[];
+                this.arrayDetalleInvitado=[];
                 let me=this;
                 this.listado=2;
                 
@@ -679,17 +864,21 @@
                 var arrayConvocatoriaT=[];
                 var url='/convocatoria/obtenerCabecera?id='+id;
                 axios.get(url).then(function (response) {
-                    var respuesta=response.data;
+                    var respuesta=response.data;    
                     arrayConvocatoriaT = respuesta.convocatoria;
                     me.titulo=arrayConvocatoriaT[0]['titulo'];
                     me.codigo=arrayConvocatoriaT[0]['codigo'];
                     me.descripcion=arrayConvocatoriaT[0]['descripcion'];
                     me.estado=arrayConvocatoriaT[0]['estado'];
-                    me.userRedacto=arrayConvocatoriaT[0]['iduser'];
-                })
-                .catch(function (error) {
+                    //Ver redactor
+                    me.cedulaRedactor=arrayConvocatoriaT[0]['iduser'];
+                    me.apellidoRedactor=arrayConvocatoriaT[0]['apellidos'];
+                    me.nombreRedactor=arrayConvocatoriaT[0]['nombres'];
+                    me.emailRedactor=arrayConvocatoriaT[0]['EMail'];
+                    me.perfilRedactor=arrayConvocatoriaT[0]['perfil'];
+                }).catch(function (error) {
                     console.log(error);
-                })
+                });
                 //Obtener datos de la Onden dia
                 var url='/convocatoria/obtenerOrdenDias?id='+id;
                 axios.get(url).then(function (response) {
@@ -698,8 +887,8 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                })
-                //Obtener datos de las personas enviadas el acta
+                });
+                //Obtener datos de las personas enviadas la convocatoria
                 var url='/convocatoria/obtenerDetalles?id='+id;
                 axios.get(url).then(function (response) {
                     var respuesta=response.data;
@@ -707,18 +896,38 @@
                 })
                 .catch(function (error) {
                     console.log(error);
+                });
+                //Obtener datos de las personas invitadas al punto Orden dia
+                var url='/convocatoria/obtenerDetalleOrdenDias?id='+id;
+                axios.get(url).then(function (response) {
+                    var respuesta=response.data;
+                    me.arrayDetalleInvitado = respuesta.detalleorden_dias;
+                    me.ordenarPersonaInv();
                 })
+                .catch(function (error) {
+                    console.log(error);
+                });
             },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
                 this.buscarA='';
                 this.arrayUser=[];
+                this.arrayPersonaB=[];
+                this.tipoAccionInv=0;
+                this.idordendia=0;
             },
             abrirModal(){
                 this.arrayUser=[];
                 this.modal = 1;
                 this.tituloModal = 'Seleccione uno o varios usuarios';
+            },
+            abrirModalInvitado(id){
+                this.idordendia=(id+1);
+                this.arrayUser=[];
+                this.modal = 1;
+                this.tituloModal = 'Seleccione uno o varios usuarios';
+                this.tipoAccionInv=1;
             },
             desactivarIngreso(id){
                 const swalWithBootstrapButtons = Swal.mixin({

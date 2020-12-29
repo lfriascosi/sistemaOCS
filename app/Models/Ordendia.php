@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ordendia extends Model
 {
     protected $table = 'orden_dias';
-    protected $fillable = ['idconvocatoria','numconvocatoria','nombre','condicion'];
+    protected $fillable = ['idconvocatoria','numerador','nombre','condicion'];
 
     public $timestamps = false;
     

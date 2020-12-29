@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('contenido/contenido');
 });
 
-//Convocatoria
+//CONVOCATORIA
 Route::get('/convocatoria','App\Http\Controllers\ConvocatoriaController@index');
 Route::post('/convocatoria/registrar','App\Http\Controllers\ConvocatoriaController@store');
 //Listado Personas
@@ -29,3 +29,5 @@ Route::get('/convocatoria/obtenerCabecera','App\Http\Controllers\ConvocatoriaCon
 Route::get('/convocatoria/obtenerDetalles','App\Http\Controllers\ConvocatoriaController@obtenerDetalles');
 //Listado Orden dia
 Route::get('/convocatoria/obtenerOrdenDias','App\Http\Controllers\ConvocatoriaController@obtenerOrdenDias');
+//Listado Detalle Orden dia
+Route::get('/convocatoria/obtenerDetalleOrdenDias','App\Http\Controllers\ConvocatoriaController@obtenerDetalleOrdenDias');
