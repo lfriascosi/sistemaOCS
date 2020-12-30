@@ -3,6 +3,8 @@
         <!-- Breadcrumb -->
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Escritorio</a></li>
+            <li class="breadcrumb-item">Convocatoria</li>
+            <li class="breadcrumb-item active">Redacción</li>
         </ol>
         <div class="container-fluid">
             <!-- Ejemplo de tabla Listado -->
@@ -13,14 +15,14 @@
                         <i class="icon-plus"></i>&nbsp;Nuevo
                     </button>
                 </div>
-                <!--Listado-->
+                <!--Listado Convocatoria-->
                 <template v-if="listado==1">
                     <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
                                 <select class="form-control col-md-3" v-model="criterio">
-                                    <option value="codigo">Codigo</option>
+                                    <option value="codigo">Código</option>
                                     <option value="titulo">Título</option>
                                     <option value="descripcion">Descripción</option>
                                 </select>
@@ -37,24 +39,24 @@
                             <tr>
                                 <th>Opciones</th>
                                 <th>Redactor</th>
-                                <th>Titulo</th>
-                                <th>Codigo</th>
-                                <th>Descripcion</th>
+                                <th>Título</th>
+                                <th>Código</th>
+                                <th>Descripción</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody v-if="arrayConvocatoria.length">
                             <tr v-for="convocatoria in arrayConvocatoria" :key="convocatoria.id">
-                                <td>
+                                <td width="1" align="center" style="vertical-align:middle;">
                                     <button type="button" @click="verConvocatoria(convocatoria.id)" class="btn btn-success btn-sm">
                                         <i class="icon-eye"></i>
                                     </button>
                                 </td>
-                                <td v-text="convocatoria.apellidos+' '+convocatoria.nombres"></td>
-                                <td v-text="convocatoria.titulo"></td>
-                                <td v-text="convocatoria.codigo"></td>
-                                <td v-text="convocatoria.descripcion"></td>
-                                <td>
+                                <td width="100" align="center"  style="vertical-align:middle;" v-text="convocatoria.apellidos+' '+convocatoria.nombres"></td>
+                                <td width="220" align="justify" style="vertical-align:middle;" v-text="convocatoria.titulo"></td>
+                                <td width="200" align="center" style="vertical-align:middle;" v-text="convocatoria.codigo"></td>
+                                <td align="justify" v-text="convocatoria.descripcion"></td>
+                                <td width="1" align="center" style="vertical-align:middle;">
                                     <div v-if="convocatoria.estado=='Enviada'">
                                         <span class="badge badge-success" v-text="convocatoria.estado"></span>
                                     </div>
@@ -88,8 +90,8 @@
                     </nav>
                     </div>
                 </template>
-                <!--Fin Listado-->
-                <!--Detalle Convocatoria-->
+                <!--Fin Listado Convocatoria-->
+                <!--Listado Agregar Convocatoria-->
                 <template v-else-if="listado==0">
                     <div class="card-body">
                         <b>Convocatoria</b>
@@ -109,7 +111,7 @@
                                 </div>
                             </div>
                         </div>
-                        <b>Opcional envio de correo del dia</b>
+                        <b>Opcional envio de correo del día</b>
                         <div class="form-group row border">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -163,7 +165,7 @@
                                 </table>
                             </div>
                         </div>
-                        <b>Orden del dia</b>
+                        <b>Orden del día</b>
                         <div class="form-group row border">
                             <div class="col-md-10">
                                 <div class="form-group">
@@ -208,7 +210,7 @@
                                     <tbody v-else>
                                         <tr>
                                             <td colspan="4">
-                                                No hay orden del dia agregada
+                                                No hay orden del día agregada
                                             </td>
                                         </tr>
                                     </tbody>
@@ -232,8 +234,8 @@
                         </div>
                     </div>
                 </template>
-                <!--Fin Detalle Convocatoria-->
-                <!--Ver Convocatoria-->
+                <!--Fin Listado Agregar Convocatoria-->
+                <!--Ver Detalle Convocatoria-->
                 <template v-else-if="listado==2">
                     <div class="card-body">
                         <div class="form-group row border">
@@ -244,17 +246,17 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label for=""><b>Codigo</b></label>
+                                <label for=""><b>Código</b></label>
                                 <p v-text="codigo"></p>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label><b>Descripcíon</b></label>
+                                    <label><b>Descripción</b></label>
                                     <p v-text="descripcion"></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row border">
+                        <div class="form-group row border">&nbsp;
                             <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
@@ -267,8 +269,8 @@
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalle.length">
-                                        <tr v-for="(detalle, index) in arrayDetalle" :key="detalle.id" v-bind:index="index">
-                                            <td>{{index+1}}</td>
+                                        <tr align="center" v-for="(detalle, index) in arrayDetalle" :key="detalle.id" v-bind:index="index">
+                                            <td >{{index+1}}</td>
                                             <td v-text="detalle.nombre"/>
                                         </tr>
                                     </tbody>
@@ -282,12 +284,12 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="form-group row border">
+                        <div class="form-group row border">&nbsp;
                             <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th colspan="1"><b>Orden Dia</b></th>
+                                            <th colspan="1"><b>Orden Día</b></th>
                                             <th colspan="5"><b>Usuarios Invitados</b></th>
                                         </tr>
                                         <tr>
@@ -300,7 +302,7 @@
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalleInvitado.length">
-                                        <tr v-for="detalleInv in arrayDetalleInvitado" :key="detalleInv.numeroIdentificacion">
+                                        <tr align="center" v-for="detalleInv in arrayDetalleInvitado" :key="detalleInv.numeroIdentificacion">
                                             <td v-text="detalleInv.numerador"/>
                                             <td v-text="detalleInv.numeroIdentificacion"/>
                                             <td v-text="detalleInv.apellidos"/>
@@ -312,14 +314,14 @@
                                     <tbody v-else>
                                         <tr>
                                             <td colspan="6">
-                                                No hay Usuarios enviados
+                                                No hay usuarios enviados
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="form-group row border">
+                        <div class="form-group row border">&nbsp;
                             <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
@@ -334,7 +336,7 @@
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalleEnvio.length">
-                                        <tr v-for="detalleEnv in arrayDetalleEnvio" :key="detalleEnv.iduser">
+                                        <tr align="center" v-for="detalleEnv in arrayDetalleEnvio" :key="detalleEnv.iduser">
                                             <td v-text="detalleEnv.iduser"/>
                                             <td v-text="detalleEnv.apellidos+' '+detalleEnv.nombres"/>
                                             <td v-text="detalleEnv.EMail"/>
@@ -344,14 +346,14 @@
                                     <tbody v-else>
                                         <tr>
                                             <td colspan="4">
-                                                No hay Usuarios enviados
+                                                No hay usuarios enviados
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="form-group row border">
+                        <div class="form-group row border">&nbsp;
                             <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
@@ -367,7 +369,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr align="center">
                                             <td v-text="cedulaRedactor"/>
                                             <td v-text="apellidoRedactor"/>
                                             <td v-text="nombreRedactor"/>
@@ -385,7 +387,7 @@
                         </div>
                     </div>
                 </template>
-                <!--Fin ver Convocatoria-->
+                <!--Fin Ver Detalle Convocatoria-->
             </div>
             <!-- Fin ejemplo de tabla Listado -->
         </div>

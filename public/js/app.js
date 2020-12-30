@@ -2373,6 +2373,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -39380,7 +39382,7 @@ var render = function() {
                           },
                           [
                             _c("option", { attrs: { value: "codigo" } }, [
-                              _vm._v("Codigo")
+                              _vm._v("Código")
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "titulo" } }, [
@@ -39478,25 +39480,36 @@ var render = function() {
                                 convocatoria
                               ) {
                                 return _c("tr", { key: convocatoria.id }, [
-                                  _c("td", [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-success btn-sm",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.verConvocatoria(
-                                              convocatoria.id
-                                            )
-                                          }
-                                        }
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: {
+                                        "vertical-align": "middle"
                                       },
-                                      [_c("i", { staticClass: "icon-eye" })]
-                                    )
-                                  ]),
+                                      attrs: { width: "1", align: "center" }
+                                    },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-success btn-sm",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.verConvocatoria(
+                                                convocatoria.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("i", { staticClass: "icon-eye" })]
+                                      )
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c("td", {
+                                    staticStyle: { "vertical-align": "middle" },
+                                    attrs: { width: "100", align: "center" },
                                     domProps: {
                                       textContent: _vm._s(
                                         convocatoria.apellidos +
@@ -39507,18 +39520,23 @@ var render = function() {
                                   }),
                                   _vm._v(" "),
                                   _c("td", {
+                                    staticStyle: { "vertical-align": "middle" },
+                                    attrs: { width: "220", align: "justify" },
                                     domProps: {
                                       textContent: _vm._s(convocatoria.titulo)
                                     }
                                   }),
                                   _vm._v(" "),
                                   _c("td", {
+                                    staticStyle: { "vertical-align": "middle" },
+                                    attrs: { width: "200", align: "center" },
                                     domProps: {
                                       textContent: _vm._s(convocatoria.codigo)
                                     }
                                   }),
                                   _vm._v(" "),
                                   _c("td", {
+                                    attrs: { align: "justify" },
                                     domProps: {
                                       textContent: _vm._s(
                                         convocatoria.descripcion
@@ -39526,29 +39544,40 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("td", [
-                                    convocatoria.estado == "Enviada"
-                                      ? _c("div", [
-                                          _c("span", {
-                                            staticClass: "badge badge-success",
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                convocatoria.estado
-                                              )
-                                            }
-                                          })
-                                        ])
-                                      : _c("div", [
-                                          _c("span", {
-                                            staticClass: "badge badge-warning",
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                convocatoria.estado
-                                              )
-                                            }
-                                          })
-                                        ])
-                                  ])
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: {
+                                        "vertical-align": "middle"
+                                      },
+                                      attrs: { width: "1", align: "center" }
+                                    },
+                                    [
+                                      convocatoria.estado == "Enviada"
+                                        ? _c("div", [
+                                            _c("span", {
+                                              staticClass:
+                                                "badge badge-success",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  convocatoria.estado
+                                                )
+                                              }
+                                            })
+                                          ])
+                                        : _c("div", [
+                                            _c("span", {
+                                              staticClass:
+                                                "badge badge-warning",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  convocatoria.estado
+                                                )
+                                              }
+                                            })
+                                          ])
+                                    ]
+                                  )
                                 ])
                               }),
                               0
@@ -39790,7 +39819,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("b", [_vm._v("Opcional envio de correo del dia")]),
+                  _c("b", [_vm._v("Opcional envio de correo del día")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
                     _c("div", { staticClass: "col-md-6" }, [
@@ -39978,7 +40007,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("b", [_vm._v("Orden del dia")]),
+                  _c("b", [_vm._v("Orden del día")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
                     _c("div", { staticClass: "col-md-10" }, [
@@ -40268,6 +40297,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
+                    _vm._v(" \n                        "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -40289,7 +40319,7 @@ var render = function() {
                                     "tr",
                                     {
                                       key: detalle.id,
-                                      attrs: { index: index }
+                                      attrs: { align: "center", index: index }
                                     },
                                     [
                                       _c("td", [_vm._v(_vm._s(index + 1))]),
@@ -40311,6 +40341,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
+                    _vm._v(" \n                        "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -40329,7 +40360,10 @@ var render = function() {
                                 ) {
                                   return _c(
                                     "tr",
-                                    { key: detalleInv.numeroIdentificacion },
+                                    {
+                                      key: detalleInv.numeroIdentificacion,
+                                      attrs: { align: "center" }
+                                    },
                                     [
                                       _c("td", {
                                         domProps: {
@@ -40386,6 +40420,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
+                    _vm._v(" \n                        "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -40402,35 +40437,42 @@ var render = function() {
                                 _vm._l(_vm.arrayDetalleEnvio, function(
                                   detalleEnv
                                 ) {
-                                  return _c("tr", { key: detalleEnv.iduser }, [
-                                    _c("td", {
-                                      domProps: {
-                                        textContent: _vm._s(detalleEnv.iduser)
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("td", {
-                                      domProps: {
-                                        textContent: _vm._s(
-                                          detalleEnv.apellidos +
-                                            " " +
-                                            detalleEnv.nombres
-                                        )
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("td", {
-                                      domProps: {
-                                        textContent: _vm._s(detalleEnv.EMail)
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("td", {
-                                      domProps: {
-                                        textContent: _vm._s(detalleEnv.perfil)
-                                      }
-                                    })
-                                  ])
+                                  return _c(
+                                    "tr",
+                                    {
+                                      key: detalleEnv.iduser,
+                                      attrs: { align: "center" }
+                                    },
+                                    [
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(detalleEnv.iduser)
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            detalleEnv.apellidos +
+                                              " " +
+                                              detalleEnv.nombres
+                                          )
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(detalleEnv.EMail)
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(detalleEnv.perfil)
+                                        }
+                                      })
+                                    ]
+                                  )
                                 }),
                                 0
                               )
@@ -40441,6 +40483,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
+                    _vm._v(" \n                        "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -40452,7 +40495,7 @@ var render = function() {
                           _vm._m(16),
                           _vm._v(" "),
                           _c("tbody", [
-                            _c("tr", [
+                            _c("tr", { attrs: { align: "center" } }, [
                               _c("td", {
                                 domProps: {
                                   textContent: _vm._s(_vm.cedulaRedactor)
@@ -40817,7 +40860,11 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item" }, [
         _c("a", { attrs: { href: "/" } }, [_vm._v("Escritorio")])
-      ])
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "breadcrumb-item" }, [_vm._v("Convocatoria")]),
+      _vm._v(" "),
+      _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Redacción")])
     ])
   },
   function() {
@@ -40830,11 +40877,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Redactor")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Titulo")]),
+        _c("th", [_vm._v("Título")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Codigo")]),
+        _c("th", [_vm._v("Código")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Descripcion")]),
+        _c("th", [_vm._v("Descripción")]),
         _vm._v(" "),
         _c("th", [_vm._v("Estado")])
       ])
@@ -40905,7 +40952,7 @@ var staticRenderFns = [
     return _c("tr", [
       _c("td", { attrs: { colspan: "4" } }, [
         _vm._v(
-          "\n                                            No hay orden del dia agregada\n                                        "
+          "\n                                            No hay orden del día agregada\n                                        "
         )
       ])
     ])
@@ -40920,13 +40967,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [_c("b", [_vm._v("Codigo")])])
+    return _c("label", { attrs: { for: "" } }, [_c("b", [_vm._v("Código")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [_c("b", [_vm._v("Descripcíon")])])
+    return _c("label", [_c("b", [_vm._v("Descripción")])])
   },
   function() {
     var _vm = this
@@ -40962,7 +41009,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { attrs: { colspan: "1" } }, [_c("b", [_vm._v("Orden Dia")])]),
+        _c("th", { attrs: { colspan: "1" } }, [_c("b", [_vm._v("Orden Día")])]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "5" } }, [
           _c("b", [_vm._v("Usuarios Invitados")])
@@ -40991,7 +41038,7 @@ var staticRenderFns = [
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
         _vm._v(
-          "\n                                            No hay Usuarios enviados\n                                        "
+          "\n                                            No hay usuarios enviados\n                                        "
         )
       ])
     ])
@@ -41025,7 +41072,7 @@ var staticRenderFns = [
     return _c("tr", [
       _c("td", { attrs: { colspan: "4" } }, [
         _vm._v(
-          "\n                                            No hay Usuarios enviados\n                                        "
+          "\n                                            No hay usuarios enviados\n                                        "
         )
       ])
     ])

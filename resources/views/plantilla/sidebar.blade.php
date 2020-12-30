@@ -11,7 +11,7 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-event"></i>Convocatoria</a>
                 <ul class="nav-dropdown-items">
                     <li @click="menu=1" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-speech"></i>Redaccion</a>
+                        <a class="nav-link" href="#"><i class="icon-speech"></i>Redacción</a>
                     </li>
                     <li @click="menu=2" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-envelope-letter"></i>Notificaciones Email</a>

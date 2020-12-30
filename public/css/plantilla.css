@@ -227,7 +227,7 @@ caption {
   caption-side: bottom; }
 
 th {
-  text-align: left; }
+  text-align: center; }
 
 label {
   display: inline-block;
@@ -7654,7 +7654,7 @@ base-chart.chart {
     background-image: url("../img/logo.png");
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 55px auto;
+    background-size: 53px auto;
     border-bottom: 1px solid #c2cfd6; }
   .app-header.navbar .navbar-toggler {
     min-width: 50px;
