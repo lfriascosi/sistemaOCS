@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i>Convocatorias
                     <button type="button" @click="mostrarDetalleConvocatoria()" class="btn btn-secondary">
-                        <i class="icon-plus"></i>&nbsp;Nuevo
+                        <i class="icon-plus"></i>&nbsp;Nueva
                     </button>
                 </div>
                 <!--Listado Convocatoria-->
@@ -118,14 +118,14 @@
                                     <label>Usuario <span style="color:red;" v-show="personaUser==''">(*seleccione)</span></label>
                                     <div class="form-inline">
                                         <input type="text" class="form-control" v-model="docUser" @keyup.enter="buscarPersona()" placeholder="Ingrese cédula">
-                                        <button @click="abrirModal()" class="btn- btn-primary">...</button>
+                                        <button @click="abrirModal()" class="btn- btn-primary" title="Buscar Persona">⋮</button>
                                         <input type="text" readonly class="form-control" v-model="personaUser">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button @click="agregarPersona()" class="btn btn-success form-control btnagregar">
+                                    <button @click="agregarPersona()" class="btn btn-success form-control btnagregar" title="Agregar Persona">
                                         <i class="icon-plus"></i>
                                     </button>
                                 </div>
@@ -144,7 +144,7 @@
                                     <tbody v-if="arrayPersona.length">
                                         <tr v-for="(persona,index) in arrayPersona" :key="persona.id">
                                             <td>
-                                                <button @click="eliminarPersona(index)" type="button" class="btn btn-danger btn-sm">
+                                                <button @click="eliminarPersona(index)" type="button" class="btn btn-danger btn-sm" title="Eliminar Persona">
                                                     <i class="icon-close"></i>
                                                 </button>
                                             
@@ -170,12 +170,12 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Nombre <span style="color:red;" v-show="nombre==''">(*Ingrese)</span></label>
-                                    <input type="text" @keyup.enter="agregarOrdendia()" placeholder="Ingrese nombre de la orden dia" class="form-control" v-model="nombre">
+                                    <input type="text" @keyup.enter="agregarOrdendia()" placeholder="Ingrese el nombre del punto de la orden del dia" class="form-control" v-model="nombre">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button @click="agregarOrdendia()" class="btn btn-success form-control btnagregar">
+                                    <button @click="agregarOrdendia()" class="btn btn-success form-control btnagregar" title="Agregar Orden Día">
                                         <i class="icon-plus"></i>
                                     </button>
                                 </div>
@@ -192,15 +192,18 @@
                                     </thead>
                                     <tbody v-if="arrayOrdenDia.length">
                                         <tr v-for="(detalle,index) in arrayOrdenDia" :key="detalle.id">
-                                            <td>
-                                                <button @click="eliminarOrdendia(index)" type="button" class="btn btn-danger btn-sm" title="Eliminar">
+                                            <td width="120" align="center" style="vertical-align:middle;">
+                                                <button @click="eliminarOrdendia(index)" type="button" class="btn btn-danger btn-sm" title="Eliminar Punto">
                                                     <i class="icon-close"></i>
                                                 </button>&nbsp;
                                                 <button @click="abrirModalInvitado(index)" type="button" class="btn btn-success btn-sm" title="Agregar invitado">
                                                     <i class="icon-plus"></i>
                                                 </button>
+                                                <button v-if="detalle.invitado!='Ninguno'" @click="eliminarInvitado(detalle.nro)" type="button" class="btn btn-danger btn-sm" title="Eliminar invitado">
+                                                    <i class="icon-user-unfollow"></i>
+                                                </button>
                                             </td>
-                                            <td v-text="detalle.nro"></td>
+                                            <td align="center" v-text="detalle.nro"></td>
                                             <td>
                                                 <input v-model="detalle.nombre" type="text" value="" class="form-control">
                                             </td>
@@ -431,13 +434,13 @@
                                         <th>Perfil</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody v-if="arrayPersonaB.length">
                                     <tr v-for="persona in arrayPersonaB" :key="persona.id">
-                                        <td>
+                                        <td width="1" align="center" style="vertical-align:middle;">
                                             <button type="button"  v-if="tipoAccionInv==0" @click="agregarPersonaModal(persona)" class="btn btn-success btn-sm">
                                                 <i class="icon-check"></i>
                                             </button>
-                                            <button type="button"  v-if="tipoAccionInv==1" @click="agregarInvitado(persona)" class="btn btn-warning btn-sm">
+                                            <button type="button"  v-if="tipoAccionInv==1" @click="agregarInvitado(persona)" class="btn btn-success btn-sm">
                                                 <i class="icon-check"></i>
                                             </button>
                                         </td>
@@ -448,13 +451,18 @@
                                         <td v-text="persona.perfil"></td>
                                     </tr>
                                 </tbody>
+                                <tbody v-else>
+                                        <tr>
+                                            <td colspan="6">
+                                                No existe usuario
+                                            </td>
+                                        </tr>
+                                    </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                        <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarPersona()">Guardar</button>
-                        <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarPersona()">Actualizar</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -539,13 +547,6 @@
                     from++;
                 }
                 return pagesArray;
-            },
-            calcularTotal: function(){
-                var resultado =0.0;
-                for (var i = 0; i < this.arrayDetalle.length; i++) {
-                    resultado=resultado+(this.arrayDetalle[i].precio*this.arrayDetalle[i].cantidad);
-                }
-                return resultado;
             }
         },
         methods : {
@@ -560,25 +561,6 @@
                 .catch(function (error) {
                     console.log(error);
                 })
-            },
-            selectProveedor(search,loading){
-                let me=this;
-                loading(true)
-                var url='/proveedor/selectProveedor?filtro='+search;
-                axios.get(url).then(function (response) {
-                    let respuesta=response.data;
-                    q: search
-                    me.arrayProveedor = respuesta.proveedores;
-                    loading(false)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-            },
-            getDatosProveedor(val1){
-                let me = this;
-                me.loading =true;
-                me.idproveedor = val1.id;
             },
             buscarPersona(){
                 let me=this;
@@ -634,18 +616,50 @@
             },
             eliminarOrdendia(index){
                 let me=this;
+                me.eliminarInvitado(me.arrayOrdenDia[index].nro);
                 me.arrayOrdenDia.splice(index,1);
-                for (var i = 0; i < this.arrayOrdenDia.length; i++) {
-                    this.arrayOrdenDia[i].nro=i+1;
+                for (var i = 0; i < me.arrayOrdenDia.length; i++) {
+                    me.arrayOrdenDia[i].nro=i+1;
                 }
+            },
+            eliminarRI(num,id){
+                let me=this;
+                if(num==1){
+                    for (var i = 0; i < me.arrayPersonaInv.length; i++) {
+                        if(me.arrayPersonaInv[i].idordendia==id){
+                            me.arrayPersonaInv.splice(i,1);
+                            break;
+                        }
+                    }
+                }else{
+                    num--;
+                    for (var i = 0; i < me.arrayPersonaInv.length; i++) {
+                        if(me.arrayPersonaInv[i].idordendia==id){
+                            me.arrayPersonaInv.splice(i,1);
+                            me.eliminarRI(num,id);
+                        }
+                    }
+                }
+                
+            },
+            eliminarInvitado(id){
+                let me=this;
+                var num=0;
+                for (var i = 0; i < me.arrayOrdenDia.length; i++) {
+                    if(me.arrayOrdenDia[i].nro==id){
+                        me.arrayOrdenDia[i].invitado='Ninguno';
+                    }
+                }
+                for (var i = 0; i < me.arrayPersonaInv.length; i++) {
+                    if(me.arrayPersonaInv[i].idordendia==id){
+                        num++;
+                    }
+                }
+                me.eliminarRI(num,id);
             },
             eliminarPersona(index){
                 let me=this;
                 me.arrayPersona.splice(index,1);
-            },
-            eliminarPersonaInv(){
-                let me=this;
-                me.arrayPersonaInv=[];
             },
             agregarOrdendia(){
                 let me=this;
@@ -759,26 +773,61 @@
                 if(this.validarConvocatoria()){
                     return;
                 }
-                let me=this;
-                axios.post('/convocatoria/registrar',{
-                    'titulo' : this.titulo,
-                    'codigo' : this.codigo,
-                    'descripcion' : this.descripcion,
-                    'data_ordendia' : this.arrayOrdenDia,
-                    'data_persona' : this.arrayPersona,
-                    'data_persona_invitada' : this.arrayPersonaInv,
-                }).then(function (response) {
-                    me.listado=1;
-                    me.listarConvocatoria(1,'','codigo');
-                    me.titulo = '';
-                    me.codigo = '';
-                    me.descripcion = '';
-                    me.arrayConvocatoria=[];
-                    me.arrayOrdenDia=[];
-                    me.arrayPersona=[];
-                    me.arrayPersonaInv=[];
-                }).catch(function (error) {
-                    console.log(error);
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+                swalWithBootstrapButtons.fire({
+                    title: '¿Está seguro(a) de guardar la convocatoria?',
+                    text: "No se podra revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si, Guardar',
+                    cancelButtonText: 'No, Cancelar',
+                    reverseButtons: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        swalWithBootstrapButtons.fire(
+                            'Guardada!',
+                            'La convocatoria ha sido guardada.',
+                            'success'
+                        )
+                        //Guardar Convocatoria
+                        let me=this;
+                        axios.post('/convocatoria/registrar',{
+                            'titulo' : this.titulo,
+                            'codigo' : this.codigo,
+                            'descripcion' : this.descripcion,
+                            'data_ordendia' : this.arrayOrdenDia,
+                            'data_persona' : this.arrayPersona,
+                            'data_persona_invitada' : this.arrayPersonaInv,
+                        }).then(function (response) {
+                            me.listado=1;
+                            me.listarConvocatoria(1,'','codigo');
+                            me.titulo = '';
+                            me.codigo = '';
+                            me.descripcion = '';
+                            me.arrayConvocatoria=[];
+                            me.arrayOrdenDia=[];
+                            me.arrayPersona=[];
+                            me.arrayPersonaInv=[];
+                        }).catch(function (error) {
+                            console.log(error);
+                        })
+                        //
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelada',
+                            'La convocatoria todavía no fue guardada.',
+                            'error'
+                        )
+                    }
                 })
             },
             validarConvocatoria(){
@@ -806,6 +855,9 @@
                 this.arrayDetalle=[];
                 this.arrayDetalleEnvio=[];
                 this.arrayDetalleInvitado=[];
+                this.arrayOrdenDia=[];
+                this.arrayPersonaInv=[];
+                this.errorMostrarMsjConvocatoria=[];
                 this.titulo='';
                 this.codigo='';
                 this.descripcion='';
@@ -815,6 +867,7 @@
                 this.nombreRedactor='';
                 this.emailRedactor='';
                 this.perfilRedactor='';
+                this.errorConvocatoria=0;
             },
             ordenarPersonaInv(){
                 let me=this;
@@ -930,46 +983,7 @@
                 this.modal = 1;
                 this.tituloModal = 'Seleccione uno o varios usuarios';
                 this.tipoAccionInv=1;
-            },
-            desactivarIngreso(id){
-                const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-                })
-
-                swalWithBootstrapButtons.fire({
-                title: 'Esta seguro de anular este ingreso?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar!',
-                reverseButtons: true
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    let me=this;
-                    axios.put('/ingreso/desactivar',{
-                        'id' : id
-                    }).then(function (response) {
-                        me.listarConvocatoria(1,'','num_comprobante');
-                        swalWithBootstrapButtons.fire(
-                        'Anulado!',
-                        'El ingreso ha sido anulado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    })
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    
-                }
-                })
-            },
+            }
         },
         mounted() {
             this.listarConvocatoria(1,this.buscar,this.criterio);

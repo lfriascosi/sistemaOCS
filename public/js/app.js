@@ -2375,6 +2375,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2454,15 +2462,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return pagesArray;
-    },
-    calcularTotal: function calcularTotal() {
-      var resultado = 0.0;
-
-      for (var i = 0; i < this.arrayDetalle.length; i++) {
-        resultado = resultado + this.arrayDetalle[i].precio * this.arrayDetalle[i].cantidad;
-      }
-
-      return resultado;
     }
   },
   methods: {
@@ -2476,26 +2475,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
-    },
-    selectProveedor: function selectProveedor(search, loading) {
-      var me = this;
-      loading(true);
-      var url = '/proveedor/selectProveedor?filtro=' + search;
-      axios.get(url).then(function (response) {
-        var respuesta = response.data;
-
-        q: search;
-
-        me.arrayProveedor = respuesta.proveedores;
-        loading(false);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    getDatosProveedor: function getDatosProveedor(val1) {
-      var me = this;
-      me.loading = true;
-      me.idproveedor = val1.id;
     },
     buscarPersona: function buscarPersona() {
       var me = this;
@@ -2556,19 +2535,55 @@ __webpack_require__.r(__webpack_exports__);
     },
     eliminarOrdendia: function eliminarOrdendia(index) {
       var me = this;
+      me.eliminarInvitado(me.arrayOrdenDia[index].nro);
       me.arrayOrdenDia.splice(index, 1);
 
-      for (var i = 0; i < this.arrayOrdenDia.length; i++) {
-        this.arrayOrdenDia[i].nro = i + 1;
+      for (var i = 0; i < me.arrayOrdenDia.length; i++) {
+        me.arrayOrdenDia[i].nro = i + 1;
       }
+    },
+    eliminarRI: function eliminarRI(num, id) {
+      var me = this;
+
+      if (num == 1) {
+        for (var i = 0; i < me.arrayPersonaInv.length; i++) {
+          if (me.arrayPersonaInv[i].idordendia == id) {
+            me.arrayPersonaInv.splice(i, 1);
+            break;
+          }
+        }
+      } else {
+        num--;
+
+        for (var i = 0; i < me.arrayPersonaInv.length; i++) {
+          if (me.arrayPersonaInv[i].idordendia == id) {
+            me.arrayPersonaInv.splice(i, 1);
+            me.eliminarRI(num, id);
+          }
+        }
+      }
+    },
+    eliminarInvitado: function eliminarInvitado(id) {
+      var me = this;
+      var num = 0;
+
+      for (var i = 0; i < me.arrayOrdenDia.length; i++) {
+        if (me.arrayOrdenDia[i].nro == id) {
+          me.arrayOrdenDia[i].invitado = 'Ninguno';
+        }
+      }
+
+      for (var i = 0; i < me.arrayPersonaInv.length; i++) {
+        if (me.arrayPersonaInv[i].idordendia == id) {
+          num++;
+        }
+      }
+
+      me.eliminarRI(num, id);
     },
     eliminarPersona: function eliminarPersona(index) {
       var me = this;
       me.arrayPersona.splice(index, 1);
-    },
-    eliminarPersonaInv: function eliminarPersonaInv() {
-      var me = this;
-      me.arrayPersonaInv = [];
     },
     agregarOrdendia: function agregarOrdendia() {
       var me = this;
@@ -2684,30 +2699,57 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     registrarConvocatoria: function registrarConvocatoria() {
+      var _this = this;
+
       if (this.validarConvocatoria()) {
         return;
       }
 
-      var me = this;
-      axios.post('/convocatoria/registrar', {
-        'titulo': this.titulo,
-        'codigo': this.codigo,
-        'descripcion': this.descripcion,
-        'data_ordendia': this.arrayOrdenDia,
-        'data_persona': this.arrayPersona,
-        'data_persona_invitada': this.arrayPersonaInv
-      }).then(function (response) {
-        me.listado = 1;
-        me.listarConvocatoria(1, '', 'codigo');
-        me.titulo = '';
-        me.codigo = '';
-        me.descripcion = '';
-        me.arrayConvocatoria = [];
-        me.arrayOrdenDia = [];
-        me.arrayPersona = [];
-        me.arrayPersonaInv = [];
-      })["catch"](function (error) {
-        console.log(error);
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: '¿Está seguro(a) de guardar la convocatoria?',
+        text: "No se podra revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, Guardar',
+        cancelButtonText: 'No, Cancelar',
+        reverseButtons: false
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire('Guardada!', 'La convocatoria ha sido guardada.', 'success'); //Guardar Convocatoria
+
+          var me = _this;
+          axios.post('/convocatoria/registrar', {
+            'titulo': _this.titulo,
+            'codigo': _this.codigo,
+            'descripcion': _this.descripcion,
+            'data_ordendia': _this.arrayOrdenDia,
+            'data_persona': _this.arrayPersona,
+            'data_persona_invitada': _this.arrayPersonaInv
+          }).then(function (response) {
+            me.listado = 1;
+            me.listarConvocatoria(1, '', 'codigo');
+            me.titulo = '';
+            me.codigo = '';
+            me.descripcion = '';
+            me.arrayConvocatoria = [];
+            me.arrayOrdenDia = [];
+            me.arrayPersona = [];
+            me.arrayPersonaInv = [];
+          })["catch"](function (error) {
+            console.log(error);
+          }); //
+        } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('Cancelada', 'La convocatoria todavía no fue guardada.', 'error');
+        }
       });
     },
     validarConvocatoria: function validarConvocatoria() {
@@ -2734,6 +2776,9 @@ __webpack_require__.r(__webpack_exports__);
       this.arrayDetalle = [];
       this.arrayDetalleEnvio = [];
       this.arrayDetalleInvitado = [];
+      this.arrayOrdenDia = [];
+      this.arrayPersonaInv = [];
+      this.errorMostrarMsjConvocatoria = [];
       this.titulo = '';
       this.codigo = '';
       this.descripcion = '';
@@ -2743,6 +2788,7 @@ __webpack_require__.r(__webpack_exports__);
       this.nombreRedactor = '';
       this.emailRedactor = '';
       this.perfilRedactor = '';
+      this.errorConvocatoria = 0;
     },
     ordenarPersonaInv: function ordenarPersonaInv() {
       var me = this;
@@ -2862,39 +2908,6 @@ __webpack_require__.r(__webpack_exports__);
       this.modal = 1;
       this.tituloModal = 'Seleccione uno o varios usuarios';
       this.tipoAccionInv = 1;
-    },
-    desactivarIngreso: function desactivarIngreso(id) {
-      var _this = this;
-
-      var swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      });
-      swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de anular este ingreso?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar!',
-        reverseButtons: true
-      }).then(function (result) {
-        if (result.isConfirmed) {
-          var me = _this;
-          axios.put('/ingreso/desactivar', {
-            'id': id
-          }).then(function (response) {
-            me.listarConvocatoria(1, '', 'num_comprobante');
-            swalWithBootstrapButtons.fire('Anulado!', 'El ingreso ha sido anulado con éxito.', 'success');
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel) {}
-      });
     }
   },
   mounted: function mounted() {
@@ -39341,7 +39354,7 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "icon-plus" }),
-                _vm._v(" Nuevo\n                ")
+                _vm._v(" Nueva\n                ")
               ]
             )
           ]),
@@ -39888,13 +39901,14 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn- btn-primary",
+                              attrs: { title: "Buscar Persona" },
                               on: {
                                 click: function($event) {
                                   return _vm.abrirModal()
                                 }
                               }
                             },
-                            [_vm._v("...")]
+                            [_vm._v("⋮")]
                           ),
                           _vm._v(" "),
                           _c("input", {
@@ -39929,6 +39943,7 @@ var render = function() {
                           {
                             staticClass:
                               "btn btn-success form-control btnagregar",
+                            attrs: { title: "Agregar Persona" },
                             on: {
                               click: function($event) {
                                 return _vm.agregarPersona()
@@ -39963,7 +39978,10 @@ var render = function() {
                                         "button",
                                         {
                                           staticClass: "btn btn-danger btn-sm",
-                                          attrs: { type: "button" },
+                                          attrs: {
+                                            type: "button",
+                                            title: "Eliminar Persona"
+                                          },
                                           on: {
                                             click: function($event) {
                                               return _vm.eliminarPersona(index)
@@ -40043,7 +40061,8 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            placeholder: "Ingrese nombre de la orden dia"
+                            placeholder:
+                              "Ingrese el nombre del punto de la orden del dia"
                           },
                           domProps: { value: _vm.nombre },
                           on: {
@@ -40080,6 +40099,7 @@ var render = function() {
                           {
                             staticClass:
                               "btn btn-success form-control btnagregar",
+                            attrs: { title: "Agregar Orden Día" },
                             on: {
                               click: function($event) {
                                 return _vm.agregarOrdendia()
@@ -40109,47 +40129,96 @@ var render = function() {
                                   index
                                 ) {
                                   return _c("tr", { key: detalle.id }, [
-                                    _c("td", [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-danger btn-sm",
-                                          attrs: {
-                                            type: "button",
-                                            title: "Eliminar"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.eliminarOrdendia(index)
-                                            }
-                                          }
+                                    _c(
+                                      "td",
+                                      {
+                                        staticStyle: {
+                                          "vertical-align": "middle"
                                         },
-                                        [_c("i", { staticClass: "icon-close" })]
-                                      ),
-                                      _vm._v(
-                                        " \n                                            "
-                                      ),
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-success btn-sm",
-                                          attrs: {
-                                            type: "button",
-                                            title: "Agregar invitado"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.abrirModalInvitado(
-                                                index
-                                              )
+                                        attrs: { width: "120", align: "center" }
+                                      },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-danger btn-sm",
+                                            attrs: {
+                                              type: "button",
+                                              title: "Eliminar Punto"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.eliminarOrdendia(
+                                                  index
+                                                )
+                                              }
                                             }
-                                          }
-                                        },
-                                        [_c("i", { staticClass: "icon-plus" })]
-                                      )
-                                    ]),
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-close"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(
+                                          " \n                                            "
+                                        ),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-success btn-sm",
+                                            attrs: {
+                                              type: "button",
+                                              title: "Agregar invitado"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.abrirModalInvitado(
+                                                  index
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-plus"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        detalle.invitado != "Ninguno"
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-danger btn-sm",
+                                                attrs: {
+                                                  type: "button",
+                                                  title: "Eliminar invitado"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.eliminarInvitado(
+                                                      detalle.nro
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "icon-user-unfollow"
+                                                })
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    ),
                                     _vm._v(" "),
                                     _c("td", {
+                                      attrs: { align: "center" },
                                       domProps: {
                                         textContent: _vm._s(detalle.nro)
                                       }
@@ -40724,75 +40793,102 @@ var render = function() {
                     [
                       _vm._m(17),
                       _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.arrayPersonaB, function(persona) {
-                          return _c("tr", { key: persona.id }, [
-                            _c("td", [
-                              _vm.tipoAccionInv == 0
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-success btn-sm",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.agregarPersonaModal(
-                                            persona
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_c("i", { staticClass: "icon-check" })]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.tipoAccionInv == 1
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-warning btn-sm",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.agregarInvitado(persona)
-                                        }
-                                      }
-                                    },
-                                    [_c("i", { staticClass: "icon-check" })]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(
-                                  persona.numeroIdentificacion
-                                )
-                              }
+                      _vm.arrayPersonaB.length
+                        ? _c(
+                            "tbody",
+                            _vm._l(_vm.arrayPersonaB, function(persona) {
+                              return _c("tr", { key: persona.id }, [
+                                _c(
+                                  "td",
+                                  {
+                                    staticStyle: { "vertical-align": "middle" },
+                                    attrs: { width: "1", align: "center" }
+                                  },
+                                  [
+                                    _vm.tipoAccionInv == 0
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-success btn-sm",
+                                            attrs: { type: "button" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.agregarPersonaModal(
+                                                  persona
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-check"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.tipoAccionInv == 1
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-success btn-sm",
+                                            attrs: { type: "button" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.agregarInvitado(
+                                                  persona
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon-check"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(
+                                      persona.numeroIdentificacion
+                                    )
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(persona.apellidos)
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(persona.nombres)
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(persona.EMail)
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(persona.perfil)
+                                  }
+                                })
+                              ])
                             }),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(persona.apellidos)
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: { textContent: _vm._s(persona.nombres) }
-                            }),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: { textContent: _vm._s(persona.EMail) }
-                            }),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: { textContent: _vm._s(persona.perfil) }
-                            })
-                          ])
-                        }),
-                        0
-                      )
+                            0
+                          )
+                        : _c("tbody", [_vm._m(18)])
                     ]
                   )
                 ])
@@ -40811,39 +40907,7 @@ var render = function() {
                     }
                   },
                   [_vm._v("Cerrar")]
-                ),
-                _vm._v(" "),
-                _vm.tipoAccion == 1
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.registrarPersona()
-                          }
-                        }
-                      },
-                      [_vm._v("Guardar")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.tipoAccion == 2
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.actualizarPersona()
-                          }
-                        }
-                      },
-                      [_vm._v("Actualizar")]
-                    )
-                  : _vm._e()
+                )
               ])
             ])
           ]
@@ -41118,6 +41182,18 @@ var staticRenderFns = [
         _c("th", [_vm._v("Correo")]),
         _vm._v(" "),
         _c("th", [_vm._v("Perfil")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "6" } }, [
+        _vm._v(
+          "\n                                            No existe usuario\n                                        "
+        )
       ])
     ])
   }
