@@ -157,11 +157,7 @@ class ConvocatoriaController extends Controller
             $convocatoria->titulo = $request->titulo;
             $convocatoria->codigo = $request->codigo;
             $convocatoria->descripcion = $request->descripcion;
-            if(sizeof($personas)<=0){
-                $convocatoria->estado = 'Guardada';
-            }else{
-                $convocatoria->estado = 'Enviada';
-            }
+            $convocatoria->estado = 'Guardada';
             $convocatoria->save();
             //Array Personas Detalle_convocatoria
             foreach ($personas as $kep => $per) {
@@ -177,7 +173,6 @@ class ConvocatoriaController extends Controller
                 $ordendia->idconvocatoria = $convocatoria->id;
                 $ordendia->numerador = $ord['nro'];
                 $ordendia->nombre = $ord['nombre'];
-                $ordendia->condicion = 0;
                 $ordendia->save();
                 //Array Detalle Orden Dia
                 foreach ($detalleordendias as $kep => $dord) {

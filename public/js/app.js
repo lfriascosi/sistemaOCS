@@ -2380,9 +2380,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2758,6 +2755,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.titulo) this.errorMostrarMsjConvocatoria.push("Ingrese el título de la convocatoria");
       if (!this.codigo) this.errorMostrarMsjConvocatoria.push("Ingrese el codigo de la convocatoria");
       if (!this.descripcion) this.errorMostrarMsjConvocatoria.push("Ingrese la descripcion de la convocatoria");
+      if (this.arrayPersona.length <= 0) this.errorMostrarMsjConvocatoria.push("Ingrese usuarios dirigidos");
       if (this.arrayOrdenDia.length <= 0) this.errorMostrarMsjConvocatoria.push("Ingrese el Orden del dia");
       if (this.errorMostrarMsjConvocatoria.length) this.errorConvocatoria = 1;
       return this.errorConvocatoria;
@@ -39566,29 +39564,16 @@ var render = function() {
                                       attrs: { width: "1", align: "center" }
                                     },
                                     [
-                                      convocatoria.estado == "Enviada"
-                                        ? _c("div", [
-                                            _c("span", {
-                                              staticClass:
-                                                "badge badge-success",
-                                              domProps: {
-                                                textContent: _vm._s(
-                                                  convocatoria.estado
-                                                )
-                                              }
-                                            })
-                                          ])
-                                        : _c("div", [
-                                            _c("span", {
-                                              staticClass:
-                                                "badge badge-warning",
-                                              domProps: {
-                                                textContent: _vm._s(
-                                                  convocatoria.estado
-                                                )
-                                              }
-                                            })
-                                          ])
+                                      _c("div", [
+                                        _c("span", {
+                                          staticClass: "badge badge-success",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              convocatoria.estado
+                                            )
+                                          }
+                                        })
+                                      ])
                                     ]
                                   )
                                 ])
@@ -39832,7 +39817,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("b", [_vm._v("Opcional envio de correo del día")]),
+                  _c("b", [_vm._v("Seleccione usuarios dirigidos")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
                     _c("div", { staticClass: "col-md-6" }, [

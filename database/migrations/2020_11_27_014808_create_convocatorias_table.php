@@ -20,6 +20,7 @@ class CreateConvocatoriasTable extends Migration
             $table->string('codigo',50);
             $table->string('descripcion',1000);
             $table->string('estado',30);
+            $table->boolean('condicion')->default(0);
             $table->timestamps();
         });
     }

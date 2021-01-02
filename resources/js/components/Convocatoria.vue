@@ -57,12 +57,9 @@
                                 <td width="200" align="center" style="vertical-align:middle;" v-text="convocatoria.codigo"></td>
                                 <td align="justify" v-text="convocatoria.descripcion"></td>
                                 <td width="1" align="center" style="vertical-align:middle;">
-                                    <div v-if="convocatoria.estado=='Enviada'">
+                                    <div>
                                         <span class="badge badge-success" v-text="convocatoria.estado"></span>
                                     </div>
-                                    <div v-else>
-                                        <span class="badge badge-warning" v-text="convocatoria.estado"></span>
-                                    </div>                                     
                                 </td>
                             </tr>
                         </tbody>
@@ -111,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                        <b>Opcional envio de correo del día</b>
+                        <b>Seleccione usuarios dirigidos</b>
                         <div class="form-group row border">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -837,6 +834,7 @@
                 if(!this.titulo) this.errorMostrarMsjConvocatoria.push("Ingrese el título de la convocatoria");
                 if(!this.codigo) this.errorMostrarMsjConvocatoria.push("Ingrese el codigo de la convocatoria");
                 if(!this.descripcion) this.errorMostrarMsjConvocatoria.push("Ingrese la descripcion de la convocatoria");
+                if(this.arrayPersona.length<=0) this.errorMostrarMsjConvocatoria.push("Ingrese usuarios dirigidos");
                 if(this.arrayOrdenDia.length<=0) this.errorMostrarMsjConvocatoria.push("Ingrese el Orden del dia");
                 if (this.errorMostrarMsjConvocatoria.length) this.errorConvocatoria=1;
                 return this.errorConvocatoria;
