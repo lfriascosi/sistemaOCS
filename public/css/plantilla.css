@@ -1623,11 +1623,11 @@ fieldset[disabled] a.btn {
     border-color: #3a9d5d; }
 
 .btn-info {
-  color: #111;
+  color: #fff;
   background-color: #63c2de;
   border-color: #63c2de; }
   .btn-info:hover {
-    color: #111;
+    color: #fff;
     background-color: #43b6d7;
     border-color: #39b2d5; }
   .btn-info:focus, .btn-info.focus {
@@ -3420,7 +3420,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000; }
+  background-color: #3c29297a; }
   .modal-backdrop.fade {
     opacity: 0; }
   .modal-backdrop.show {
@@ -3470,7 +3470,7 @@ button.close {
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: 500px;
-    margin: 30px auto; }
+    margin: 150px auto; }
   .modal-sm {
     max-width: 300px; } }
 
@@ -7562,6 +7562,10 @@ base-chart.chart {
 .modal-primary .modal-header {
   color: #fff;
   background-color: #20a8d8; }
+
+.panel-heading {
+    color: #fff;
+    background-color: #20a8d8; }
 
 .modal-secondary .modal-content {
   border-color: #a4b7c1; }

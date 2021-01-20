@@ -31,3 +31,18 @@ Route::get('/convocatoria/obtenerDetalles','App\Http\Controllers\ConvocatoriaCon
 Route::get('/convocatoria/obtenerOrdenDias','App\Http\Controllers\ConvocatoriaController@obtenerOrdenDias');
 //Listado Detalle Orden dia
 Route::get('/convocatoria/obtenerDetalleOrdenDias','App\Http\Controllers\ConvocatoriaController@obtenerDetalleOrdenDias');
+//Activar o Inactivcar Orden dia
+Route::put('/convocatoria/activar','App\Http\Controllers\ConvocatoriaController@activar');
+Route::put('/convocatoria/inactivar','App\Http\Controllers\ConvocatoriaController@inactivar');
+
+//ARCHIVO
+Route::post('/convocatoria/storeArchivo','App\Http\Controllers\ConvocatoriaController@storeArchivo');
+
+//ACTA
+Route::get('/acta','App\Http\Controllers\ActaController@index');
+//Cabecera
+Route::get('/acta/obtenerCabecera','App\Http\Controllers\ActaController@obtenerCabecera');
+//Listado Orden dia
+Route::get('/acta/obtenerOrdenDias','App\Http\Controllers\ActaController@obtenerOrdenDias');
+//Busqueda Id
+Route::get('/acta/obtenerIdConvocatoria','App\Http\Controllers\ActaController@obtenerIdConvocatoria');

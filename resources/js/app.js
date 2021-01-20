@@ -26,7 +26,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('convocatoria', require('./components/Convocatoria.vue').default);
+Vue.component('redaccion-convocatoria', require('./components/RedaccionConvocatoria.vue').default);
+Vue.component('redaccion-acta', require('./components/RedaccionActa.vue').default);
 
 const app = new Vue({
     el: '#app',

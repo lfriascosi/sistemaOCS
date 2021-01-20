@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//
 use Illuminate\Support\Facades\DB;
 use App\Models\Convocatoria;
 use App\Models\Detalleconvocatoria;
 use App\Models\Detalleordendia;
 use App\Models\Ordendia;
-//
 use App\Models\Persona;
+use Illuminate\Support\Facades\Storage;
 
 class ConvocatoriaController extends Controller
 {
@@ -21,33 +22,45 @@ class ConvocatoriaController extends Controller
 
     public function index( Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
         $buscar = $request->buscar;
         $criterio = $request->criterio;
-        if($buscar==''){
+        $ri = $request->ri;
+        if($ri==null){
+            if($buscar==''){
+                $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
+                ->select('convocatorias.id','convocatorias.iduser',
+                'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
+                'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
+                ->orderBy('convocatorias.id','desc')->paginate(10);
+            }else{
+                $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
+                ->select('convocatorias.id','convocatorias.iduser',
+                'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
+                'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
+                ->where('convocatorias.'.$criterio,'like','%'.$buscar.'%')
+                ->orderBy('convocatorias.id','desc')->paginate(10);
+            }
+            return [
+                'pagination' =>[
+                    'total' =>$convocatorias->total(),
+                    'current_page' =>$convocatorias->currentPage(),
+                    'per_page' =>$convocatorias->perPage(),
+                    'last_page' =>$convocatorias->lastPage(),
+                    'from' =>$convocatorias->firstItem(),
+                    'to' =>$convocatorias->lastItem(),
+                ],
+                'convocatorias' => $convocatorias
+            ];
+        }else{
             $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
             ->select('convocatorias.id','convocatorias.iduser',
-            'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado',
+            'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
             'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
-            ->orderBy('convocatorias.id','desc')->paginate(10);
-        }else{
-            $convocatorias = Convocatoria::select('convocatorias.id','convocatorias.iduser',
-            'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado')
-            ->where('convocatorias.'.$criterio,'like','%'.$buscar.'%')
-            ->orderBy('convocatorias.id','desc')->paginate(10);
+            ->where('convocatorias.codigo','=',$ri)
+            ->take(1)->get();;
+            return ['convocatoria' => $convocatorias];
         }
-        
-        return [
-            'pagination' =>[
-                'total' =>$convocatorias->total(),
-                'current_page' =>$convocatorias->currentPage(),
-                'per_page' =>$convocatorias->perPage(),
-                'last_page' =>$convocatorias->lastPage(),
-                'from' =>$convocatorias->firstItem(),
-                'to' =>$convocatorias->lastItem(),
-            ],
-            'convocatorias' => $convocatorias
-        ];
     }
     public function obtenerCabecera( Request $request)
     {
@@ -57,7 +70,7 @@ class ConvocatoriaController extends Controller
         ->select('convocatorias.id','convocatorias.iduser','convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado',
         'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
         ->where('convocatorias.id','=',$id)
-        ->orderBy('convocatorias.id','desc')->take(1)->get();
+        ->take(1)->get();
 
         return ['convocatoria' => $convocatoria];
     }
@@ -80,7 +93,7 @@ class ConvocatoriaController extends Controller
         if (!$request->ajax()) return redirect('/');
         $id = $request->id;
         $orden_dias = Ordendia::join('convocatorias','orden_dias.idconvocatoria','=','convocatorias.id')
-        ->select('orden_dias.nombre','orden_dias.condicion')
+        ->select('orden_dias.id','orden_dias.idconvocatoria','orden_dias.numerador','orden_dias.nombre','orden_dias.nomdoc','orden_dias.estado','orden_dias.condicion')
         ->where('orden_dias.idconvocatoria','=',$id)
         ->orderBy('orden_dias.id','asc')->get();
 
@@ -89,12 +102,12 @@ class ConvocatoriaController extends Controller
 
     public function obtenerDetalleOrdenDias( Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
         $id = $request->id;
         $detalleorden_dias = Detalleordendia::join('orden_dias','detalle_orden_dias.idordendia','=','orden_dias.id')
         ->join('convocatorias','orden_dias.idconvocatoria','=','convocatorias.id')
         ->join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.detalle_orden_dias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
-        ->select('orden_dias.numerador','v_usuarios_sys_ocs.numeroIdentificacion','v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
+        ->select('orden_dias.nombre','orden_dias.numerador','v_usuarios_sys_ocs.numeroIdentificacion','v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
         ->where('orden_dias.idconvocatoria','=',$id)
         ->orderBy('orden_dias.numerador','asc')->get();
 
@@ -123,6 +136,17 @@ class ConvocatoriaController extends Controller
         ->take(1)->get();
 
         return ['personas' => $personas];
+    }
+
+    public function storeArchivo(Request $request)
+    {
+        $array=$request->all();
+        $array_num = count($array);
+        for ($i = 0; $i < $array_num; ++$i){
+            $file=$array[$i];
+            $nombre = $file->getClientOriginalName();
+            Storage::disk('public')->put($nombre,  \File::get($file));
+        }
     }
 
     /**
@@ -157,7 +181,7 @@ class ConvocatoriaController extends Controller
             $convocatoria->titulo = $request->titulo;
             $convocatoria->codigo = $request->codigo;
             $convocatoria->descripcion = $request->descripcion;
-            $convocatoria->estado = 'Guardada';
+            $convocatoria->estado = 'Enviada';
             $convocatoria->save();
             //Array Personas Detalle_convocatoria
             foreach ($personas as $kep => $per) {
@@ -173,6 +197,8 @@ class ConvocatoriaController extends Controller
                 $ordendia->idconvocatoria = $convocatoria->id;
                 $ordendia->numerador = $ord['nro'];
                 $ordendia->nombre = $ord['nombre'];
+                $ordendia->nomdoc = $ord['nomdoc'];
+                $ordendia->estado = 'Activo';
                 $ordendia->save();
                 //Array Detalle Orden Dia
                 foreach ($detalleordendias as $kep => $dord) {
@@ -233,5 +259,21 @@ class ConvocatoriaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function activar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $ordenDia = Ordendia::findOrFail($request->id);
+        $ordenDia->estado = 'Activo';
+        $ordenDia->save();
+    }
+
+    public function inactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $ordenDia = Ordendia::findOrFail($request->id);
+        $ordenDia->estado = 'Inactivo';
+        $ordenDia->save();
     }
 }

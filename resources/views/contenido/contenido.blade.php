@@ -4,7 +4,7 @@
         <example-component></example-component>
     </template>
     <template v-if="menu==1">
-        <convocatoria></convocatoria>
+        <redaccion-convocatoria></redaccion-convocatoria>
     </template>
     <template v-if="menu==2">
         <h1>Contenido del menu 2</h1>
@@ -13,7 +13,7 @@
         <h1>Contenido del menu 3</h1>
     </template>
     <template v-if="menu==4">
-        <h1>Contenido del menu 4</h1>
+        <redaccion-acta></redaccion-acta>
     </template>
     <template v-if="menu==5">
         <h1>Contenido del menu 5</h1>

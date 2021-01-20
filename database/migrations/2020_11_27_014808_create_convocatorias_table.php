@@ -17,7 +17,7 @@ class CreateConvocatoriasTable extends Migration
             $table->increments('id');
             $table->string('iduser',11);
             $table->string('titulo',100);
-            $table->string('codigo',50);
+            $table->string('codigo',50)->unique();
             $table->string('descripcion',1000);
             $table->string('estado',30);
             $table->boolean('condicion')->default(0);

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActasTable extends Migration
+class CreateFirmaActasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateActasTable extends Migration
      */
     public function up()
     {
-        Schema::create('actas', function (Blueprint $table) {
+        Schema::create('firma_actas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('idacta')->unsigned();
+            $table->foreign('idacta')->references('id')->on('actas')->onDelete('cascade');
             $table->string('iduser',11);
-            $table->string('titulo',100);
-            $table->string('codigo',50)->unique();
-            $table->string('descripcion',1000);
-            $table->string('estado',30);
-            $table->boolean('condicion')->default(0);
-            $table->timestamps();
         });
     }
 
@@ -32,6 +28,6 @@ class CreateActasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actas');
+        Schema::dropIfExists('firma_actas');
     }
 }

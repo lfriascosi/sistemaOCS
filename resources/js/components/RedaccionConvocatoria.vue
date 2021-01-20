@@ -28,8 +28,12 @@
                                 </select>
                                 <input type="text" v-model="buscar" @keyup.enter="listarConvocatoria(1,buscar,criterio)" class="form-control"
                                     placeholder="Texto a buscar">
-                                <button type="submit" @click="listarConvocatoria(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i>
-                                    Buscar</button>
+                                <button type="submit" @click="listarConvocatoria(1,buscar,criterio)" class="btn btn-primary" title="Buscar convocatoria">
+                                    <i class="fa fa-search"></i>Buscar
+                                </button>
+                                <button type="submit" @click="listarConvocatoria(1,'','')" class="btn btn-info" title="Ver todas las convocatorias">
+                                    <i class="fa fa-list"></i> Lista
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -47,8 +51,8 @@
                         </thead>
                         <tbody v-if="arrayConvocatoria.length">
                             <tr v-for="convocatoria in arrayConvocatoria" :key="convocatoria.id">
-                                <td width="1" align="center" style="vertical-align:middle;">
-                                    <button type="button" @click="verConvocatoria(convocatoria.id)" class="btn btn-success btn-sm">
+                                <td width="100" align="center" style="vertical-align:middle;">
+                                    <button type="button" @click="verConvocatoria(convocatoria.id)" class="btn btn-success btn-sm" title="Ver convocatoria">
                                         <i class="icon-eye"></i>
                                     </button>
                                 </td>
@@ -110,12 +114,12 @@
                         </div>
                         <b>Seleccione usuarios dirigidos</b>
                         <div class="form-group row border">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Usuario <span style="color:red;" v-show="personaUser==''">(*seleccione)</span></label>
                                     <div class="form-inline">
                                         <input type="text" class="form-control" v-model="docUser" @keyup.enter="buscarPersona()" placeholder="Ingrese cédula">
-                                        <button @click="abrirModal()" class="btn- btn-primary" title="Buscar Persona">⋮</button>
+                                        <button @click="abrirModal()" class="btn- btn-primary" title="Buscar Persona"  data-toggle="modal" data-target="#modalPersona">⋮</button>
                                         <input type="text" readonly class="form-control" v-model="personaUser">
                                     </div>
                                 </div>
@@ -140,7 +144,7 @@
                                     </thead>
                                     <tbody v-if="arrayPersona.length">
                                         <tr v-for="(persona,index) in arrayPersona" :key="persona.id">
-                                            <td>
+                                            <td width="1" align="center" style="vertical-align:middle;">
                                                 <button @click="eliminarPersona(index)" type="button" class="btn btn-danger btn-sm" title="Eliminar Persona">
                                                     <i class="icon-close"></i>
                                                 </button>
@@ -167,7 +171,7 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Nombre <span style="color:red;" v-show="nombre==''">(*Ingrese)</span></label>
-                                    <input type="text" @keyup.enter="agregarOrdendia()" placeholder="Ingrese el nombre del punto de la orden del dia" class="form-control" v-model="nombre">
+                                    <input type="text" @keyup.enter="agregarOrdendia()" placeholder="Ingrese el nombre del punto de la orden del día" class="form-control" v-model="nombre">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -185,26 +189,30 @@
                                             <th>Nro</th>
                                             <th>Nombre</th>
                                             <th>Invitado</th>
+                                            <th>Adjunto</th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayOrdenDia.length">
                                         <tr v-for="(detalle,index) in arrayOrdenDia" :key="detalle.id">
-                                            <td width="120" align="center" style="vertical-align:middle;">
+                                            <td width="140" align="center" style="vertical-align:middle;">
                                                 <button @click="eliminarOrdendia(index)" type="button" class="btn btn-danger btn-sm" title="Eliminar Punto">
                                                     <i class="icon-close"></i>
                                                 </button>&nbsp;
-                                                <button @click="abrirModalInvitado(index)" type="button" class="btn btn-success btn-sm" title="Agregar invitado">
+                                                <button @click="abrirModalInvitado(index)" type="button" class="btn btn-success btn-sm" title="Agregar invitado" data-toggle="modal" data-target="#modalPersona">
                                                     <i class="icon-plus"></i>
                                                 </button>
                                                 <button v-if="detalle.invitado!='Ninguno'" @click="eliminarInvitado(detalle.nro)" type="button" class="btn btn-danger btn-sm" title="Eliminar invitado">
                                                     <i class="icon-user-unfollow"></i>
                                                 </button>
                                             </td>
-                                            <td align="center" v-text="detalle.nro"></td>
+                                            <td align="center" style="vertical-align:middle;" v-text="detalle.nro"></td>
                                             <td>
                                                 <input v-model="detalle.nombre" type="text" value="" class="form-control">
                                             </td>
-                                            <td v-text="detalle.invitado"></td>
+                                            <td style="vertical-align:middle;" v-text="detalle.invitado"></td>
+                                            <td width="1" align="center"  style="vertical-align:middle;">
+                                                <input type="file" :id="'archivoInput'+detalle.nro" class="form-control-file" accept="application/*">
+                                            </td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -261,22 +269,49 @@
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th colspan="2"><b>Orden día</b></th>
+                                            <th colspan="5"><b>Orden día</b></th>
                                         </tr>
                                         <tr>
+                                            <th><b>Opción</b></th>
                                             <th><b>Nro</b></th>
-                                            <th><b>Nombre</b></th>                                       
+                                            <th><b>Nombre</b></th>
+                                            <th><b>Documento</b></th>
+                                            <th><b>Estado</b></th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalle.length">
                                         <tr align="center" v-for="(detalle, index) in arrayDetalle" :key="detalle.id" v-bind:index="index">
-                                            <td >{{index+1}}</td>
-                                            <td v-text="detalle.nombre"/>
+                                            <td width="1" align="center" style="vertical-align:middle;">
+                                                <template v-if="detalle.estado=='Activo'">
+                                                    <button type="button" class="btn btn-danger btn-sm" @click="inactivarOrdendia(detalle.id,detalle.idconvocatoria)" title="Inactivar punto de la orde diá">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+                                                </template>
+                                                <template v-else>
+                                                    <button type="button" class="btn btn-success btn-sm" @click="activarOrdendia(detalle.id,detalle.idconvocatoria)" title="Activar punto de la orde diá">
+                                                        <i class="icon-check"></i>
+                                                    </button>
+                                                </template>
+                                            </td>
+                                            <td style="vertical-align:middle;" v-text="detalle.numerador"></td>
+                                            <td style="vertical-align:middle;" v-text="detalle.nombre"/>
+                                            <td style="vertical-align:middle;" v-if="detalle.nomdoc==null">Ninguno</td>
+                                            <td v-else width="1" align="center" style="vertical-align:middle;">
+                                                <a class="nav-link nav-dropdown-toggle" :href="'storage/'+detalle.nomdoc" target="_blank"><i class="icon-doc" v-text="detalle.nomdoc"></i></a>
+                                            </td>
+                                            <td width="1" align="center" style="vertical-align:middle;">
+                                                <div v-if="detalle.estado=='Activo'">
+                                                    <span class="badge badge-success" v-text="detalle.estado"></span>
+                                                </div>
+                                                <div v-else>
+                                                    <span class="badge badge-danger" v-text="detalle.estado"></span>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
                                         <tr>
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 No hay orden del dia agregados
                                             </td>
                                         </tr>
@@ -391,14 +426,14 @@
             </div>
             <!-- Fin ejemplo de tabla Listado -->
         </div>
-        <!--Inicio del modal agregar/actualizar-->
-        <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal}" role="dialog" aria-labelledby="myModalLabel"
+        <!--Inicio del modal agregar-->
+        <div class="modal fade" id="modalPersona"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" v-text="tituloModal"></h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close" data-dismiss="modal">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -459,7 +494,83 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" @click="cerrarModal()" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!--Fin del modal-->
+        <!--Inicio del modal Activar o Inactivar-->
+        <div class="modal fade" id="modalActivar"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" v-text="tituloModal"></h4>
+                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <select class="form-control col-md-3" v-model="criterioA">
+                                        <option value="apellidos">Apellido</option>
+                                        <option value="nombres">Nombre</option>
+                                        <option value="EMail">Correo</option>
+                                        <option value="perfil">Perfil</option>
+                                    </select>
+                                    <input type="text" v-model="buscarA" @keyup.enter="listarPersona(buscarA,criterioA)" class="form-control"
+                                        placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarPersona(buscarA,criterioA)" class="btn btn-primary"><i class="fa fa-search"></i>
+                                        Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-response">
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Opciones</th>
+                                        <th>Cédula</th>
+                                        <th>Apellidos</th>
+                                        <th>Nombres</th>
+                                        <th>Correo</th>
+                                        <th>Perfil</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="arrayPersonaB.length">
+                                    <tr v-for="persona in arrayPersonaB" :key="persona.id">
+                                        <td width="1" align="center" style="vertical-align:middle;">
+                                            <button type="button"  v-if="tipoAccionInv==0" @click="agregarPersonaModal(persona)" class="btn btn-success btn-sm">
+                                                <i class="icon-check"></i>
+                                            </button>
+                                            <button type="button"  v-if="tipoAccionInv==1" @click="agregarInvitado(persona)" class="btn btn-success btn-sm">
+                                                <i class="icon-check"></i>
+                                            </button>
+                                        </td>
+                                        <td v-text="persona.numeroIdentificacion"></td>
+                                        <td v-text="persona.apellidos"></td>
+                                        <td v-text="persona.nombres"></td>
+                                        <td v-text="persona.EMail"></td>
+                                        <td v-text="persona.perfil"></td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                        <tr>
+                                            <td colspan="6">
+                                                No existe usuario
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="cerrarModal()" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -476,6 +587,7 @@
             return {
                 //Inicio
                 arrayConvocatoria :[],
+                arrayDetalle :[],
                 arrayDetalleEnvio :[],
                 arrayDetalleInvitado :[],
                 arrayOrdenDia : [],
@@ -501,10 +613,11 @@
                 errorMostrarMsjConvocatoria : [],
                 tipoAccionInv : 0,
                 idordendia:0,
+                idVal:'',
+                arrayArchivo:[],
                 //Fin
                 
                 listado: 1,
-                modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
                 pagination : {
@@ -544,7 +657,7 @@
                     from++;
                 }
                 return pagesArray;
-            }
+            },
         },
         methods : {
             listarConvocatoria (page,buscar,criterio){
@@ -658,10 +771,43 @@
                 let me=this;
                 me.arrayPersona.splice(index,1);
             },
+            guardarArchivos(){
+                let me=this;
+                me.arrayArchivo=[];
+                me.arrayOrdenDia.forEach(od => {
+                    var cadena= 'archivoInput'+od.nro;
+                    var archivoExt = document.getElementById(cadena);
+                    var archivo= archivoExt.files[0];
+                    if(archivo!=null){
+                        me.arrayArchivo.push({
+                            file: archivo
+                        });
+                        od.nomdoc=archivo.name;
+                    }else{
+                        od.nomdoc='';
+                    }
+                });
+                const formDataDoc = new FormData();
+                var cont=0;
+                me.arrayArchivo.forEach(element => {
+                    formDataDoc.append(cont,element.file);
+                    cont+=1;
+                });
+                axios.post('/convocatoria/storeArchivo',formDataDoc)
+                .then(function (response) {
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            },
             agregarOrdendia(){
                 let me=this;
                 if(me.nombre==''){
-
+                    Swal.fire({
+                            title: 'Error...',
+                            text: 'Ingrese algun nombre del punto de la orden del día!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                 }else{
                     if(me.encuentra(me.nombre)){
                         Swal.fire({
@@ -674,7 +820,8 @@
                         me.arrayOrdenDia.push({
                         nro: me.arrayOrdenDia.length+1,
                         nombre: me.nombre,
-                        invitado: 'Ninguno'
+                        invitado: 'Ninguno',
+                        nomdoc: ''
                         });
                         me.nombre="";
                     }                    
@@ -714,7 +861,14 @@
             },
             agregarPersona(){
                 let me=this;
-                if(me.personaUser!=''){
+                if(me.personaUser=='' || me.personaUser=='No existe persona'){
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'Ingrese la cédula de una persona válida!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }else{
                     if(me.encuentraPersona(me.docUser)){
                         Swal.fire({
                             title: 'Error...',
@@ -733,7 +887,7 @@
                         });
                         me.docUser="";
                         me.personaUser="";
-                    }                    
+                    }
                 }
             },
             agregarPersonaModal( data = []){
@@ -787,13 +941,10 @@
                     reverseButtons: false
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        swalWithBootstrapButtons.fire(
-                            'Guardada!',
-                            'La convocatoria ha sido guardada.',
-                            'success'
-                        )
+                        
                         //Guardar Convocatoria
                         let me=this;
+                        me.guardarArchivos();
                         axios.post('/convocatoria/registrar',{
                             'titulo' : this.titulo,
                             'codigo' : this.codigo,
@@ -811,8 +962,18 @@
                             me.arrayOrdenDia=[];
                             me.arrayPersona=[];
                             me.arrayPersonaInv=[];
+                            swalWithBootstrapButtons.fire(
+                            'Guardada!',
+                            'La convocatoria ha sido guardada.',
+                            'success'
+                        )
                         }).catch(function (error) {
                             console.log(error);
+                            swalWithBootstrapButtons.fire(
+                                'Ocurrió un conflicto',
+                                'El código de la convocatoria ya existe.',
+                                'error'
+                            )
                         })
                         //
                     } else if (
@@ -962,7 +1123,6 @@
                 });
             },
             cerrarModal(){
-                this.modal=0;
                 this.tituloModal='';
                 this.buscarA='';
                 this.arrayUser=[];
@@ -971,6 +1131,7 @@
                 this.idordendia=0;
             },
             abrirModal(){
+                this.arrayPersonaB=[];
                 this.arrayUser=[];
                 this.modal = 1;
                 this.tituloModal = 'Seleccione uno o varios usuarios';
@@ -978,10 +1139,105 @@
             abrirModalInvitado(id){
                 this.idordendia=(id+1);
                 this.arrayUser=[];
-                this.modal = 1;
                 this.tituloModal = 'Seleccione uno o varios usuarios';
                 this.tipoAccionInv=1;
-            }
+            },
+            inactivarOrdendia(id,idconvocatoria){
+                const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                title: 'Esta seguro de inactivar este punto de la orden diá?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar!',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    let me=this;
+                    axios.put('/convocatoria/inactivar',{
+                        'id' : id
+                    }).then(function (response) {
+                        //Obtener datos de la Onden dia
+                        var url='/convocatoria/obtenerOrdenDias?id='+idconvocatoria;
+                        axios.get(url).then(function (response) {
+                            me.arrayDetalle=[];
+                            var respuesta=response.data;
+                            me.arrayDetalle = respuesta.orden_dias;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        swalWithBootstrapButtons.fire(
+                            'Desactivado!',
+                            'El punto de la orden diá ha sido inactivado con éxito.',
+                            'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    })
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    
+                }
+                })
+            },
+            activarOrdendia(id,idconvocatoria){
+                const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                title: 'Esta seguro de activar este punto de la orden diá?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar!',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    let me=this;
+                    axios.put('/convocatoria/activar',{
+                        'id' : id
+                    }).then(function (response) {
+                        //Obtener datos de la Onden dia
+                        var url='/convocatoria/obtenerOrdenDias?id='+idconvocatoria;
+                        axios.get(url).then(function (response) {
+                            me.arrayDetalle=[];
+                            var respuesta=response.data;
+                            me.arrayDetalle = respuesta.orden_dias;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        swalWithBootstrapButtons.fire(
+                        'Activado!',
+                        'El punto de la orden diá ha sido activado con éxito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    })
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    
+                }
+                })
+            },
         },
         mounted() {
             this.listarConvocatoria(1,this.buscar,this.criterio);
