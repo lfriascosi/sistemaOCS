@@ -3393,25 +3393,127 @@ __webpack_require__.r(__webpack_exports__);
       me.arraySelectOrdendia = [];
       me.arraySelectOrdendia = arrayTemp;
     },
-    listarConvocatoriaS: function listarConvocatoriaS(buscar, criterio) {
+    verificarConvocatorias: function verificarConvocatorias() {
+      var convocatoriasT = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var buscar = arguments.length > 1 ? arguments[1] : undefined;
       var me = this;
-      var url = '/convocatoria?buscar=' + buscar + '&criterio=' + criterio;
+      var convocatorias = [];
+      var convocatoriasV = [];
+      var url = '/acta/buscarConvocatoriaActa';
       axios.get(url).then(function (response) {
         var respuesta = response.data;
-        me.arrayListConvocatoria = respuesta.convocatorias.data;
+        convocatoriasV = respuesta.convocatorias;
+        var cont = 0;
+
+        for (var i = 0; i < convocatoriasT.length; i++) {
+          cont = 0;
+
+          for (var j = 0; j < convocatoriasV.length; j++) {
+            if (convocatoriasT[i].id == convocatoriasV[j].id) {
+              cont++;
+            }
+
+            if (buscar.toUpperCase() == convocatoriasV[j].codigo.toUpperCase()) {
+              Swal.fire({
+                title: 'Error...',
+                text: 'Esta convocatoria ya tiene su acta definida!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }
+
+            if (buscar.toUpperCase() == convocatoriasV[j].titulo.toUpperCase()) {
+              Swal.fire({
+                title: 'Error...',
+                text: 'Esta convocatoria ya tiene su acta definida!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }
+
+            if (buscar.toUpperCase() == convocatoriasV[j].descripcion.toUpperCase()) {
+              Swal.fire({
+                title: 'Error...',
+                text: 'Esta convocatoria ya tiene su acta definida!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }
+          }
+
+          if (cont == 0) {
+            convocatorias.push({
+              id: convocatoriasT[i].id,
+              iduser: convocatoriasT[i].iduser,
+              titulo: convocatoriasT[i].titulo,
+              codigo: convocatoriasT[i].codigo,
+              descripcion: convocatoriasT[i].descripcion,
+              estado: convocatoriasT[i].estado,
+              condicion: convocatoriasT[i].condicion,
+              apellidos: convocatoriasT[i].apellidos,
+              nombres: convocatoriasT[i].nombres,
+              EMail: convocatoriasT[i].EMail,
+              perfil: convocatoriasT[i].perfil
+            });
+          }
+        }
       })["catch"](function (error) {
         console.log(error);
       });
+      return convocatorias;
     },
-    buscarConvocatoria: function buscarConvocatoria(buscar) {
+    listarConvocatoriaS: function listarConvocatoriaS(buscar, criterio) {
       var me = this;
-      var url = '/convocatoria?ri=' + buscar;
+
+      if (buscar != '') {
+        var url = '/acta/buscarConvocatorias?buscar=' + buscar + '&criterio=' + criterio;
+        axios.get(url).then(function (response) {
+          var respuesta = response.data;
+          me.arrayListConvocatoria = me.verificarConvocatorias(respuesta.convocatorias, buscar);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else {
+        me.arrayListConvocatoria = [];
+        Swal.fire({
+          title: 'Error...',
+          text: 'Ingrese un texto de busqueda!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    },
+    buscarConvocatoriaI: function buscarConvocatoriaI(buscar) {
+      var me = this;
+      var url = '/acta/buscarConvocatoria?buscar=' + buscar + '&criterio=codigo';
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayTempConvocatoria = respuesta.convocatoria;
 
         if (me.arrayTempConvocatoria.length > 0) {
-          me.codigoVerifi = 'Código valido';
+          var url = '/acta/buscarConvocatoriaActa';
+          axios.get(url).then(function (response) {
+            var respuesta = response.data;
+            var convocatoriasV = respuesta.convocatorias;
+            var cont = 0;
+
+            for (var j = 0; j < convocatoriasV.length; j++) {
+              if (me.arrayTempConvocatoria[0].id == convocatoriasV[j].id) {
+                me.arrayTempConvocatoria = [];
+                me.codigoVerifi = 'Código inválido';
+                Swal.fire({
+                  title: 'Error...',
+                  text: 'Esta convocatoria ya tiene su acta definida!',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              } else {
+                me.codigoVerifi = 'Código valido';
+              }
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
         } else {
           me.codigoVerifi = 'Código inválido';
         }
@@ -42227,7 +42329,7 @@ var render = function() {
                                 ) {
                                   return null
                                 }
-                                return _vm.buscarConvocatoria(
+                                return _vm.buscarConvocatoriaI(
                                   _vm.codigoConvocatoria
                                 )
                               },
@@ -42245,7 +42347,7 @@ var render = function() {
                             {
                               staticClass: "btn- btn-primary",
                               attrs: {
-                                title: "Buscar Convocatoria",
+                                title: "Buscar convocatoria",
                                 "data-toggle": "modal",
                                 "data-target": "#modalConvocatoria"
                               },
@@ -43137,7 +43239,7 @@ var render = function() {
                           attrs: { type: "button" },
                           on: {
                             click: function($event) {
-                              return _vm.ocultarDetalleConvocatoria()
+                              return _vm.ocultarDetalleActa()
                             }
                           }
                         },
@@ -43295,7 +43397,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-primary",
-                          attrs: { type: "submit" },
+                          attrs: { type: "submit", disabled: !_vm.buscarA },
                           on: {
                             click: function($event) {
                               return _vm.listarConvocatoriaS(
@@ -44308,7 +44410,7 @@ var staticRenderFns = [
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
         _vm._v(
-          "\n                                            No existe convocatoria\n                                        "
+          "\n                                            No existe convocatoria habilitada\n                                        "
         )
       ])
     ])

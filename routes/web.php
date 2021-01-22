@@ -46,3 +46,9 @@ Route::get('/acta/obtenerCabecera','App\Http\Controllers\ActaController@obtenerC
 Route::get('/acta/obtenerOrdenDias','App\Http\Controllers\ActaController@obtenerOrdenDias');
 //Busqueda Id
 Route::get('/acta/obtenerIdConvocatoria','App\Http\Controllers\ActaController@obtenerIdConvocatoria');
+//Buscar Convocatoria
+Route::get('/acta/buscarConvocatoria','App\Http\Controllers\ActaController@buscarConvocatoria');
+//Buscar Convocatorias
+Route::get('/acta/buscarConvocatorias','App\Http\Controllers\ActaController@buscarConvocatorias');
+//Buscar Convocatorias con Actas
+Route::get('/acta/buscarConvocatoriaActa','App\Http\Controllers\ActaController@buscarConvocatoriaActa');

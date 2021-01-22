@@ -25,42 +25,31 @@ class ConvocatoriaController extends Controller
         if (!$request->ajax()) return redirect('/');
         $buscar = $request->buscar;
         $criterio = $request->criterio;
-        $ri = $request->ri;
-        if($ri==null){
-            if($buscar==''){
-                $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
-                ->select('convocatorias.id','convocatorias.iduser',
-                'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
-                'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
-                ->orderBy('convocatorias.id','desc')->paginate(10);
-            }else{
-                $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
-                ->select('convocatorias.id','convocatorias.iduser',
-                'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
-                'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
-                ->where('convocatorias.'.$criterio,'like','%'.$buscar.'%')
-                ->orderBy('convocatorias.id','desc')->paginate(10);
-            }
-            return [
-                'pagination' =>[
-                    'total' =>$convocatorias->total(),
-                    'current_page' =>$convocatorias->currentPage(),
-                    'per_page' =>$convocatorias->perPage(),
-                    'last_page' =>$convocatorias->lastPage(),
-                    'from' =>$convocatorias->firstItem(),
-                    'to' =>$convocatorias->lastItem(),
-                ],
-                'convocatorias' => $convocatorias
-            ];
+        if($buscar==''){
+            $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
+            ->select('convocatorias.id','convocatorias.iduser',
+            'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
+            'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
+            ->orderBy('convocatorias.id','desc')->paginate(10);
         }else{
             $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
             ->select('convocatorias.id','convocatorias.iduser',
             'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
             'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
-            ->where('convocatorias.codigo','=',$ri)
-            ->take(1)->get();;
-            return ['convocatoria' => $convocatorias];
+            ->where('convocatorias.'.$criterio,'like','%'.$buscar.'%')
+            ->orderBy('convocatorias.id','desc')->paginate(10);
         }
+        return [
+            'pagination' =>[
+                'total' =>$convocatorias->total(),
+                'current_page' =>$convocatorias->currentPage(),
+                'per_page' =>$convocatorias->perPage(),
+                'last_page' =>$convocatorias->lastPage(),
+                'from' =>$convocatorias->firstItem(),
+                'to' =>$convocatorias->lastItem(),
+            ],
+            'convocatorias' => $convocatorias
+        ];
     }
     public function obtenerCabecera( Request $request)
     {

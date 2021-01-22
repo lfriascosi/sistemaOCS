@@ -118,8 +118,8 @@
                                 <div class="form-group">
                                     <label>Convocatoria <span style="color:red;" v-show="!arraySelectConvocatoria.length">(*seleccione)</span></label>
                                     <div class="form-inline">
-                                        <input style="width : 40%;" type="text" class="form-control" v-model="codigoConvocatoria" @keyup.enter="buscarConvocatoria(codigoConvocatoria)" placeholder="Ingrese código convocatoria">
-                                        <button @click="abrirModal()" class="btn- btn-primary" title="Buscar Convocatoria" data-toggle="modal" data-target="#modalConvocatoria">⋮</button>
+                                        <input style="width : 40%;" type="text" class="form-control" v-model="codigoConvocatoria" @keyup.enter="buscarConvocatoriaI(codigoConvocatoria)" placeholder="Ingrese código convocatoria">
+                                        <button @click="abrirModal()" class="btn- btn-primary" title="Buscar convocatoria" data-toggle="modal" data-target="#modalConvocatoria">⋮</button>
                                         <input type="text" readonly class="form-control" v-model="codigoVerifi">
                                     </div>
                                 </div>
@@ -433,7 +433,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <button type="button" @click="ocultarDetalleConvocatoria()" class="btn btn-secondary">Cerrar</button>
+                                <button type="button" @click="ocultarDetalleActa()" class="btn btn-secondary">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -463,7 +463,7 @@
                                     </select>
                                     <input type="text" v-model="buscarA" @keyup.enter="listarConvocatoriaS(buscarA,criterioA)" class="form-control"
                                         placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarConvocatoriaS(buscarA,criterioA)" class="btn btn-primary"><i class="fa fa-search"></i>
+                                    <button type="submit" @click="listarConvocatoriaS(buscarA,criterioA)" class="btn btn-primary" :disabled="!buscarA"><i class="fa fa-search"></i>
                                         Buscar</button>
                                 </div>
                             </div>
@@ -497,7 +497,7 @@
                                 <tbody v-else>
                                         <tr>
                                             <td colspan="6">
-                                                No existe convocatoria
+                                                No existe convocatoria habilitada
                                             </td>
                                         </tr>
                                     </tbody>
@@ -513,7 +513,7 @@
             <!-- /.modal-dialog -->
         </div>
         <!--Fin del modal-->
-        <!--Inicio del modal Descripcion agregar/actualizar-->
+        <!--Inicio del modal Descripcion -->
         <div class="modal fade" id="modalDescripcionN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -1260,29 +1260,123 @@
                 me.arraySelectOrdendia=[];
                 me.arraySelectOrdendia=arrayTemp;
             },
-            listarConvocatoriaS (buscar,criterio){
+            verificarConvocatorias(convocatoriasT=[],buscar){
                 let me=this;
-                var url='/convocatoria?buscar=' + buscar + '&criterio=' + criterio;
+                var convocatorias=[];
+                var convocatoriasV=[];
+                var url='/acta/buscarConvocatoriaActa';
                 axios.get(url).then(function (response) {
                     var respuesta=response.data;
-                    me.arrayListConvocatoria = respuesta.convocatorias.data;
+                    convocatoriasV = respuesta.convocatorias;
+                    var cont=0;
+                    for (var i = 0; i < convocatoriasT.length; i++) {
+                        cont=0;
+                        for (var j = 0; j < convocatoriasV.length; j++) {
+                            if(convocatoriasT[i].id==convocatoriasV[j].id){
+                                cont++;
+                            }
+                            if(buscar.toUpperCase()==convocatoriasV[j].codigo.toUpperCase()){
+                                Swal.fire({
+                                    title: 'Error...',
+                                    text: 'Esta convocatoria ya tiene su acta definida!',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                            if(buscar.toUpperCase()==convocatoriasV[j].titulo.toUpperCase()){
+                                Swal.fire({
+                                    title: 'Error...',
+                                    text: 'Esta convocatoria ya tiene su acta definida!',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                            if(buscar.toUpperCase()==convocatoriasV[j].descripcion.toUpperCase()){
+                                Swal.fire({
+                                    title: 'Error...',
+                                    text: 'Esta convocatoria ya tiene su acta definida!',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        }
+                        if(cont==0){
+                            
+                            convocatorias.push({
+                                id:convocatoriasT[i].id,
+                                iduser:convocatoriasT[i].iduser,
+                                titulo:convocatoriasT[i].titulo,
+                                codigo:convocatoriasT[i].codigo,
+                                descripcion:convocatoriasT[i].descripcion,
+                                estado:convocatoriasT[i].estado,
+                                condicion:convocatoriasT[i].condicion,
+                                apellidos:convocatoriasT[i].apellidos,
+                                nombres:convocatoriasT[i].nombres,
+                                EMail:convocatoriasT[i].EMail,
+                                perfil:convocatoriasT[i].perfil,
+                            });
+                        }
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
+                return convocatorias;
             },
-            buscarConvocatoria (buscar){
+            listarConvocatoriaS (buscar,criterio){
                 let me=this;
-                var url='/convocatoria?ri=' + buscar;
+                if(buscar!=''){
+                    var url='/acta/buscarConvocatorias?buscar=' + buscar + '&criterio=' + criterio;
+                    axios.get(url).then(function (response) {
+                        var respuesta=response.data;
+                        me.arrayListConvocatoria = me.verificarConvocatorias(respuesta.convocatorias,buscar);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                }else{
+                    me.arrayListConvocatoria=[];
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'Ingrese un texto de busqueda!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            buscarConvocatoriaI (buscar){
+                let me=this;
+                var url='/acta/buscarConvocatoria?buscar=' + buscar+ '&criterio=codigo';
                 axios.get(url).then(function (response) {
                     var respuesta=response.data;
                     me.arrayTempConvocatoria = respuesta.convocatoria;
                     if(me.arrayTempConvocatoria.length>0){
-                        me.codigoVerifi='Código valido';
+                        var url='/acta/buscarConvocatoriaActa';
+                        axios.get(url).then(function (response) {
+                            var respuesta=response.data;
+                            var convocatoriasV = respuesta.convocatorias;
+                            var cont=0;
+                            for (var j = 0; j < convocatoriasV.length; j++) {
+                                if(me.arrayTempConvocatoria[0].id==convocatoriasV[j].id){
+                                    me.arrayTempConvocatoria=[];
+                                    me.codigoVerifi='Código inválido';
+                                    Swal.fire({
+                                        title: 'Error...',
+                                        text: 'Esta convocatoria ya tiene su acta definida!',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }else{
+                                    me.codigoVerifi='Código valido';
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
                     }else{
                         me.codigoVerifi='Código inválido';
                     }
-                    
                 })
                 .catch(function (error) {
                     console.log(error);

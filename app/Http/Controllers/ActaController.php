@@ -9,6 +9,7 @@ use App\Models\Acta;
 use App\Models\Detalleacta;
 use App\Models\Ordendia;
 use App\Models\Firmaacta;
+use App\Models\Convocatoria;
 
 class ActaController extends Controller
 {
@@ -75,5 +76,42 @@ class ActaController extends Controller
         ->orderBy('orden_dias.id','asc')->get();
 
         return ['orden_dias' => $orden_dias];
+    }
+    public function buscarConvocatoria( Request $request)
+    {
+        //if (!$request->ajax()) return redirect('/');
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+        $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
+        ->select('convocatorias.id','convocatorias.iduser',
+        'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
+        'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
+        ->where('convocatorias.'.$criterio,'=',$buscar)
+        ->take(1)->get();
+        return ['convocatoria' => $convocatorias];
+    }
+
+    public function buscarConvocatorias( Request $request)
+    {
+        //if (!$request->ajax()) return redirect('/');
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+        $convocatorias = Convocatoria::join('dbpruebaocs.v_usuarios_sys_ocs','dbsistemaocs.convocatorias.iduser','=','dbpruebaocs.v_usuarios_sys_ocs.numeroIdentificacion')
+        ->select('convocatorias.id','convocatorias.iduser',
+        'convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion','convocatorias.estado','convocatorias.condicion',
+        'v_usuarios_sys_ocs.apellidos','v_usuarios_sys_ocs.nombres','v_usuarios_sys_ocs.EMail','v_usuarios_sys_ocs.perfil')
+        ->where('convocatorias.'.$criterio,'like','%'.$buscar.'%')
+        ->orderBy('convocatorias.id','desc')->get();
+        return ['convocatorias' => $convocatorias];
+    }
+
+    public function buscarConvocatoriaActa( Request $request)
+    {
+        //if (!$request->ajax()) return redirect('/');
+        $convocatorias = Convocatoria::join('orden_dias','convocatorias.id','=','orden_dias.idconvocatoria')
+        ->join('detalle_actas','orden_dias.id','=','detalle_actas.idordendia')
+        ->select('convocatorias.id','convocatorias.titulo','convocatorias.codigo','convocatorias.descripcion',)
+        ->orderBy('convocatorias.id','desc')->get();
+        return ['convocatorias' => $convocatorias];
     }
 }
