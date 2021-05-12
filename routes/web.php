@@ -52,3 +52,6 @@ Route::get('/acta/buscarConvocatoria','App\Http\Controllers\ActaController@busca
 Route::get('/acta/buscarConvocatorias','App\Http\Controllers\ActaController@buscarConvocatorias');
 //Buscar Convocatorias con Actas
 Route::get('/acta/buscarConvocatoriaActa','App\Http\Controllers\ActaController@buscarConvocatoriaActa');
+
+//Correo
+Route::post('/email/send','MailController@send');

@@ -15,8 +15,10 @@ class CreateResolucionesTable extends Migration
     {
         Schema::create('resoluciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('iddetalleacta')->unsigned();
-            $table->foreign('iddetalleacta')->references('id')->on('detalle_actas')->onDelete('cascade');
+            $table->integer('idordendia')->unsigned();
+            $table->foreign('idordendia')->references('id')->on('orden_dias')->onDelete('cascade');
+            $table->integer('idacta')->unsigned();
+            $table->foreign('idacta')->references('id')->on('actas')->onDelete('cascade');
             $table->string('codigo',50);
             $table->string('descripcion',1000);
             $table->timestamps();

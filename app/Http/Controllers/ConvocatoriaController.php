@@ -12,6 +12,9 @@ use App\Models\Ordendia;
 use App\Models\Persona;
 use Illuminate\Support\Facades\Storage;
 
+use App\Mail\VueMail;
+use Illuminate\Support\Facades\Mail;
+
 class ConvocatoriaController extends Controller
 {
     /**
@@ -199,6 +202,22 @@ class ConvocatoriaController extends Controller
                     }
                 }
             }
+            //Envio de Correo
+            $data = ([
+                'titulo' => $request->titulo,
+                'codigo' => $request->codigo,
+                'descripcion' => $request->descripcion,
+            ]);
+            $id = $convocatoria->id;
+            $lstordendias = Ordendia::join('convocatorias','orden_dias.idconvocatoria','=','convocatorias.id')
+            ->select('orden_dias.id','orden_dias.idconvocatoria','orden_dias.numerador','orden_dias.nombre','orden_dias.nomdoc','orden_dias.estado','orden_dias.condicion')
+            ->where('orden_dias.idconvocatoria','=',$id)
+            ->orderBy('orden_dias.id','asc')->get();
+            foreach ($personas as $kep => $per) {
+                Mail::to($per['EMail'])->send(new VueMail($data, $lstordendias));
+            }
+            
+            
             @DB::commit();
         } catch (Exception $e) {
             DB::rollBack();

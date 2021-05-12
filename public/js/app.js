@@ -2086,6 +2086,102 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2736,7 +2832,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       arrayEjemplo: [],
       arrayConvocatoria: [],
       arrayDetalleEnvio: [],
@@ -2754,7 +2852,7 @@ __webpack_require__.r(__webpack_exports__);
       errorActa: 0,
       errorMostrarMsjActa: [],
       tipoAccionInv: 0,
-      idordendia: 0,
+      idordendia: '',
       //Inicio
       arrayActa: [],
       arrayDetalleActa: [],
@@ -2762,9 +2860,13 @@ __webpack_require__.r(__webpack_exports__);
       arrayListConvocatoria: [],
       arraySelectConvocatoria: [],
       arrayTempConvocatoria: [],
-      arraySelectOrdendia: [],
       arrayCheckbox: [],
-      arraySelectCheckbox: [],
+      arrayCheckboxSelect: [],
+      arraySelectOrdendia: [],
+      arrayDescripcion: [],
+      arrayResolucion: [],
+      arrayResolucionVista: [],
+      arrayVistaOrdendia: [],
       codigoConvocatoria: '',
       codigoVerifi: '',
       codigo: '',
@@ -2778,29 +2880,17 @@ __webpack_require__.r(__webpack_exports__);
       emailRedactor: '',
       perfilRedactor: '',
       valBoolean: false,
-      idDescripcion: '',
       aidConvocatoriaActa: '',
-      //Fin
-      listado: 1,
-      modal: 0,
-      tituloModal: '',
-      tipoAccion: 0,
-      pagination: {
-        'total': 0,
-        'current_page': 0,
-        'per_page': 0,
-        'last_page': 0,
-        'from': 0,
-        'to': 0
-      },
-      offset: 3,
-      criterio: 'codigo',
-      buscar: '',
-      criterioA: 'codigo',
-      buscarA: '',
-      criterioP: 'apellidos',
-      buscarP: ''
-    };
+      valModal: false,
+      descripcionResolucion: ''
+    }, _defineProperty(_ref, "descripcionResolucion", ''), _defineProperty(_ref, "listado", 1), _defineProperty(_ref, "modal", 0), _defineProperty(_ref, "tituloModal", ''), _defineProperty(_ref, "tipoAccion", 0), _defineProperty(_ref, "pagination", {
+      'total': 0,
+      'current_page': 0,
+      'per_page': 0,
+      'last_page': 0,
+      'from': 0,
+      'to': 0
+    }), _defineProperty(_ref, "offset", 3), _defineProperty(_ref, "criterio", 'codigo'), _defineProperty(_ref, "buscar", ''), _defineProperty(_ref, "criterioA", 'codigo'), _defineProperty(_ref, "buscarA", ''), _defineProperty(_ref, "criterioP", 'apellidos'), _defineProperty(_ref, "buscarP", ''), _ref;
   },
   computed: {
     isActived: function isActived() {
@@ -2831,6 +2921,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return pagesArray;
+    },
+    mayus: function mayus() {
+      var me = this;
+
+      if (me.codigo != '') {
+        me.codigo = me.codigo.toUpperCase();
+      }
     }
   },
   methods: {
@@ -2879,11 +2976,11 @@ __webpack_require__.r(__webpack_exports__);
       me.pagination.current_page = page;
       me.listarConvocatoria(page, buscar, criterio);
     },
-    encuentra: function encuentra(nombre) {
+    encuentra: function encuentra(descripcion) {
       var sw = 0;
 
-      for (var i = 0; i < this.arrayOrdenDia.length; i++) {
-        if (this.arrayOrdenDia[i].nombre == nombre) {
+      for (var i = 0; i < this.arrayResolucion.length; i++) {
+        if (this.arrayResolucion[i].descripcion == descripcion) {
           sw = true;
         }
       }
@@ -2901,123 +2998,130 @@ __webpack_require__.r(__webpack_exports__);
 
       return sw;
     },
-    encuentraPersonaInv: function encuentraPersonaInv(cedula) {
+    eliminarResolucionVista: function eliminarResolucionVista(index) {
+      var me = this; //me.eliminarInvitado(me.arrayOrdenDia[index].nro);
+
+      me.arrayResolucionVista.splice(index, 1);
+      /*for (var i = 0; i < me.arrayOrdenDia.length; i++) {
+          me.arrayOrdenDia[i].nro=i+1;
+      }*/
+    },
+    eliminarPersona: function eliminarPersona(index) {
+      var me = this;
+      me.arrayPersona.splice(index, 1);
+    },
+    metodoSortResolu: function metodoSortResolu() {
+      var me = this;
+      var arrayTemp = [];
+      me.arrayResolucion.sort(function (o1, o2) {
+        if (o1.idordendia > o2.idordendia) {
+          //comparación lexicogŕafica
+          return 1;
+        } else if (o1.idordendia < o2.idordendia) {
+          return -1;
+        }
+
+        return 0;
+      });
+
+      for (var i = 0; i < me.arrayResolucion.length; i++) {
+        me.arrayResolucion[i].codigo = '';
+      }
+    },
+    ordenarCodigoResol: function ordenarCodigoResol() {
+      var me = this; //me.metodoSortResolu();
+
+      me.codigo = me.codigo.toUpperCase();
+      var pos = me.codigo.length - 2;
+      var cadCe = '';
+      var codigoVal = '';
+      var contV = 0;
+      var contC = 0;
+      var contV2 = false;
+      var contC2 = 0;
+
+      for (var i = 0; i < me.arrayResolucion.length; i++) {
+        contV = 0;
+
+        for (var j = 0; j < me.arrayResolucion.length; j++) {
+          if (me.arrayResolucion[i].descripcion == me.arrayResolucion[j].descripcion) {
+            contV++;
+          }
+        }
+
+        if (contV == 1) {
+          contC++;
+        }
+      }
+
+      for (var i = 0; i < me.arrayResolucionVista.length; i++) {
+        contV2 = false;
+
+        for (var j = 0; j < me.arrayResolucion.length; j++) {
+          if (me.arrayResolucionVista[i].codigo == me.arrayResolucion[j].codigo) {
+            contV2 = true;
+          }
+        }
+
+        if (contV2) {
+          contC2++;
+        }
+      }
+
+      var contador = contC - contC2 + me.arrayResolucionVista.length + 1;
+
+      if (contador < 9) {
+        cadCe = '/00';
+      } else {
+        cadCe = '/0';
+      }
+
+      if (me.codigo.includes('-A', pos)) {
+        codigoVal = me.codigo.slice(0, pos) + cadCe + contador;
+      } else {
+        codigoVal = me.codigo + cadCe + contador;
+      }
+
+      return codigoVal;
+    },
+    encuentraResolucion: function encuentraResolucion(descripcion) {
       var sw = 0;
 
-      for (var i = 0; i < this.arrayPersonaInv.length; i++) {
-        if (this.arrayPersonaInv[i].cedula == cedula && this.arrayPersonaInv[i].idordendia == this.idordendia) {
+      for (var i = 0; i < this.arrayResolucionVista.length; i++) {
+        if (this.arrayResolucionVista[i].descripcion == descripcion) {
           sw = true;
         }
       }
 
       return sw;
     },
-    eliminarOrdendia: function eliminarOrdendia(index) {
-      var me = this;
-      me.eliminarInvitado(me.arrayOrdenDia[index].nro);
-      me.arrayOrdenDia.splice(index, 1);
-
-      for (var i = 0; i < me.arrayOrdenDia.length; i++) {
-        me.arrayOrdenDia[i].nro = i + 1;
-      }
-    },
-    eliminarRI: function eliminarRI(num, id) {
+    agregarResolucion: function agregarResolucion() {
       var me = this;
 
-      if (num == 1) {
-        for (var i = 0; i < me.arrayPersonaInv.length; i++) {
-          if (me.arrayPersonaInv[i].idordendia == id) {
-            me.arrayPersonaInv.splice(i, 1);
-            break;
-          }
-        }
-      } else {
-        num--;
-
-        for (var i = 0; i < me.arrayPersonaInv.length; i++) {
-          if (me.arrayPersonaInv[i].idordendia == id) {
-            me.arrayPersonaInv.splice(i, 1);
-            me.eliminarRI(num, id);
-          }
-        }
-      }
-    },
-    eliminarInvitado: function eliminarInvitado(id) {
-      var me = this;
-      var num = 0;
-
-      for (var i = 0; i < me.arrayOrdenDia.length; i++) {
-        if (me.arrayOrdenDia[i].nro == id) {
-          me.arrayOrdenDia[i].invitado = 'Ninguno';
-        }
-      }
-
-      for (var i = 0; i < me.arrayPersonaInv.length; i++) {
-        if (me.arrayPersonaInv[i].idordendia == id) {
-          num++;
-        }
-      }
-
-      me.eliminarRI(num, id);
-    },
-    eliminarPersona: function eliminarPersona(index) {
-      var me = this;
-      me.arrayPersona.splice(index, 1);
-    },
-    agregarOrdendia: function agregarOrdendia() {
-      var me = this;
-
-      if (me.nombre == '') {} else {
-        if (me.encuentra(me.nombre)) {
-          Swal.fire({
-            title: 'Error...',
-            text: 'Ese nombre ya se encuentra agregado!',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-        } else {
-          me.arrayOrdenDia.push({
-            nro: me.arrayOrdenDia.length + 1,
-            nombre: me.nombre,
-            invitado: 'Ninguno'
-          });
-          me.nombre = "";
-        }
-      }
-    },
-    agregarInvitado: function agregarInvitado() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      var me = this;
-
-      if (me.encuentraPersonaInv(data['numeroIdentificacion'])) {
+      if (me.descripcionResolucion == '') {
         Swal.fire({
           title: 'Error...',
-          text: 'La perona ya se encuentra invitada a este punto de la orden del dia!',
+          text: 'Agrege una descripción!',
           icon: 'error',
           confirmButtonText: 'OK'
         });
       } else {
-        me.arrayPersonaInv.push({
-          idordendia: me.idordendia,
-          cedula: data['numeroIdentificacion'],
-          nombre: data['apellidos'] + ' ' + data['nombres'],
-          EMail: data['EMail'],
-          perfil: data['perfil']
-        });
-        var invitados = '';
+        if (!me.encuentraResolucion(me.descripcionResolucion)) {
+          //for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+          me.arrayResolucionVista.push({
+            //idordendia: me.arrayCheckboxSelect[i].id,
+            codigo: me.ordenarCodigoResol(),
+            descripcion: me.descripcionResolucion
+          }); //}
 
-        for (var i = 0; i < me.arrayOrdenDia.length; i++) {
-          if (me.arrayOrdenDia[i].nro == me.idordendia) {
-            if (me.arrayOrdenDia[i].invitado != 'Ninguno') {
-              invitados += ', ' + data['apellidos'] + ' ' + data['nombres'];
-              me.arrayOrdenDia[i].invitado += invitados;
-            } else {
-              invitados = data['apellidos'] + ' ' + data['nombres'];
-              me.arrayOrdenDia[i].invitado = invitados;
-            }
-
-            break;
-          }
+          me.descripcionResolucion = ""; //me.llenarVistaDescripcionResolucion();
+        } else {
+          Swal.fire({
+            title: 'Error...',
+            text: 'La descripción ya existe!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         }
       }
     },
@@ -3067,54 +3171,47 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    inicializarOrdenDiaSelect: function inicializarOrdenDiaSelect() {
-      var me = this;
-      var arrayTemp = [];
-
-      for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-        arrayTemp.push({
-          id: me.arraySelectOrdendia[i]['id'] + '',
-          numerador: me.arraySelectOrdendia[i]['numerador'] + '',
-          nombre: me.arraySelectOrdendia[i]['nombre'],
-          nombreAlternativo: '',
-          descripcion: 'Ninguna'
-        });
-      }
-
-      me.arraySelectOrdendia = arrayTemp;
-    },
     agregarConvocatoriaModal: function agregarConvocatoriaModal() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var me = this;
 
-      if (me.arraySelectConvocatoria.length > 0) {
+      if (me.codigo != '') {
+        if (me.arraySelectConvocatoria.length > 0) {
+          Swal.fire({
+            title: 'Error...',
+            text: 'Solo se puede seleccionar una convocatoria!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          me.buscarA = "";
+        } else {
+          me.arraySelectConvocatoria.push({
+            id: data['id'],
+            titulo: data['titulo'],
+            codigo: data['codigo'],
+            descripcion: data['descripcion'],
+            estado: data['estado'],
+            iduser: data['iduser'],
+            apellidos: data['apellidos'],
+            nombres: data['nombres'],
+            EMail: data['EMail'],
+            perfil: data['perfil']
+          });
+          var url = '/convocatoria/obtenerOrdenDias?id=' + me.arraySelectConvocatoria[0]['id'];
+          axios.get(url).then(function (response) {
+            var respuesta = response.data;
+            me.arraySelectOrdendia = respuesta.orden_dias;
+            me.inicializarOrdenDiaSelect();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      } else {
         Swal.fire({
           title: 'Error...',
-          text: 'Solo se puede seleccionar una convocatoria!',
+          text: 'Debe ingresar un código de acta!',
           icon: 'error',
           confirmButtonText: 'OK'
-        });
-        me.buscarA = "";
-      } else {
-        me.arraySelectConvocatoria.push({
-          id: data['id'],
-          titulo: data['titulo'],
-          codigo: data['codigo'],
-          descripcion: data['descripcion'],
-          estado: data['estado'],
-          iduser: data['iduser'],
-          apellidos: data['apellidos'],
-          nombres: data['nombres'],
-          EMail: data['EMail'],
-          perfil: data['perfil']
-        });
-        var url = '/convocatoria/obtenerOrdenDias?id=' + me.arraySelectConvocatoria[0]['id'];
-        axios.get(url).then(function (response) {
-          var respuesta = response.data;
-          me.arraySelectOrdendia = respuesta.orden_dias;
-          me.inicializarOrdenDiaSelect();
-        })["catch"](function (error) {
-          console.log(error);
         });
       }
     },
@@ -3129,6 +3226,7 @@ __webpack_require__.r(__webpack_exports__);
           confirmButtonText: 'OK'
         });
       } else {
+        //if(me.codigo!=''){
         if (me.arraySelectConvocatoria.length == 0) {
           me.arraySelectConvocatoria = me.arrayTempConvocatoria;
           me.arrayTempConvocatoria = [];
@@ -3150,12 +3248,201 @@ __webpack_require__.r(__webpack_exports__);
             confirmButtonText: 'OK'
           });
         }
+        /*
+        }else{
+        Swal.fire({
+            title: 'Error...',
+            text: 'Debe ingresar un código de acta!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        }
+        */
+
       }
     },
     eliminarconvocatoria: function eliminarconvocatoria() {
       var me = this;
       me.arraySelectConvocatoria = [];
       me.arraySelectOrdendia = [];
+      me.arrayVistaOrdendia = [];
+      me.codigoVerifi = '';
+    },
+    combinarDescripcion: function combinarDescripcion() {
+      var me = this;
+      var arrayTemp = [];
+      var idT = '';
+      var numeradorT = '';
+      var nombreT = '';
+      var descripcionT = '';
+      var cont = 0;
+      var cont2 = 0;
+      var cade = '';
+
+      for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+        cont = 0;
+        idT = '';
+        numeradorT = '';
+        nombreT = '';
+        descripcionT = '';
+
+        for (var j = 0; j < me.arrayVistaOrdendia.length; j++) {
+          if (me.arrayVistaOrdendia[i].descripcion != 'Ninguna' && me.arrayVistaOrdendia[i].descripcion == me.arrayVistaOrdendia[j].descripcion) {
+            cont++;
+
+            if (cont > 1) {
+              idT += ',';
+              numeradorT += ',';
+              nombreT += ',';
+            }
+
+            idT += me.arrayVistaOrdendia[j].idordendia;
+            numeradorT += me.arrayVistaOrdendia[j].numerador;
+            nombreT += me.arrayVistaOrdendia[j].nombre;
+            descripcionT = me.arrayVistaOrdendia[j].descripcion;
+          }
+        }
+
+        if (cont > 1) {
+          if (!me.buscarD(idT, arrayTemp)) {
+            var arrayId = idT.split(",");
+            cont2 = 0;
+            cade = '';
+
+            for (var q = 0; q < me.arrayResolucion.length; q++) {
+              if (arrayId[0] == me.arrayResolucion[q].idordendia) {
+                if (cont2 > 0) {
+                  cade += ',';
+                } else {
+                  me.codigo = me.codigo.toUpperCase();
+                  var pos = me.codigo.length - 2;
+
+                  if (me.codigo.includes('-A', pos)) {
+                    cade += me.codigo.slice(0, pos) + '/(';
+                  } else {
+                    cade += me.codigo + '/(';
+                  }
+                }
+
+                cade += me.arrayResolucion[q].codigo.slice(-3);
+                cont2++;
+              }
+            }
+
+            if (cade == '') {
+              cade = 'Ninguna';
+            } else {
+              cade += ')';
+            }
+
+            arrayTemp.push({
+              idordendia: idT,
+              numerador: numeradorT,
+              nombre: nombreT,
+              nombrealternativo: '',
+              descripcion: descripcionT,
+              resolucion: cade
+            });
+          }
+        } else {
+          cont2 = 0;
+          cade = '';
+
+          for (var q = 0; q < me.arrayResolucion.length; q++) {
+            if (me.arrayVistaOrdendia[i].idordendia == me.arrayResolucion[q].idordendia) {
+              if (cont2 > 0) {
+                cade += ',';
+              } else {
+                me.codigo = me.codigo.toUpperCase();
+                var pos = me.codigo.length - 2;
+
+                if (me.codigo.includes('-A', pos)) {
+                  cade += me.codigo.slice(0, pos) + '/(';
+                } else {
+                  cade += me.codigo + '/(';
+                }
+              }
+
+              cade += me.arrayResolucion[q].codigo.slice(-3);
+              cont2++;
+            }
+          }
+
+          if (cade == '') {
+            cade = 'Ninguna';
+          } else {
+            cade += ')';
+          }
+
+          arrayTemp.push({
+            idordendia: me.arrayVistaOrdendia[i].idordendia,
+            numerador: me.arrayVistaOrdendia[i].numerador,
+            nombre: me.arrayVistaOrdendia[i].nombre,
+            nombrealternativo: '',
+            descripcion: me.arrayVistaOrdendia[i].descripcion,
+            resolucion: cade
+          });
+        }
+      }
+
+      me.arrayVistaOrdendia = [];
+      me.arrayVistaOrdendia = arrayTemp; //me.ordenarCodigoResol();
+    },
+    inicializarOrdenDiaSelect: function inicializarOrdenDiaSelect() {
+      var me = this;
+      me.arrayVistaOrdendia = [];
+
+      for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
+        me.arrayVistaOrdendia.push({
+          idordendia: me.arraySelectOrdendia[i]['id'] + '',
+          numerador: me.arraySelectOrdendia[i]['numerador'] + '',
+          nombre: me.arraySelectOrdendia[i]['nombre'],
+          nombrealternativo: '',
+          descripcion: 'Ninguna',
+          resolucion: 'Ninguna'
+        });
+      }
+    },
+    llenarVistaDescripcionResolucion: function llenarVistaDescripcionResolucion() {
+      var me = this;
+      me.inicializarOrdenDiaSelect();
+      var cont = 0;
+      var cade = '';
+
+      for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+        for (var j = 0; j < me.arrayDescripcion.length; j++) {
+          if (me.arrayVistaOrdendia[i].idordendia == me.arrayDescripcion[j].idordendia) {
+            me.arrayVistaOrdendia[i].descripcion = me.arrayDescripcion[j].descripcion;
+          }
+        }
+
+        cont = 0;
+        cade = '';
+
+        for (var q = 0; q < me.arrayResolucion.length; q++) {
+          if (me.arrayVistaOrdendia[i].idordendia == me.arrayResolucion[q].idordendia) {
+            if (cont > 0) {
+              cade += ',';
+            } else {
+              me.codigo = me.codigo.toUpperCase();
+              var pos = me.codigo.length - 2;
+
+              if (me.codigo.includes('-A', pos)) {
+                cade += me.codigo.slice(0, pos) + '/(';
+              } else {
+                cade += me.codigo + '/(';
+              }
+            }
+
+            cade += me.arrayResolucion[q].codigo.slice(-3);
+            cont++;
+          }
+        }
+
+        if (cade != '') {
+          me.arrayVistaOrdendia[i].resolucion = cade + ')';
+        }
+      }
     },
     guardarDescripcion: function guardarDescripcion() {
       var me = this;
@@ -3168,22 +3455,81 @@ __webpack_require__.r(__webpack_exports__);
           confirmButtonText: 'OK'
         });
       } else {
-        if (me.arraySelectCheckbox.length > 0) {
-          for (var i = 0; i < me.arraySelectCheckbox.length; i++) {
-            for (var j = 0; j < me.arraySelectOrdendia.length; j++) {
-              if (me.arraySelectCheckbox[i]['id'] == me.arraySelectOrdendia[j]['id'] || me.idDescripcion == me.arraySelectOrdendia[j]['id']) {
-                me.arraySelectOrdendia[j]['descripcion'] = me.descripcionActa;
+        if (me.arrayCheckboxSelect.length > 0) {
+          //me.llenarVistaDescripcionResolucion();
+          var condicion = false;
+
+          for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+            condicion = false;
+
+            for (var j = 0; j < me.arrayVistaOrdendia.length; j++) {
+              if (me.arrayCheckboxSelect[i].id == me.arrayVistaOrdendia[j].idordendia) {
+                for (var q = 0; q < me.arrayDescripcion.length; q++) {
+                  if (me.arrayCheckboxSelect[i].id == me.arrayDescripcion[q].idordendia) {
+                    condicion = true;
+                    me.arrayDescripcion[q].descripcion = me.descripcionActa;
+                  }
+                }
+
+                if (condicion == false) {
+                  me.arrayDescripcion.push({
+                    idordendia: me.arrayVistaOrdendia[j].idordendia,
+                    descripcion: me.descripcionActa,
+                    nombrealternativo: ''
+                  });
+                }
               }
             }
           }
-
-          me.arraySelectCheckbox = [];
         }
 
+        me.llenarVistaDescripcionResolucion();
         me.combinarDescripcion();
         me.descripcionActa = '';
         me.arrayCheckbox = [];
+        me.arrayCheckboxSelect = [];
       }
+    },
+    guardarResolucion: function guardarResolucion() {
+      var me = this;
+
+      for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+        for (var j = me.arrayResolucion.length; j > 0; j--) {
+          if (me.arrayCheckboxSelect[i].id == me.arrayResolucion[j - 1].idordendia) {
+            me.arrayResolucion.splice(j - 1, 1);
+          }
+        }
+      }
+
+      for (var i = 0; i < me.arrayResolucionVista.length; i++) {
+        for (var j = 0; j < me.arrayCheckboxSelect.length; j++) {
+          me.arrayResolucion.push({
+            idordendia: me.arrayCheckboxSelect[j].id,
+            codigo: me.arrayResolucionVista[i].codigo,
+            descripcion: me.arrayResolucionVista[i].descripcion
+          });
+        }
+      }
+
+      me.arrayResolucionVista = [];
+      me.llenarVistaDescripcionResolucion(); //me.ordenarCodigoResol();
+
+      me.combinarDescripcion();
+      me.arrayCheckbox = [];
+      me.arrayCheckboxSelect = [];
+    },
+    metodoSortOrdenDia: function metodoSortOrdenDia() {
+      var me = this;
+      me.arraySelectOrdendia.sort(function (o1, o2) {
+        if (o1.numerador > o2.numerador) {
+          //comparación lexicogŕafica
+          return 1;
+        } else if (o1.numerador < o2.numerador) {
+          return -1;
+        }
+
+        return 0;
+      });
     },
     eliminarDescripcion: function eliminarDescripcion(id) {
       var me = this;
@@ -3194,58 +3540,69 @@ __webpack_require__.r(__webpack_exports__);
       var arrayTemp = [];
       var pos = 0;
       arrayId = cadenaId.split(",");
+      var arrayPos = [];
 
-      if (arrayId.length > 1) {
-        for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-          if (me.arraySelectOrdendia[i]['id'] == id) {
-            arrayNro = me.arraySelectOrdendia[i]['numerador'].split(",");
-            arrayNombre = me.arraySelectOrdendia[i]['nombre'].split(",");
-          }
-        }
-
-        for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-          if (me.arraySelectOrdendia[i]['id'] == id) {
-            for (var j = 0; j < arrayId.length; j++) {
-              arrayTemp.push({
-                id: arrayId[j],
-                numerador: arrayNro[j],
-                nombre: arrayNombre[j],
-                nombreAlternativo: '',
-                descripcion: 'Ninguna'
-              });
-            }
-          } else {
-            arrayTemp.push({
-              id: me.arraySelectOrdendia[i]['id'],
-              numerador: me.arraySelectOrdendia[i]['numerador'],
-              nombre: me.arraySelectOrdendia[i]['nombre'],
-              nombreAlternativo: '',
-              descripcion: me.arraySelectOrdendia[i]['descripcion']
-            });
-          }
-        }
-
-        me.arraySelectOrdendia = arrayTemp;
-      } else {
-        for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-          if (me.arraySelectOrdendia[i]['id'] == id) {
-            me.arraySelectOrdendia[i]['descripcion'] = 'Ninguna';
+      for (var i = 0; i < arrayId.length; i++) {
+        for (var j = 0; j < me.arrayDescripcion.length; j++) {
+          if (arrayId[i] == me.arrayDescripcion[j].idordendia) {
+            me.arrayDescripcion.splice(j, 1);
           }
         }
       }
+
+      me.llenarVistaDescripcionResolucion();
+      me.combinarDescripcion();
+    },
+    eliminarResolucion: function eliminarResolucion(index) {
+      var me = this;
+      this.llenarCheckbox(index);
+
+      for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+        for (var j = me.arrayResolucion.length; j > 0; j--) {
+          if (me.arrayCheckboxSelect[i].id == me.arrayResolucion[j - 1].idordendia) {
+            me.arrayResolucion.splice(j - 1, 1);
+          }
+        }
+      }
+
+      me.llenarVistaDescripcionResolucion();
+      me.combinarDescripcion();
+      me.arrayCheckbox = [];
+      me.arrayCheckboxSelect = [];
     },
     editarDescripcion: function editarDescripcion(id) {
       var me = this;
-      me.idDescripcion = id;
       me.tituloModal = 'Editar descripción';
       me.valBoolean = false;
       me.arrayCheckbox = [];
-      me.arraySelectCheckbox = [];
+      me.arrayCheckboxSelect = [];
 
-      for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-        if (me.arraySelectOrdendia[i]['id'] == id) {
-          me.descripcionActa = me.arraySelectOrdendia[i]['descripcion'];
+      for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+        if (me.arrayVistaOrdendia[i].idordendia == id) {
+          me.descripcionActa = me.arrayVistaOrdendia[i].descripcion;
           me.llenarCheckbox(id);
+        }
+      }
+    },
+    editarResolucion: function editarResolucion(id) {
+      var me = this;
+      me.tituloModal = 'Editar resolción';
+      me.arrayResolucionVista = [];
+      me.arrayCheckbox = [];
+      me.arrayCheckboxSelect = [];
+      me.llenarCheckbox(id);
+
+      for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+        for (var j = 0; j < me.arrayResolucion.length; j++) {
+          if (me.arrayCheckboxSelect[i].id == me.arrayResolucion[j].idordendia) {
+            if (!me.buscarR(me.arrayResolucion[j].descripcion, me.arrayResolucionVista)) {
+              me.arrayResolucionVista.push({
+                //idordendia: me.arrayResolucion[j].idordendia,
+                codigo: me.arrayResolucion[j].codigo,
+                descripcion: me.arrayResolucion[j].descripcion
+              });
+            }
+          }
         }
       }
     },
@@ -3261,40 +3618,40 @@ __webpack_require__.r(__webpack_exports__);
     llenarCheckbox: function llenarCheckbox(id) {
       var me = this;
       me.arrayCheckbox = [];
-      me.arraySelectCheckbox = [];
+      me.arrayCheckboxSelect = [];
       var arrayId = [];
       var cadenaId = '';
       var arrayNro = [];
       var cadenaNro = '';
 
-      for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-        if (me.arraySelectOrdendia[i]['id'] == id) {
+      for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+        if (me.arrayVistaOrdendia[i].idordendia == id) {
           cadenaId = id + '';
           arrayId = cadenaId.split(",");
 
           if (arrayId.length > 1) {
-            cadenaNro = me.arraySelectOrdendia[i]['numerador'] + '';
+            cadenaNro = me.arrayVistaOrdendia[i]['numerador'] + '';
             arrayNro = cadenaNro.split(",");
 
             for (var j = 0; j < arrayId.length; j++) {
-              me.arraySelectCheckbox.push({
+              me.arrayCheckboxSelect.push({
                 id: arrayId[j],
                 numerador: arrayNro[j]
               });
             }
           } else {
-            me.arraySelectCheckbox.push({
-              id: me.arraySelectOrdendia[i]['id'],
-              numerador: me.arraySelectOrdendia[i]['numerador']
+            me.arrayCheckboxSelect.push({
+              id: me.arrayVistaOrdendia[i].idordendia,
+              numerador: me.arrayVistaOrdendia[i]['numerador']
             });
           }
         } else {
-          if (me.arraySelectOrdendia[i]['descripcion'] == 'Ninguna') {
-            cadenaId = me.arraySelectOrdendia[i]['id'] + '';
+          if (me.arrayVistaOrdendia[i]['descripcion'] == 'Ninguna') {
+            cadenaId = me.arrayVistaOrdendia[i].idordendia + '';
             arrayId = cadenaId.split(",");
 
             if (arrayId.length > 1) {
-              cadenaNro = me.arraySelectOrdendia[i]['numerador'] + '';
+              cadenaNro = me.arrayVistaOrdendia[i]['numerador'] + '';
               arrayNro = cadenaNro.split(",");
 
               for (var j = 0; j < arrayId.length; j++) {
@@ -3305,8 +3662,8 @@ __webpack_require__.r(__webpack_exports__);
               }
             } else {
               me.arrayCheckbox.push({
-                id: me.arraySelectOrdendia[i]['id'],
-                numerador: me.arraySelectOrdendia[i]['numerador']
+                id: me.arrayVistaOrdendia[i].idordendia,
+                numerador: me.arrayVistaOrdendia[i]['numerador']
               });
             }
           }
@@ -3329,69 +3686,24 @@ __webpack_require__.r(__webpack_exports__);
       var sw = 0;
 
       for (var i = 0; i < data.length; i++) {
-        if (data[i].id == id) {
+        if (data[i].idordendia == id) {
           sw = true;
         }
       }
 
       return sw;
     },
-    combinarDescripcion: function combinarDescripcion() {
-      var me = this;
-      var arrayTemp = [];
-      var idT = '';
-      var numeradorT = '';
-      var nombreT = '';
-      var descripcionT = '';
-      var cont = 0;
+    buscarR: function buscarR(resolucion) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var sw = 0;
 
-      for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-        cont = 0;
-        idT = '';
-        numeradorT = '';
-        nombreT = '';
-        descripcionT = '';
-
-        for (var j = 0; j < me.arraySelectOrdendia.length; j++) {
-          if (me.arraySelectOrdendia[i]['descripcion'] != 'Ninguna' && me.arraySelectOrdendia[i]['descripcion'] == me.arraySelectOrdendia[j]['descripcion']) {
-            cont++;
-
-            if (cont > 1) {
-              idT += ',';
-              numeradorT += ',';
-              nombreT += ',';
-            }
-
-            idT += me.arraySelectOrdendia[j]['id'];
-            numeradorT += me.arraySelectOrdendia[j]['numerador'];
-            nombreT += me.arraySelectOrdendia[j]['nombre'];
-            descripcionT = me.arraySelectOrdendia[j]['descripcion'];
-          }
-        }
-
-        if (cont > 1) {
-          if (!me.buscarD(idT, arrayTemp)) {
-            arrayTemp.push({
-              id: idT,
-              numerador: numeradorT,
-              nombre: nombreT,
-              nombreAlternativo: '',
-              descripcion: descripcionT
-            });
-          }
-        } else {
-          arrayTemp.push({
-            id: me.arraySelectOrdendia[i]['id'],
-            numerador: me.arraySelectOrdendia[i]['numerador'],
-            nombre: me.arraySelectOrdendia[i]['nombre'],
-            nombreAlternativo: '',
-            descripcion: me.arraySelectOrdendia[i]['descripcion']
-          });
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].descripcion == resolucion) {
+          sw = true;
         }
       }
 
-      me.arraySelectOrdendia = [];
-      me.arraySelectOrdendia = arrayTemp;
+      return sw;
     },
     verificarConvocatorias: function verificarConvocatorias() {
       var convocatoriasT = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -3484,7 +3796,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     buscarConvocatoriaI: function buscarConvocatoriaI(buscar) {
-      var me = this;
+      var me = this; //if(me.codigo!=''){
+
       var url = '/acta/buscarConvocatoria?buscar=' + buscar + '&criterio=codigo';
       axios.get(url).then(function (response) {
         var respuesta = response.data;
@@ -3520,6 +3833,16 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+      /*
+      }else{
+          Swal.fire({
+              title: 'Error...',
+              text: 'Debe ingresar un código de acta!',
+              icon: 'error',
+              confirmButtonText: 'OK'
+          });
+      }
+      */
     },
     registrarConvocatoria: function registrarConvocatoria() {
       var _this = this;
@@ -3595,6 +3918,10 @@ __webpack_require__.r(__webpack_exports__);
       me.arrayDetalleActa = [];
       me.arraySelectConvocatoria = [];
       me.arraySelectOrdendia = [];
+    },
+    mostrarModal: function mostrarModal() {
+      var me = this;
+      me.valModal = true;
     },
     ocultarDetalleActa: function ocultarDetalleActa() {
       this.listado = 1;
@@ -3730,7 +4057,16 @@ __webpack_require__.r(__webpack_exports__);
       this.descripcionActa = '';
       this.arrayPersonaB = [];
       this.arrayCheckbox = [];
-      this.arraySelectCheckbox = [];
+      this.arrayCheckboxSelect = [];
+      this.arrayResolucionVista = [];
+    },
+    cerrarModalResolucion: function cerrarModalResolucion() {
+      //this.modal=0;
+      this.tituloModal = '';
+      this.descripcionActa = '';
+      this.arrayCheckbox = [];
+      this.arrayCheckboxSelect = [];
+      this.arrayResolucionVista = [];
     },
     abrirModal: function abrirModal() {
       this.tituloModal = '';
@@ -3745,10 +4081,39 @@ __webpack_require__.r(__webpack_exports__);
       this.tituloModal = 'Seleccione uno o varios usuarios';
     },
     abrirModalDescripcion: function abrirModalDescripcion(index) {
-      this.tituloModal = 'Ingrese descripción';
-      this.descripcionActa = '';
-      this.llenarCheckbox(index);
-      this.valBoolean = false;
+      if (this.codigo != '') {
+        this.valModal = true;
+        this.tituloModal = 'Ingrese descripción';
+        this.descripcionActa = '';
+        this.llenarCheckbox(index);
+        this.valBoolean = false;
+        this.idordendia = index;
+      } else {
+        this.valModal = false;
+        Swal.fire({
+          title: 'Error...',
+          text: 'Debe ingresar un código de acta!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    },
+    abrirModalResolucion: function abrirModalResolucion(index) {
+      if (this.codigo != '') {
+        this.valModal = true;
+        this.tituloModal = 'Ingrese una o varias resoluciones';
+        this.descripcionResolucion = '';
+        this.llenarCheckbox(index);
+        this.arrayResolucionVista = [];
+      } else {
+        this.valModal = false;
+        Swal.fire({
+          title: 'Error...',
+          text: 'Debe ingresar un código de acta!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
     }
   },
   mounted: function mounted() {
@@ -3767,6 +4132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -4450,7 +4816,9 @@ __webpack_require__.r(__webpack_exports__);
       var url = 'convocatoria/buscarPersona?filtro=' + me.docUser;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
+        console.log(me.arrayUser);
         me.arrayUser = respuesta.personas;
+        console.log(me.arrayUser);
 
         if (me.arrayUser.length > 0) {
           me.docUser = me.arrayUser[0]['numeroIdentificacion'];
@@ -4560,26 +4928,32 @@ __webpack_require__.r(__webpack_exports__);
       me.arrayOrdenDia.forEach(function (od) {
         var cadena = 'archivoInput' + od.nro;
         var archivoExt = document.getElementById(cadena);
-        var archivo = archivoExt.files[0];
 
-        if (archivo != null) {
-          me.arrayArchivo.push({
-            file: archivo
-          });
-          od.nomdoc = archivo.name;
-        } else {
-          od.nomdoc = '';
-        }
+        try {
+          var archivo = archivoExt.files[0];
+
+          if (archivo != undefined) {
+            me.arrayArchivo.push({
+              file: archivo
+            });
+            od.nomdoc = archivo.name;
+          } else {
+            od.nomdoc = '';
+          }
+        } catch (error) {}
       });
-      var formDataDoc = new FormData();
-      var cont = 0;
-      me.arrayArchivo.forEach(function (element) {
-        formDataDoc.append(cont, element.file);
-        cont += 1;
-      });
-      axios.post('/convocatoria/storeArchivo', formDataDoc).then(function (response) {})["catch"](function (error) {
-        console.log(error);
-      });
+
+      if (me.arrayArchivo.length) {
+        var formDataDoc = new FormData();
+        var cont = 0;
+        me.arrayArchivo.forEach(function (element) {
+          formDataDoc.append(cont, element.file);
+          cont += 1;
+        });
+        axios.post('/convocatoria/storeArchivo', formDataDoc).then(function (response) {})["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     agregarOrdendia: function agregarOrdendia() {
       var me = this;
@@ -9452,7 +9826,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width: 900px){\n.btnagregar{\n        margin-top: 1.7rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width: 900px){\n.btnagregar{\n        margin-top: 1.7rem;\n}\n.btnagregarR{\n        font-size: 20px;\n        margin-top: 0.1rem;\n        height: 88px;\n}\n}\n", ""]);
 
 // exports
 
@@ -41803,6 +42177,27 @@ var render = function() {
                 _c("i", { staticClass: "icon-plus" }),
                 _vm._v(" Nueva\n                ")
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "modal",
+                  "data-target": "#modalResolucion"
+                },
+                on: {
+                  click: function($event) {
+                    return _vm.mostrarModal()
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "icon-plus" }),
+                _vm._v(" Detalle\n                ")
+              ]
             )
           ]),
           _vm._v(" "),
@@ -42209,8 +42604,11 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
+                        staticStyle: { "text-transform": "uppercase" },
                         attrs: {
                           type: "text",
+                          onkeyup:
+                            "javascript:this.value=this.value.toUpperCase();",
                           placeholder: "Ingrese el código de la acta"
                         },
                         domProps: { value: _vm.codigo },
@@ -42513,13 +42911,13 @@ var render = function() {
                         [
                           _vm._m(5),
                           _vm._v(" "),
-                          _vm.arraySelectOrdendia.length
+                          _vm.arrayVistaOrdendia.length
                             ? _c(
                                 "tbody",
-                                _vm._l(_vm.arraySelectOrdendia, function(
+                                _vm._l(_vm.arrayVistaOrdendia, function(
                                   detalle
                                 ) {
-                                  return _c("tr", { key: detalle.id }, [
+                                  return _c("tr", { key: detalle.idordendia }, [
                                     _c(
                                       "td",
                                       {
@@ -42545,7 +42943,7 @@ var render = function() {
                                                 on: {
                                                   click: function($event) {
                                                     return _vm.abrirModalDescripcion(
-                                                      detalle.id
+                                                      detalle.idordendia
                                                     )
                                                   }
                                                 }
@@ -42574,7 +42972,7 @@ var render = function() {
                                                 on: {
                                                   click: function($event) {
                                                     return _vm.editarDescripcion(
-                                                      detalle.id
+                                                      detalle.idordendia
                                                     )
                                                   }
                                                 }
@@ -42600,7 +42998,102 @@ var render = function() {
                                                 on: {
                                                   click: function($event) {
                                                     return _vm.eliminarDescripcion(
-                                                      detalle.id
+                                                      detalle.idordendia
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "icon-close"
+                                                })
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticStyle: {
+                                          "vertical-align": "middle"
+                                        },
+                                        attrs: { width: "90", align: "center" }
+                                      },
+                                      [
+                                        detalle.resolucion == "Ninguna"
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-primary btn-sm",
+                                                attrs: {
+                                                  type: "button",
+                                                  title: "Agregar resolución",
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#modalResolucion"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.abrirModalResolucion(
+                                                      detalle.idordendia
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "icon-plus"
+                                                })
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        detalle.resolucion != "Ninguna"
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-warning btn-sm",
+                                                attrs: {
+                                                  type: "button",
+                                                  title: "Editar resolución",
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#modalResolucion"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.editarResolucion(
+                                                      detalle.idordendia
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "icon-pencil"
+                                                })
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        detalle.resolucion != "Ninguna"
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-danger btn-sm",
+                                                attrs: {
+                                                  type: "button",
+                                                  title: "Eliminar resoluciones"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.eliminarResolucion(
+                                                      detalle.idordendia
                                                     )
                                                   }
                                                 }
@@ -42625,7 +43118,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(" "),
-                                    _vm.buscarComa(detalle.id)
+                                    _vm.buscarComa(detalle.idordendia)
                                       ? _c("td", {
                                           staticStyle: {
                                             "vertical-align": "middle"
@@ -42641,9 +43134,9 @@ var render = function() {
                                                 name: "model",
                                                 rawName: "v-model",
                                                 value:
-                                                  detalle.nombreAlternativo,
+                                                  detalle.nombrealternativo,
                                                 expression:
-                                                  "detalle.nombreAlternativo"
+                                                  "detalle.nombrealternativo"
                                               }
                                             ],
                                             staticClass: "form-control",
@@ -42653,7 +43146,7 @@ var render = function() {
                                               placeholder: "Ingrese un nombre"
                                             },
                                             domProps: {
-                                              value: detalle.nombreAlternativo
+                                              value: detalle.nombrealternativo
                                             },
                                             on: {
                                               input: function($event) {
@@ -42662,7 +43155,7 @@ var render = function() {
                                                 }
                                                 _vm.$set(
                                                   detalle,
-                                                  "nombreAlternativo",
+                                                  "nombrealternativo",
                                                   $event.target.value
                                                 )
                                               }
@@ -42673,6 +43166,12 @@ var render = function() {
                                     _c("td", {
                                       domProps: {
                                         textContent: _vm._s(detalle.descripcion)
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("td", {
+                                      domProps: {
+                                        textContent: _vm._s(detalle.resolucion)
                                       }
                                     })
                                   ])
@@ -43532,281 +44031,604 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        staticStyle: { display: "none" },
-        attrs: {
-          id: "modalDescripcionN",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myModalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-primary modal-lg",
-            attrs: { role: "document" }
-          },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c("h4", {
-                  staticClass: "modal-title",
-                  domProps: { textContent: _vm._s(_vm.tituloModal) }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "aria-label": "Close",
-                      "data-dismiss": "modal"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.cerrarModal()
-                      }
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c(
-                  "form",
-                  {
-                    staticClass: "form-horizontal",
-                    attrs: {
-                      action: "",
-                      method: "post",
-                      enctype: "multipart/form-data"
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.descripcionActa,
-                              expression: "descripcionActa"
-                            }
-                          ],
-                          staticClass: "form-control",
+    _vm.valModal
+      ? _c("div", [
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              staticStyle: { display: "none" },
+              attrs: {
+                id: "modalDescripcionN",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "myModalLabel",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog modal-primary modal-lg",
+                  attrs: { role: "document" }
+                },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("h4", {
+                        staticClass: "modal-title",
+                        domProps: { textContent: _vm._s(_vm.tituloModal) }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
                           attrs: {
-                            type: "textarea",
-                            placeholder:
-                              "Ingrese la descripción deacuerdo al punto del orden día seleccionado.",
-                            rows: "6"
+                            type: "button",
+                            "aria-label": "Close",
+                            "data-dismiss": "modal"
                           },
-                          domProps: { value: _vm.descripcionActa },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.descripcionActa = $event.target.value
+                            click: function($event) {
+                              return _vm.cerrarModal()
                             }
                           }
-                        })
-                      ]),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-md-12",
-                          staticStyle: { "border-top": "1px solid #c2cfd6" }
                         },
                         [
-                          _c("div", { staticClass: "panel panel-primary" }, [
-                            _c("div", { staticClass: "panel-heading" }, [
-                              _c("b", [
-                                _vm._v("Seleccione un punto adisional")
-                              ]),
-                              _vm._v(" "),
-                              !_vm.valBoolean
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "close",
-                                      attrs: {
-                                        type: "button",
-                                        "aria-label": "Close"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.cambiarBoolean()
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        { attrs: { "aria-hidden": "true" } },
-                                        [_vm._v("+")]
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.valBoolean
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "close",
-                                      attrs: {
-                                        type: "button",
-                                        "aria-label": "Close"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.cambiarBoolean()
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        { attrs: { "aria-hidden": "true" } },
-                                        [_vm._v("×")]
-                                      )
-                                    ]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _vm.valBoolean
-                              ? _c("div", { staticClass: "panel-body" }, [
-                                  _c("div", { staticClass: "form-group row" }, [
-                                    _c("div", { staticClass: "col-md-12" }, [
-                                      _c(
-                                        "div",
-                                        { staticClass: "input-group" },
-                                        _vm._l(_vm.arrayCheckbox, function(
-                                          check
-                                        ) {
-                                          return _c("div", { key: check.id }, [
-                                            _c("label", [
-                                              _vm._v(_vm._s(check.numerador))
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value:
-                                                    _vm.arraySelectCheckbox,
-                                                  expression:
-                                                    "arraySelectCheckbox"
-                                                }
-                                              ],
-                                              attrs: { type: "checkbox" },
-                                              domProps: {
-                                                value: check,
-                                                checked: Array.isArray(
-                                                  _vm.arraySelectCheckbox
-                                                )
-                                                  ? _vm._i(
-                                                      _vm.arraySelectCheckbox,
-                                                      check
-                                                    ) > -1
-                                                  : _vm.arraySelectCheckbox
-                                              },
-                                              on: {
-                                                change: function($event) {
-                                                  var $$a =
-                                                      _vm.arraySelectCheckbox,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = check,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        (_vm.arraySelectCheckbox = $$a.concat(
-                                                          [$$v]
-                                                        ))
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        (_vm.arraySelectCheckbox = $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          ))
-                                                    }
-                                                  } else {
-                                                    _vm.arraySelectCheckbox = $$c
-                                                  }
-                                                }
-                                              }
-                                            })
-                                          ])
-                                        }),
-                                        0
-                                      )
-                                    ])
-                                  ])
-                                ])
-                              : _vm._e()
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×")
                           ])
                         ]
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c(
+                        "form",
+                        {
+                          staticClass: "form-horizontal",
+                          attrs: {
+                            action: "",
+                            method: "post",
+                            enctype: "multipart/form-data"
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c("div", { staticClass: "col-md-12" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.descripcionActa,
+                                    expression: "descripcionActa"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "textarea",
+                                  placeholder:
+                                    "Ingrese la descripción deacuerdo al punto del orden día seleccionado.",
+                                  rows: "6"
+                                },
+                                domProps: { value: _vm.descripcionActa },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.descripcionActa = $event.target.value
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" \n                            "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-md-12",
+                                staticStyle: {
+                                  "border-top": "1px solid #c2cfd6"
+                                }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "panel panel-primary" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "panel-heading" },
+                                      [
+                                        _c("b", [
+                                          _vm._v(
+                                            "Seleccione un punto adisional"
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        !_vm.valBoolean
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass: "close",
+                                                attrs: {
+                                                  type: "button",
+                                                  "aria-label": "Close"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.cambiarBoolean()
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    attrs: {
+                                                      "aria-hidden": "true"
+                                                    }
+                                                  },
+                                                  [_vm._v("+")]
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _vm.valBoolean
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass: "close",
+                                                attrs: {
+                                                  type: "button",
+                                                  "aria-label": "Close"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.cambiarBoolean()
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    attrs: {
+                                                      "aria-hidden": "true"
+                                                    }
+                                                  },
+                                                  [_vm._v("×")]
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm.valBoolean
+                                      ? _c(
+                                          "div",
+                                          { staticClass: "panel-body" },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "form-group row" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "col-md-12" },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "input-group"
+                                                      },
+                                                      _vm._l(
+                                                        _vm.arrayCheckbox,
+                                                        function(check) {
+                                                          return _c(
+                                                            "div",
+                                                            { key: check.id },
+                                                            [
+                                                              _c("label", [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    check.numerador
+                                                                  )
+                                                                )
+                                                              ]),
+                                                              _vm._v(" "),
+                                                              _c("input", {
+                                                                directives: [
+                                                                  {
+                                                                    name:
+                                                                      "model",
+                                                                    rawName:
+                                                                      "v-model",
+                                                                    value:
+                                                                      _vm.arrayCheckboxSelect,
+                                                                    expression:
+                                                                      "arrayCheckboxSelect"
+                                                                  }
+                                                                ],
+                                                                attrs: {
+                                                                  type:
+                                                                    "checkbox"
+                                                                },
+                                                                domProps: {
+                                                                  value: check,
+                                                                  checked: Array.isArray(
+                                                                    _vm.arrayCheckboxSelect
+                                                                  )
+                                                                    ? _vm._i(
+                                                                        _vm.arrayCheckboxSelect,
+                                                                        check
+                                                                      ) > -1
+                                                                    : _vm.arrayCheckboxSelect
+                                                                },
+                                                                on: {
+                                                                  change: function(
+                                                                    $event
+                                                                  ) {
+                                                                    var $$a =
+                                                                        _vm.arrayCheckboxSelect,
+                                                                      $$el =
+                                                                        $event.target,
+                                                                      $$c = $$el.checked
+                                                                        ? true
+                                                                        : false
+                                                                    if (
+                                                                      Array.isArray(
+                                                                        $$a
+                                                                      )
+                                                                    ) {
+                                                                      var $$v = check,
+                                                                        $$i = _vm._i(
+                                                                          $$a,
+                                                                          $$v
+                                                                        )
+                                                                      if (
+                                                                        $$el.checked
+                                                                      ) {
+                                                                        $$i <
+                                                                          0 &&
+                                                                          (_vm.arrayCheckboxSelect = $$a.concat(
+                                                                            [
+                                                                              $$v
+                                                                            ]
+                                                                          ))
+                                                                      } else {
+                                                                        $$i >
+                                                                          -1 &&
+                                                                          (_vm.arrayCheckboxSelect = $$a
+                                                                            .slice(
+                                                                              0,
+                                                                              $$i
+                                                                            )
+                                                                            .concat(
+                                                                              $$a.slice(
+                                                                                $$i +
+                                                                                  1
+                                                                              )
+                                                                            ))
+                                                                      }
+                                                                    } else {
+                                                                      _vm.arrayCheckboxSelect = $$c
+                                                                    }
+                                                                  }
+                                                                }
+                                                              })
+                                                            ]
+                                                          )
+                                                        }
+                                                      ),
+                                                      0
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" },
+                          on: {
+                            click: function($event) {
+                              return _vm.cerrarModal()
+                            }
+                          }
+                        },
+                        [_vm._v("Cerrar")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button", "data-dismiss": "modal" },
+                          on: {
+                            click: function($event) {
+                              return _vm.guardarDescripcion()
+                            }
+                          }
+                        },
+                        [_vm._v("Guardar")]
+                      )
                     ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" },
-                    on: {
-                      click: function($event) {
-                        return _vm.cerrarModal()
-                      }
-                    }
-                  },
-                  [_vm._v("Cerrar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button", "data-dismiss": "modal" },
-                    on: {
-                      click: function($event) {
-                        return _vm.guardarDescripcion()
-                      }
-                    }
-                  },
-                  [_vm._v("Guardar")]
-                )
-              ])
-            ])
-          ]
-        )
-      ]
-    ),
+                  ])
+                ]
+              )
+            ]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.valModal
+      ? _c("div", [
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              staticStyle: { display: "none" },
+              attrs: {
+                id: "modalResolucion",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "myModalLabel",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog modal-primary modal-lg",
+                  attrs: { role: "document" }
+                },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("h4", {
+                        staticClass: "modal-title",
+                        domProps: { textContent: _vm._s(_vm.tituloModal) }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: {
+                            type: "button",
+                            "aria-label": "Close",
+                            "data-dismiss": "modal"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.cerrarModal()
+                            }
+                          }
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c("div", { staticClass: "col-md-10" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.descripcionResolucion,
+                                  expression: "descripcionResolucion"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "textarea",
+                                placeholder:
+                                  "Ingrese la descripción deacuerdo al punto del orden día seleccionado.",
+                                rows: "4"
+                              },
+                              domProps: { value: _vm.descripcionResolucion },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.descripcionResolucion =
+                                    $event.target.value
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-2" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-success form-control btnagregarR",
+                                attrs: {
+                                  type: "button",
+                                  title: "Agregar resolución"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.agregarResolucion()
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "icon-plus" })]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "table-responsive col-md-12" },
+                          [
+                            _c(
+                              "table",
+                              {
+                                staticClass:
+                                  "table table-bordered table-striped table-sm"
+                              },
+                              [
+                                _vm._m(21),
+                                _vm._v(" "),
+                                _vm.arrayResolucionVista.length
+                                  ? _c(
+                                      "tbody",
+                                      _vm._l(_vm.arrayResolucionVista, function(
+                                        resolucion,
+                                        index
+                                      ) {
+                                        return _c(
+                                          "tr",
+                                          { key: resolucion.id },
+                                          [
+                                            _c(
+                                              "td",
+                                              {
+                                                staticStyle: {
+                                                  "vertical-align": "middle"
+                                                },
+                                                attrs: {
+                                                  width: "10",
+                                                  align: "center"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-danger btn-sm",
+                                                    attrs: {
+                                                      type: "button",
+                                                      title:
+                                                        "Eliminar resolución"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.eliminarResolucionVista(
+                                                          index
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "icon-close"
+                                                    })
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("td", {
+                                              staticStyle: {
+                                                "vertical-align": "middle"
+                                              },
+                                              attrs: {
+                                                width: "250",
+                                                align: "center"
+                                              },
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  resolucion.codigo
+                                                )
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("td", {
+                                              staticStyle: {
+                                                "vertical-align": "middle"
+                                              },
+                                              attrs: { align: "justify" },
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  resolucion.descripcion
+                                                )
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    )
+                                  : _c("tbody", [_vm._m(22)])
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" },
+                          on: {
+                            click: function($event) {
+                              return _vm.cerrarModalResolucion()
+                            }
+                          }
+                        },
+                        [_vm._v("Cerrar")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button", "data-dismiss": "modal" },
+                          on: {
+                            click: function($event) {
+                              return _vm.guardarResolucion()
+                            }
+                          }
+                        },
+                        [_vm._v("Guardar")]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -43977,7 +44799,7 @@ var render = function() {
                       staticClass: "table table-bordered table-striped table-sm"
                     },
                     [
-                      _vm._m(21),
+                      _vm._m(23),
                       _vm._v(" "),
                       _vm.arrayPersonaB.length
                         ? _c(
@@ -44074,7 +44896,7 @@ var render = function() {
                             }),
                             0
                           )
-                        : _c("tbody", [_vm._m(22)])
+                        : _c("tbody", [_vm._m(24)])
                     ]
                   )
                 ])
@@ -44187,13 +45009,49 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Opciones")]),
+        _c("th", { attrs: { colspan: "2" } }, [_vm._v("Opciones")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Nro")]),
+        _c(
+          "th",
+          {
+            staticStyle: { "vertical-align": "middle" },
+            attrs: { rowspan: "2" }
+          },
+          [_vm._v("Nro")]
+        ),
         _vm._v(" "),
-        _c("th", [_vm._v("Nombre")]),
+        _c(
+          "th",
+          {
+            staticStyle: { "vertical-align": "middle" },
+            attrs: { rowspan: "2" }
+          },
+          [_vm._v("Nombre")]
+        ),
         _vm._v(" "),
-        _c("th", [_vm._v("Descripción")])
+        _c(
+          "th",
+          {
+            staticStyle: { "vertical-align": "middle" },
+            attrs: { rowspan: "2" }
+          },
+          [_vm._v("Descripción")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { "vertical-align": "middle" },
+            attrs: { rowspan: "2" }
+          },
+          [_vm._v("Resolución")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("th", [_vm._v("Descripción")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Resolución")])
       ])
     ])
   },
@@ -44202,7 +45060,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "4" } }, [
+      _c("td", { attrs: { colspan: "6" } }, [
         _vm._v(
           "\n                                            No hay orden del día agregada\n                                        "
         )
@@ -44411,6 +45269,32 @@ var staticRenderFns = [
       _c("td", { attrs: { colspan: "6" } }, [
         _vm._v(
           "\n                                            No existe convocatoria habilitada\n                                        "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Opción")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Código")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Descripción")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "4" } }, [
+        _vm._v(
+          "\n                                                No hay resoluciones agregadas\n                                            "
         )
       ])
     ])
@@ -45438,25 +46322,39 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticStyle: {
-                                          "vertical-align": "middle"
-                                        },
-                                        attrs: { width: "1", align: "center" }
-                                      },
-                                      [
-                                        _c("input", {
-                                          staticClass: "form-control-file",
-                                          attrs: {
-                                            type: "file",
-                                            id: "archivoInput" + detalle.nro,
-                                            accept: "application/*"
-                                          }
-                                        })
-                                      ]
-                                    )
+                                    detalle.invitado != "Ninguno"
+                                      ? _c(
+                                          "td",
+                                          {
+                                            staticStyle: {
+                                              "vertical-align": "middle"
+                                            },
+                                            attrs: {
+                                              width: "1",
+                                              align: "center"
+                                            }
+                                          },
+                                          [
+                                            _c("input", {
+                                              staticClass: "form-control-file",
+                                              attrs: {
+                                                type: "file",
+                                                id:
+                                                  "archivoInput" + detalle.nro,
+                                                accept: "application/*"
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      : _c(
+                                          "td",
+                                          {
+                                            staticStyle: {
+                                              "vertical-align": "middle"
+                                            }
+                                          },
+                                          [_vm._v("Ninguno")]
+                                        )
                                   ])
                                 }),
                                 0
@@ -46674,7 +47572,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "4" } }, [
+      _c("td", { attrs: { colspan: "5" } }, [
         _vm._v(
           "\n                                            No hay orden del día agregada\n                                        "
         )

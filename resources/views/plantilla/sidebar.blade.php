@@ -23,7 +23,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item nav-dropdown">
+            <!-- <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-note"></i>Resolución</a>
                 <ul class="nav-dropdown-items">
                     <li @click="menu=6" class="nav-item">
@@ -33,7 +33,7 @@
                         <a class="nav-link" href="#"><i class="icon-docs"></i>Documentos</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             <li @click="menu=8" class="nav-item">
                 <a class="nav-link" href="#"><i class="icon-book-open"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
             </li>

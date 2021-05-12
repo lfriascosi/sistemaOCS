@@ -14,6 +14,9 @@
                     <button type="button" @click="mostrarDetalleActa()" class="btn btn-secondary">
                         <i class="icon-plus"></i>&nbsp;Nueva
                     </button>
+                    <button type="button" @click="mostrarModal()" class="btn btn-secondary"  data-toggle="modal" data-target="#modalResolucion">
+                        <i class="icon-plus"></i>&nbsp;Detalle
+                    </button>
                 </div>
                 <!--Listado Acta-->
                 <template v-if="listado==1">
@@ -103,7 +106,8 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="">Código<span style="color:red;" v-show="codigo==''">(*Ingrese)</span></label>
-                                <input type="text" placeholder="Ingrese el código de la acta" class="form-control" v-model="codigo">
+                                <input type="text" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                placeholder="Ingrese el código de la acta" class="form-control" v-model="codigo">
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -174,39 +178,59 @@
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th>Opciones</th>
-                                            <th>Nro</th>
-                                            <th>Nombre</th>
+                                            <th colspan="2">Opciones</th>
+                                            <th rowspan="2" style="vertical-align:middle;">Nro</th>
+                                            <th rowspan="2" style="vertical-align:middle;">Nombre</th>
+                                            <th rowspan="2" style="vertical-align:middle;">Descripción</th>
+                                            <th rowspan="2" style="vertical-align:middle;">Resolución</th>
+                                        </tr>
+                                        <tr>
                                             <th>Descripción</th>
+                                            <th>Resolución</th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="arraySelectOrdendia.length">
-                                        <tr v-for="detalle in arraySelectOrdendia" :key="detalle.id">
+                                    <tbody v-if="arrayVistaOrdendia.length">
+                                        <tr v-for="detalle in arrayVistaOrdendia" :key="detalle.idordendia">
                                             <td width="90" align="center" style="vertical-align:middle;">
-                                                <button v-if="detalle.descripcion=='Ninguna'" @click="abrirModalDescripcion(detalle.id)" type="button"
+                                                <button v-if="detalle.descripcion=='Ninguna'" @click="abrirModalDescripcion(detalle.idordendia)" type="button"
                                                 class="btn btn-success btn-sm" title="Agregar descripción" data-toggle="modal" data-target="#modalDescripcionN">
                                                     <i class="icon-plus"></i>
                                                 </button>
-                                                <button v-if="detalle.descripcion!='Ninguna'" @click="editarDescripcion(detalle.id)" type="button"
+                                                <button v-if="detalle.descripcion!='Ninguna'" @click="editarDescripcion(detalle.idordendia)" type="button"
                                                 class="btn btn-warning btn-sm" title="Editar descripción" data-toggle="modal" data-target="#modalDescripcionN">
                                                     <i class="icon-pencil"></i>
                                                 </button>
-                                                <button v-if="detalle.descripcion!='Ninguna'" @click="eliminarDescripcion(detalle.id)" type="button"
+                                                <button v-if="detalle.descripcion!='Ninguna'" @click="eliminarDescripcion(detalle.idordendia)" type="button"
                                                 class="btn btn-danger btn-sm" title="Eliminar descripción">
                                                     <i class="icon-close"></i>
                                                 </button>
                                             </td>
+                                            <td width="90" align="center" style="vertical-align:middle;">
+                                                <button v-if="detalle.resolucion=='Ninguna'" @click="abrirModalResolucion(detalle.idordendia)" type="button"
+                                                class="btn btn-primary btn-sm" title="Agregar resolución" data-toggle="modal" data-target="#modalResolucion">
+                                                    <i class="icon-plus"></i>
+                                                </button>
+                                                <button v-if="detalle.resolucion!='Ninguna'" @click="editarResolucion(detalle.idordendia)" type="button"
+                                                class="btn btn-warning btn-sm" title="Editar resolución" data-toggle="modal" data-target="#modalResolucion">
+                                                    <i class="icon-pencil"></i>
+                                                </button>
+                                                <button v-if="detalle.resolucion!='Ninguna'" @click="eliminarResolucion(detalle.idordendia)" type="button"
+                                                class="btn btn-danger btn-sm" title="Eliminar resoluciones">
+                                                    <i class="icon-close"></i>
+                                                </button>
+                                            </td>
                                             <td align="center" style="vertical-align:middle;" v-text="detalle.numerador"></td>
-                                            <td v-if="buscarComa(detalle.id)" style="vertical-align:middle;" v-text="detalle.nombre"></td>
+                                            <td v-if="buscarComa(detalle.idordendia)" style="vertical-align:middle;" v-text="detalle.nombre"></td>
                                             <td v-else>
-                                                <input v-model="detalle.nombreAlternativo" type="text" value="" class="form-control" placeholder="Ingrese un nombre">
+                                                <input v-model="detalle.nombrealternativo" type="text" value="" class="form-control" placeholder="Ingrese un nombre">
                                             </td>
                                             <td v-text="detalle.descripcion"></td>
+                                            <td v-text="detalle.resolucion"></td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
                                         <tr>
-                                            <td colspan="4">
+                                            <td colspan="6">
                                                 No hay orden del día agregada
                                             </td>
                                         </tr>
@@ -514,23 +538,24 @@
         </div>
         <!--Fin del modal-->
         <!--Inicio del modal Descripcion -->
-        <div class="modal fade" id="modalDescripcionN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" v-text="tituloModal"></h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close" data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <textarea type="textarea" v-model="descripcionActa" class="form-control"
-                                placeholder="Ingrese la descripción deacuerdo al punto del orden día seleccionado." rows="6"></textarea>
-                            </div>&nbsp;
-                            <div class="col-md-12" style="border-top: 1px solid #c2cfd6;">
+        <div v-if="valModal">
+            <div class="modal fade" id="modalDescripcionN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <textarea type="textarea" v-model="descripcionActa" class="form-control"
+                                    placeholder="Ingrese la descripción deacuerdo al punto del orden día seleccionado." rows="6"></textarea>
+                                </div>&nbsp;
+                                <div class="col-md-12" style="border-top: 1px solid #c2cfd6;">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <b>Seleccione un punto adisional</b>
@@ -547,25 +572,94 @@
                                                     <div class="input-group">
                                                         <div v-for="check in arrayCheckbox" :key="check.id">
                                                             <label>{{check.numerador}}</label>
-                                                            <input type="checkbox" v-model="arraySelectCheckbox" :value="check"/>
+                                                            <input type="checkbox" v-model="arrayCheckboxSelect" :value="check"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal()" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" @click="guardarDescripcion()" data-dismiss="modal">Guardar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+        <!--Fin del modal-->
+        <!--Inicio del modal Resolucion -->
+        <div v-if="valModal">
+            <div class="modal fade" id="modalResolucion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <textarea v-model="descripcionResolucion" type="textarea" class="form-control"
+                                        placeholder="Ingrese la descripción deacuerdo al punto del orden día seleccionado." rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <button type="button" @click="agregarResolucion()" class="btn btn-success form-control btnagregarR" title="Agregar resolución">
+                                            <i class="icon-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive col-md-12">
+                                    <table class="table table-bordered table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Opción</th>
+                                                <th>Código</th>
+                                                <th>Descripción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody v-if="arrayResolucionVista.length">
+                                            <tr v-for="(resolucion,index) in arrayResolucionVista" :key="resolucion.id">
+                                                <td width="10" align="center" style="vertical-align:middle;">
+                                                    <button @click="eliminarResolucionVista(index)" type="button" class="btn btn-danger btn-sm" title="Eliminar resolución">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+                                                </td>
+                                                <td width="250" align="center" style="vertical-align:middle;" v-text="resolucion.codigo"></td>
+                                                <td align="justify" style="vertical-align:middle;" v-text="resolucion.descripcion"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody v-else>
+                                            <tr>
+                                                <td colspan="4">
+                                                    No hay resoluciones agregadas
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModalResolucion()" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" @click="guardarResolucion()" data-dismiss="modal">Guardar</button>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="cerrarModal()" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" @click="guardarDescripcion()" data-dismiss="modal">Guardar</button>
-                    </div>
+                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-content -->
+                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal-dialog -->
         </div>
         <!--Fin del modal-->
         <!--Inicio del modal Persona agregar/actualizar-->
@@ -667,7 +761,7 @@
                 errorActa : 0,
                 errorMostrarMsjActa : [],
                 tipoAccionInv : 0,
-                idordendia:0,
+                idordendia:'',
                 
                 //Inicio
                 arrayActa :[],
@@ -676,9 +770,13 @@
                 arrayListConvocatoria :[],
                 arraySelectConvocatoria :[],
                 arrayTempConvocatoria :[],
-                arraySelectOrdendia :[],
                 arrayCheckbox:[],
-                arraySelectCheckbox:[],
+                arrayCheckboxSelect:[],
+                arraySelectOrdendia :[],
+                arrayDescripcion:[],
+                arrayResolucion:[],
+                arrayResolucionVista:[],
+                arrayVistaOrdendia :[],
                 codigoConvocatoria:'',
                 codigoVerifi:'',
                 codigo :'',
@@ -692,8 +790,10 @@
                 emailRedactor:'',
                 perfilRedactor:'',
                 valBoolean:false,
-                idDescripcion:'',
                 aidConvocatoriaActa:'',
+                valModal:false,
+                descripcionResolucion:'',
+                descripcionResolucion:'',
                 //Fin
                 
                 listado: 1,
@@ -739,6 +839,12 @@
                     from++;
                 }
                 return pagesArray;
+            },
+            mayus : function(){
+                let me=this;
+                if(me.codigo!=''){
+                    me.codigo=me.codigo.toUpperCase();
+                }
             }
         },
         methods : {
@@ -790,10 +896,10 @@
                 me.pagination.current_page=page;
                 me.listarConvocatoria(page,buscar,criterio);
             },
-            encuentra(nombre){
+            encuentra(descripcion){
                 var sw=0;
-                for (var i = 0; i < this.arrayOrdenDia.length; i++) {
-                    if (this.arrayOrdenDia[i].nombre==nombre) {
+                for (var i = 0; i < this.arrayResolucion.length; i++) {
+                    if (this.arrayResolucion[i].descripcion==descripcion) {
                         sw=true;
                     }
                 }
@@ -808,114 +914,118 @@
                 }
                 return sw;
             },
-            encuentraPersonaInv(cedula){
-                var sw=0;
-                for (var i = 0; i < this.arrayPersonaInv.length; i++) {
-                    if (this.arrayPersonaInv[i].cedula==cedula && this.arrayPersonaInv[i].idordendia==this.idordendia) {
-                        sw=true;
-                    }
-                }
-                return sw;
-            },
-            eliminarOrdendia(index){
+            eliminarResolucionVista(index){
                 let me=this;
-                me.eliminarInvitado(me.arrayOrdenDia[index].nro);
-                me.arrayOrdenDia.splice(index,1);
-                for (var i = 0; i < me.arrayOrdenDia.length; i++) {
+                //me.eliminarInvitado(me.arrayOrdenDia[index].nro);
+                me.arrayResolucionVista.splice(index,1);
+                /*for (var i = 0; i < me.arrayOrdenDia.length; i++) {
                     me.arrayOrdenDia[i].nro=i+1;
-                }
-            },
-            eliminarRI(num,id){
-                let me=this;
-                if(num==1){
-                    for (var i = 0; i < me.arrayPersonaInv.length; i++) {
-                        if(me.arrayPersonaInv[i].idordendia==id){
-                            me.arrayPersonaInv.splice(i,1);
-                            break;
-                        }
-                    }
-                }else{
-                    num--;
-                    for (var i = 0; i < me.arrayPersonaInv.length; i++) {
-                        if(me.arrayPersonaInv[i].idordendia==id){
-                            me.arrayPersonaInv.splice(i,1);
-                            me.eliminarRI(num,id);
-                        }
-                    }
-                }
-            },
-            eliminarInvitado(id){
-                let me=this;
-                var num=0;
-                for (var i = 0; i < me.arrayOrdenDia.length; i++) {
-                    if(me.arrayOrdenDia[i].nro==id){
-                        me.arrayOrdenDia[i].invitado='Ninguno';
-                    }
-                }
-                for (var i = 0; i < me.arrayPersonaInv.length; i++) {
-                    if(me.arrayPersonaInv[i].idordendia==id){
-                        num++;
-                    }
-                }
-                me.eliminarRI(num,id);
+                }*/
             },
             eliminarPersona(index){
                 let me=this;
                 me.arrayPersona.splice(index,1);
             },
-            agregarOrdendia(){
-                let me=this;
-                if(me.nombre==''){
-
-                }else{
-                    if(me.encuentra(me.nombre)){
-                        Swal.fire({
-                            title: 'Error...',
-                            text: 'Ese nombre ya se encuentra agregado!',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }else{
-                        me.arrayOrdenDia.push({
-                        nro: me.arrayOrdenDia.length+1,
-                        nombre: me.nombre,
-                        invitado: 'Ninguno'
-                        });
-                        me.nombre="";
-                    }                    
+            metodoSortResolu(){
+                let me = this;
+                var arrayTemp=[];
+                me.arrayResolucion.sort(function (o1,o2) {
+                    if (o1.idordendia > o2.idordendia) { //comparación lexicogŕafica
+                        return 1;
+                    } else if (o1.idordendia < o2.idordendia) {
+                        return -1;
+                    } 
+                    return 0;
+                });
+                for (var i = 0; i < me.arrayResolucion.length; i++) {
+                    me.arrayResolucion[i].codigo='';
                 }
             },
-            agregarInvitado(data = []){
+            ordenarCodigoResol(){
                 let me=this;
-                if(me.encuentraPersonaInv(data['numeroIdentificacion'])){
+                //me.metodoSortResolu();
+                me.codigo=me.codigo.toUpperCase();
+                var pos = me.codigo.length-2;
+                var cadCe='';
+                var codigoVal='';
+                var contV=0;
+                var contC=0;
+                var contV2=false;
+                var contC2=0;
+                for (var i = 0; i < me.arrayResolucion.length; i++) {
+                    contV=0;
+                    for (var j = 0; j < me.arrayResolucion.length; j++) {
+                        if(me.arrayResolucion[i].descripcion==me.arrayResolucion[j].descripcion){
+                            contV++;
+                        }
+                    }
+                    if(contV==1){
+                        contC++;
+                    }
+                }
+                for (var i = 0; i < me.arrayResolucionVista.length; i++) {
+                    contV2=false;
+                    for (var j = 0; j < me.arrayResolucion.length; j++) {
+                        if(me.arrayResolucionVista[i].codigo==me.arrayResolucion[j].codigo){
+                            contV2=true;
+                        }
+                    }
+                    if(contV2){
+                        contC2++;
+                    }
+                }
+                var contador=(contC-contC2+me.arrayResolucionVista.length+1);
+
+                if(contador<9){
+                    cadCe='/00';
+                }else{
+                    cadCe='/0';
+                }
+                if(me.codigo.includes('-A',pos)){
+                    codigoVal=me.codigo.slice(0,pos)+cadCe+(contador);
+                }else{
+                    codigoVal=me.codigo+cadCe+(contador);
+                }
+                return codigoVal;
+            },
+            encuentraResolucion(descripcion){
+                var sw=0;
+                for (var i = 0; i < this.arrayResolucionVista.length; i++) {
+                    if (this.arrayResolucionVista[i].descripcion==descripcion) {
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            agregarResolucion(){
+                let me=this;
+                if(me.descripcionResolucion==''){
                     Swal.fire({
                         title: 'Error...',
-                        text: 'La perona ya se encuentra invitada a este punto de la orden del dia!',
+                        text: 'Agrege una descripción!',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
                 }else{
-                    me.arrayPersonaInv.push({
-                    idordendia: me.idordendia,
-                    cedula: data['numeroIdentificacion'],
-                    nombre: data['apellidos']+' '+data['nombres'],
-                    EMail: data['EMail'],
-                    perfil: data['perfil']
-                    });
-                    var invitados='';
-                    for (var i = 0; i < me.arrayOrdenDia.length; i++) {
-                        if (me.arrayOrdenDia[i].nro==me.idordendia) {
-                            if(me.arrayOrdenDia[i].invitado!='Ninguno'){
-                                invitados+=', '+data['apellidos']+' '+data['nombres'];
-                                me.arrayOrdenDia[i].invitado+=invitados;
-                            }else{
-                                invitados=data['apellidos']+' '+data['nombres'];
-                                me.arrayOrdenDia[i].invitado=invitados;
-                            }
-                            break;
-                        }
+                    if(!me.encuentraResolucion(me.descripcionResolucion)){
+                        //for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+                            me.arrayResolucionVista.push({
+                                //idordendia: me.arrayCheckboxSelect[i].id,
+                                codigo: me.ordenarCodigoResol(),
+                                descripcion: me.descripcionResolucion
+                            });
+                        //}
+                        me.descripcionResolucion="";
+                        //me.llenarVistaDescripcionResolucion();
+                    }else{
+                        Swal.fire({
+                            title: 'Error...',
+                            text: 'La descripción ya existe!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                     }
-                } 
+                }
             },
             agregarPersona(){
                 let me=this;
@@ -960,51 +1070,46 @@
                     });
                 }
             },
-            inicializarOrdenDiaSelect(){
-                let me=this;
-                var arrayTemp=[];
-                for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-                    arrayTemp.push({
-                        id: me.arraySelectOrdendia[i]['id']+'',
-                        numerador: me.arraySelectOrdendia[i]['numerador']+'',
-                        nombre: me.arraySelectOrdendia[i]['nombre'],
-                        nombreAlternativo:'',
-                        descripcion: 'Ninguna'
-                    });
-                }
-                me.arraySelectOrdendia=arrayTemp;
-            },
             agregarConvocatoriaModal(data =[]){
                 let me=this;
-                if(me.arraySelectConvocatoria.length>0){
+                if(me.codigo!=''){
+                    if(me.arraySelectConvocatoria.length>0){
+                        Swal.fire({
+                            title: 'Error...',
+                            text: 'Solo se puede seleccionar una convocatoria!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        me.buscarA="";
+                    }else{
+                        me.arraySelectConvocatoria.push({
+                        id: data['id'],
+                        titulo: data['titulo'],
+                        codigo: data['codigo'],
+                        descripcion: data['descripcion'],
+                        estado: data['estado'],
+                        iduser: data['iduser'],
+                        apellidos: data['apellidos'],
+                        nombres: data['nombres'],
+                        EMail: data['EMail'],
+                        perfil: data['perfil']
+                        });
+                        var url='/convocatoria/obtenerOrdenDias?id='+me.arraySelectConvocatoria[0]['id'];
+                        axios.get(url).then(function (response) {
+                            var respuesta=response.data;
+                            me.arraySelectOrdendia = respuesta.orden_dias;
+                            me.inicializarOrdenDiaSelect();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }
+                }else{
                     Swal.fire({
                         title: 'Error...',
-                        text: 'Solo se puede seleccionar una convocatoria!',
+                        text: 'Debe ingresar un código de acta!',
                         icon: 'error',
                         confirmButtonText: 'OK'
-                    });
-                    me.buscarA="";
-                }else{
-                    me.arraySelectConvocatoria.push({
-                    id: data['id'],
-                    titulo: data['titulo'],
-                    codigo: data['codigo'],
-                    descripcion: data['descripcion'],
-                    estado: data['estado'],
-                    iduser: data['iduser'],
-                    apellidos: data['apellidos'],
-                    nombres: data['nombres'],
-                    EMail: data['EMail'],
-                    perfil: data['perfil']
-                    });
-                    var url='/convocatoria/obtenerOrdenDias?id='+me.arraySelectConvocatoria[0]['id'];
-                    axios.get(url).then(function (response) {
-                        var respuesta=response.data;
-                        me.arraySelectOrdendia = respuesta.orden_dias;
-                        me.inicializarOrdenDiaSelect();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
                     });
                 }
             },
@@ -1018,35 +1123,202 @@
                         confirmButtonText: 'OK'
                     });
                 }else{
-                    if(me.arraySelectConvocatoria.length==0){
-                        me.arraySelectConvocatoria=me.arrayTempConvocatoria;
-                        me.arrayTempConvocatoria=[];
-                        me.codigoConvocatoria='';
-                        me.codigoVerifi='';
+                    //if(me.codigo!=''){
+                        if(me.arraySelectConvocatoria.length==0){
+                            me.arraySelectConvocatoria=me.arrayTempConvocatoria;
+                            me.arrayTempConvocatoria=[];
+                            me.codigoConvocatoria='';
+                            me.codigoVerifi='';
 
-                        var url='/convocatoria/obtenerOrdenDias?id='+me.arraySelectConvocatoria[0]['id'];
-                        axios.get(url).then(function (response) {
-                            var respuesta=response.data;
-                            me.arraySelectOrdendia = respuesta.orden_dias;
-                            me.inicializarOrdenDiaSelect();
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                            var url='/convocatoria/obtenerOrdenDias?id='+me.arraySelectConvocatoria[0]['id'];
+                            axios.get(url).then(function (response) {
+                                var respuesta=response.data;
+                                me.arraySelectOrdendia = respuesta.orden_dias;
+                                me.inicializarOrdenDiaSelect();
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        }else{
+                            Swal.fire({
+                                title: 'Error...',
+                                text: 'Solo se puede seleccionar una convocatoria!',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                        /*
                     }else{
                         Swal.fire({
                             title: 'Error...',
-                            text: 'Solo se puede seleccionar una convocatoria!',
+                            text: 'Debe ingresar un código de acta!',
                             icon: 'error',
                             confirmButtonText: 'OK'
                         });
                     }
+                    */
                 }                
             },
             eliminarconvocatoria(){
                 let me=this;
                 me.arraySelectConvocatoria=[];
                 me.arraySelectOrdendia=[];
+                me.arrayVistaOrdendia=[];
+                me.codigoVerifi='';
+            },
+            combinarDescripcion(){
+                let me=this;
+                var arrayTemp=[];
+                var idT='';
+                var numeradorT='';
+                var nombreT='';
+                var descripcionT='';
+                var cont=0;
+                var cont2=0;
+                var cade='';
+                for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+                    cont=0;
+                    idT='';
+                    numeradorT='';
+                    nombreT='';
+                    descripcionT='';
+                    for (var j = 0; j < me.arrayVistaOrdendia.length; j++) {
+                        if(me.arrayVistaOrdendia[i].descripcion!='Ninguna' && me.arrayVistaOrdendia[i].descripcion==me.arrayVistaOrdendia[j].descripcion){
+                            cont++;
+                            if(cont>1){
+                                idT+= ',';
+                                numeradorT+= ',';
+                                nombreT+= ',';
+                            }
+                            idT+= me.arrayVistaOrdendia[j].idordendia;
+                            numeradorT+= me.arrayVistaOrdendia[j].numerador;
+                            nombreT+= me.arrayVistaOrdendia[j].nombre;
+                            descripcionT=me.arrayVistaOrdendia[j].descripcion;
+                        }
+                    }
+                    if(cont>1){
+                        if(!me.buscarD(idT,arrayTemp)){
+                            var arrayId=idT.split(",");
+                            cont2=0;
+                            cade='';
+                            for (var q = 0; q < me.arrayResolucion.length; q++) {
+                                if(arrayId[0]==me.arrayResolucion[q].idordendia){
+                                    if(cont2>0){
+                                        cade+=',';
+                                    }else{
+                                        me.codigo=me.codigo.toUpperCase();
+                                        var pos = me.codigo.length-2;
+                                        if(me.codigo.includes('-A',pos)){
+                                            cade+=me.codigo.slice(0,pos)+'/(';
+                                        }else{
+                                            cade+=me.codigo+'/(';
+                                        }
+                                    }
+                                    cade+=me.arrayResolucion[q].codigo.slice(-3);
+                                    cont2++;
+                                }
+                            }
+                            if(cade==''){
+                                cade='Ninguna';
+                            }else{
+                                cade+=')';
+                            }
+                            arrayTemp.push({
+                                idordendia: idT,
+                                numerador: numeradorT,
+                                nombre: nombreT,
+                                nombrealternativo: '',
+                                descripcion: descripcionT,
+                                resolucion: cade
+                            });
+                        }
+                    }else{
+                        cont2=0;
+                        cade='';
+                        for (var q = 0; q < me.arrayResolucion.length; q++) {
+                            if(me.arrayVistaOrdendia[i].idordendia==me.arrayResolucion[q].idordendia){
+                                if(cont2>0){
+                                    cade+=',';
+                                }else{
+                                    me.codigo=me.codigo.toUpperCase();
+                                    var pos = me.codigo.length-2;
+                                    if(me.codigo.includes('-A',pos)){
+                                        cade+=me.codigo.slice(0,pos)+'/(';
+                                    }else{
+                                        cade+=me.codigo+'/(';
+                                    }
+                                }
+                                cade+=me.arrayResolucion[q].codigo.slice(-3);
+                                cont2++;
+                            }
+                        }
+                        if(cade==''){
+                            cade='Ninguna';
+                        }else{
+                            cade+=')';
+                        }
+                        arrayTemp.push({
+                            idordendia: me.arrayVistaOrdendia[i].idordendia,
+                            numerador: me.arrayVistaOrdendia[i].numerador,
+                            nombre: me.arrayVistaOrdendia[i].nombre,
+                            nombrealternativo:'',
+                            descripcion: me.arrayVistaOrdendia[i].descripcion,
+                            resolucion: cade
+                        });
+                    }
+                }
+                me.arrayVistaOrdendia=[];
+                me.arrayVistaOrdendia=arrayTemp;
+                //me.ordenarCodigoResol();
+            },
+            inicializarOrdenDiaSelect(){
+                let me=this;
+                me.arrayVistaOrdendia=[];
+                for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
+                    me.arrayVistaOrdendia.push({
+                        idordendia: me.arraySelectOrdendia[i]['id']+'',
+                        numerador: me.arraySelectOrdendia[i]['numerador']+'',
+                        nombre: me.arraySelectOrdendia[i]['nombre'],
+                        nombrealternativo:'',
+                        descripcion: 'Ninguna',
+                        resolucion: 'Ninguna'
+                    });
+                }
+            },
+            llenarVistaDescripcionResolucion(){
+                let me=this;
+                me.inicializarOrdenDiaSelect();
+                var cont=0;
+                var cade='';
+                for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+                    for (var j = 0; j < me.arrayDescripcion.length; j++) {
+                        if(me.arrayVistaOrdendia[i].idordendia==me.arrayDescripcion[j].idordendia){
+                            me.arrayVistaOrdendia[i].descripcion=me.arrayDescripcion[j].descripcion;
+                        }
+                    }
+                    cont=0;
+                    cade='';
+                    for (var q = 0; q < me.arrayResolucion.length; q++) {
+                        if(me.arrayVistaOrdendia[i].idordendia==me.arrayResolucion[q].idordendia){
+                            if(cont>0){
+                                cade+=',';
+                            }else{
+                                me.codigo=me.codigo.toUpperCase();
+                                var pos = me.codigo.length-2;
+                                if(me.codigo.includes('-A',pos)){
+                                    cade+=me.codigo.slice(0,pos)+'/(';
+                                }else{
+                                    cade+=me.codigo+'/(';
+                                }
+                            }
+                            cade+=me.arrayResolucion[q].codigo.slice(-3);
+                            cont++;
+                        }
+                    }
+                    if(cade!=''){
+                        me.arrayVistaOrdendia[i].resolucion=cade+')';
+                    }
+                }
             },
             guardarDescripcion(){
                 let me=this;
@@ -1058,20 +1330,72 @@
                         confirmButtonText: 'OK'
                     });
                 }else{
-                    if(me.arraySelectCheckbox.length>0){
-                        for (var i = 0; i < me.arraySelectCheckbox.length; i++) {
-                            for (var j = 0; j < me.arraySelectOrdendia.length; j++) {
-                                if(me.arraySelectCheckbox[i]['id']==me.arraySelectOrdendia[j]['id'] || me.idDescripcion==me.arraySelectOrdendia[j]['id']){
-                                    me.arraySelectOrdendia[j]['descripcion']=me.descripcionActa;
+                    if(me.arrayCheckboxSelect.length>0){
+                        //me.llenarVistaDescripcionResolucion();
+                        var condicion=false;
+                        for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+                            condicion=false;
+                            for (var j = 0; j < me.arrayVistaOrdendia.length; j++) {
+                                if(me.arrayCheckboxSelect[i].id==me.arrayVistaOrdendia[j].idordendia){
+                                    for (var q = 0; q < me.arrayDescripcion.length; q++) {
+                                        if(me.arrayCheckboxSelect[i].id==me.arrayDescripcion[q].idordendia){
+                                            condicion=true;
+                                            me.arrayDescripcion[q].descripcion=me.descripcionActa;
+                                        }
+                                    }
+                                    if(condicion==false){
+                                        me.arrayDescripcion.push({
+                                            idordendia: me.arrayVistaOrdendia[j].idordendia,
+                                            descripcion: me.descripcionActa,
+                                            nombrealternativo:''
+                                        });
+                                    }
                                 }
                             }
                         }
-                        me.arraySelectCheckbox=[];
                     }
+                    me.llenarVistaDescripcionResolucion();
                     me.combinarDescripcion();
                     me.descripcionActa='';
                     me.arrayCheckbox=[];
+                    me.arrayCheckboxSelect=[];
                 }
+            },
+            guardarResolucion(){
+                let me=this;
+                for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+                    for (var j = me.arrayResolucion.length; j > 0 ; j--) {
+                        if(me.arrayCheckboxSelect[i].id==me.arrayResolucion[j-1].idordendia){
+                            me.arrayResolucion.splice(j-1,1);
+                        }
+                    }
+                }
+                for (var i = 0; i < me.arrayResolucionVista.length; i++) {
+                    for (var j = 0; j < me.arrayCheckboxSelect.length; j++) {
+                        me.arrayResolucion.push({
+                            idordendia: me.arrayCheckboxSelect[j].id,
+                            codigo:me.arrayResolucionVista[i].codigo,
+                            descripcion: me.arrayResolucionVista[i].descripcion
+                        });
+                    }
+                }
+                me.arrayResolucionVista=[];
+                me.llenarVistaDescripcionResolucion();
+                //me.ordenarCodigoResol();
+                me.combinarDescripcion();
+                me.arrayCheckbox=[];
+                me.arrayCheckboxSelect=[];
+            },
+            metodoSortOrdenDia(){
+                let me = this;
+                me.arraySelectOrdendia.sort(function (o1,o2) {
+                    if (o1.numerador > o2.numerador) { //comparación lexicogŕafica
+                        return 1;
+                    } else if (o1.numerador < o2.numerador) {
+                        return -1;
+                    } 
+                    return 0;
+                });
             },
             eliminarDescripcion(id){
                 let me=this;
@@ -1082,54 +1406,63 @@
                 var arrayTemp=[];
                 var pos=0;
                 arrayId=cadenaId.split(",");
-                if(arrayId.length>1){
-                    for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-                        if(me.arraySelectOrdendia[i]['id']==id){
-                            arrayNro=me.arraySelectOrdendia[i]['numerador'].split(",");
-                            arrayNombre=me.arraySelectOrdendia[i]['nombre'].split(",");
-                        }
-                    }
-                    for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-                        if(me.arraySelectOrdendia[i]['id']==id){
-                            for (var j = 0; j < arrayId.length; j++) {
-                                arrayTemp.push({
-                                    id: arrayId[j],
-                                    numerador: arrayNro[j],
-                                    nombre: arrayNombre[j],
-                                    nombreAlternativo:'',
-                                    descripcion: 'Ninguna'
-                                });
-                            }
-                        }else{
-                            arrayTemp.push({
-                                id: me.arraySelectOrdendia[i]['id'],
-                                numerador: me.arraySelectOrdendia[i]['numerador'],
-                                nombre: me.arraySelectOrdendia[i]['nombre'],
-                                nombreAlternativo:'',
-                                descripcion: me.arraySelectOrdendia[i]['descripcion']
-                            });
-                        }
-                    }
-                    me.arraySelectOrdendia=arrayTemp;
-                }else{
-                    for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-                        if(me.arraySelectOrdendia[i]['id']==id){
-                            me.arraySelectOrdendia[i]['descripcion']='Ninguna';
+                var arrayPos=[];
+                for (var i = 0; i < arrayId.length; i++) {
+                    for (var j = 0; j < me.arrayDescripcion.length; j++) {
+                        if(arrayId[i]==me.arrayDescripcion[j].idordendia){
+                            me.arrayDescripcion.splice(j,1);
                         }
                     }
                 }
+                me.llenarVistaDescripcionResolucion();
+                me.combinarDescripcion();
+            },
+            eliminarResolucion(index){
+                let me=this;
+                this.llenarCheckbox(index);
+                for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+                    for (var j = me.arrayResolucion.length; j > 0 ; j--) {
+                        if(me.arrayCheckboxSelect[i].id==me.arrayResolucion[j-1].idordendia){
+                            me.arrayResolucion.splice(j-1,1);
+                        }
+                    }
+                }
+                me.llenarVistaDescripcionResolucion();
+                me.combinarDescripcion();
+                me.arrayCheckbox=[];
+                me.arrayCheckboxSelect=[];
             },
             editarDescripcion(id){
                 let me=this;
-                me.idDescripcion=id;
                 me.tituloModal = 'Editar descripción';
                 me.valBoolean=false;
                 me.arrayCheckbox=[];
-                me.arraySelectCheckbox=[];
-                for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-                    if(me.arraySelectOrdendia[i]['id']==id){
-                        me.descripcionActa=me.arraySelectOrdendia[i]['descripcion'];
+                me.arrayCheckboxSelect=[];
+                for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+                    if(me.arrayVistaOrdendia[i].idordendia==id){
+                        me.descripcionActa=me.arrayVistaOrdendia[i].descripcion;
                         me.llenarCheckbox(id);
+                    }
+                }
+            },
+            editarResolucion(id){
+                let me=this;
+                me.tituloModal = 'Editar resolción';
+                me.arrayResolucionVista=[];
+                me.arrayCheckbox=[];
+                me.arrayCheckboxSelect=[];
+                me.llenarCheckbox(id);
+                for (var i = 0; i < me.arrayCheckboxSelect.length; i++) {
+                    for (var j = 0; j < me.arrayResolucion.length; j++) {
+                        if(me.arrayCheckboxSelect[i].id==me.arrayResolucion[j].idordendia){
+                            if(!me.buscarR(me.arrayResolucion[j].descripcion,me.arrayResolucionVista)){
+                                me.arrayResolucionVista.push({
+                                    //idordendia: me.arrayResolucion[j].idordendia,
+                                    codigo:me.arrayResolucion[j].codigo,
+                                    descripcion: me.arrayResolucion[j].descripcion
+                                })
+                            }
+                        }
                     }
                 }
             },
@@ -1144,36 +1477,36 @@
             llenarCheckbox(id){
                 let me=this;
                 me.arrayCheckbox=[];
-                me.arraySelectCheckbox=[];
+                me.arrayCheckboxSelect=[];
                 var arrayId=[];
                 var cadenaId='';
                 var arrayNro=[];
                 var cadenaNro='';
-                for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-                    if(me.arraySelectOrdendia[i]['id']==id){
+                for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
+                    if(me.arrayVistaOrdendia[i].idordendia==id){
                         cadenaId=id+'';
                         arrayId=cadenaId.split(",");
                         if(arrayId.length>1){
-                            cadenaNro=me.arraySelectOrdendia[i]['numerador']+'';
+                            cadenaNro=me.arrayVistaOrdendia[i]['numerador']+'';
                             arrayNro=cadenaNro.split(",");
                             for (var j = 0; j < arrayId.length; j++) {
-                                me.arraySelectCheckbox.push({
+                                me.arrayCheckboxSelect.push({
                                     id: arrayId[j],
                                     numerador: arrayNro[j]
                                 })
                             }
                         }else{
-                            me.arraySelectCheckbox.push({
-                                id: me.arraySelectOrdendia[i]['id'],
-                                numerador: me.arraySelectOrdendia[i]['numerador']
+                            me.arrayCheckboxSelect.push({
+                                id: me.arrayVistaOrdendia[i].idordendia,
+                                numerador: me.arrayVistaOrdendia[i]['numerador']
                             })
                         }
                     }else{
-                        if(me.arraySelectOrdendia[i]['descripcion']=='Ninguna'){
-                            cadenaId=me.arraySelectOrdendia[i]['id']+'';
+                        if(me.arrayVistaOrdendia[i]['descripcion']=='Ninguna'){
+                            cadenaId=me.arrayVistaOrdendia[i].idordendia+'';
                             arrayId=cadenaId.split(",");
                             if(arrayId.length>1){
-                                cadenaNro=me.arraySelectOrdendia[i]['numerador']+'';
+                                cadenaNro=me.arrayVistaOrdendia[i]['numerador']+'';
                                 arrayNro=cadenaNro.split(",");
                                 for (var j = 0; j < arrayId.length; j++) {
                                     me.arrayCheckbox.push({
@@ -1183,8 +1516,8 @@
                                 }
                             }else{
                                 me.arrayCheckbox.push({
-                                    id: me.arraySelectOrdendia[i]['id'],
-                                    numerador: me.arraySelectOrdendia[i]['numerador']
+                                    id: me.arrayVistaOrdendia[i].idordendia,
+                                    numerador: me.arrayVistaOrdendia[i]['numerador']
                                 });
                             }
                         }
@@ -1203,62 +1536,20 @@
             buscarD(id,data=[]){
                 var sw=0;
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].id==id) {
+                    if (data[i].idordendia==id) {
                         sw=true;
                     }
                 }
                 return sw;
             },
-            combinarDescripcion(){
-                let me=this;
-                var arrayTemp=[];
-                var idT='';
-                var numeradorT='';
-                var nombreT='';
-                var descripcionT='';
-                var cont=0;
-                for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
-                    cont=0;
-                    idT='';
-                    numeradorT='';
-                    nombreT='';
-                    descripcionT='';
-                    for (var j = 0; j < me.arraySelectOrdendia.length; j++) {
-                        if(me.arraySelectOrdendia[i]['descripcion']!='Ninguna' && me.arraySelectOrdendia[i]['descripcion']==me.arraySelectOrdendia[j]['descripcion']){
-                            cont++;
-                            if(cont>1){
-                                idT+= ',';
-                                numeradorT+= ',';
-                                nombreT+= ',';
-                            }
-                            idT+= me.arraySelectOrdendia[j]['id'];
-                            numeradorT+= me.arraySelectOrdendia[j]['numerador'];
-                            nombreT+= me.arraySelectOrdendia[j]['nombre'];
-                            descripcionT=me.arraySelectOrdendia[j]['descripcion'];
-                        }
-                    }
-                    if(cont>1){
-                        if(!me.buscarD(idT,arrayTemp)){
-                            arrayTemp.push({
-                                id: idT,
-                                numerador: numeradorT,
-                                nombre: nombreT,
-                                nombreAlternativo: '',
-                                descripcion: descripcionT
-                            });
-                        }
-                    }else{
-                        arrayTemp.push({
-                            id: me.arraySelectOrdendia[i]['id'],
-                            numerador: me.arraySelectOrdendia[i]['numerador'],
-                            nombre: me.arraySelectOrdendia[i]['nombre'],
-                            nombreAlternativo:'',
-                            descripcion: me.arraySelectOrdendia[i]['descripcion']
-                        });
+            buscarR(resolucion,data=[]){
+                var sw=0;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].descripcion==resolucion) {
+                        sw=true;
                     }
                 }
-                me.arraySelectOrdendia=[];
-                me.arraySelectOrdendia=arrayTemp;
+                return sw;
             },
             verificarConvocatorias(convocatoriasT=[],buscar){
                 let me=this;
@@ -1346,41 +1637,52 @@
             },
             buscarConvocatoriaI (buscar){
                 let me=this;
-                var url='/acta/buscarConvocatoria?buscar=' + buscar+ '&criterio=codigo';
-                axios.get(url).then(function (response) {
-                    var respuesta=response.data;
-                    me.arrayTempConvocatoria = respuesta.convocatoria;
-                    if(me.arrayTempConvocatoria.length>0){
-                        var url='/acta/buscarConvocatoriaActa';
-                        axios.get(url).then(function (response) {
-                            var respuesta=response.data;
-                            var convocatoriasV = respuesta.convocatorias;
-                            var cont=0;
-                            for (var j = 0; j < convocatoriasV.length; j++) {
-                                if(me.arrayTempConvocatoria[0].id==convocatoriasV[j].id){
-                                    me.arrayTempConvocatoria=[];
-                                    me.codigoVerifi='Código inválido';
-                                    Swal.fire({
-                                        title: 'Error...',
-                                        text: 'Esta convocatoria ya tiene su acta definida!',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }else{
-                                    me.codigoVerifi='Código valido';
+                //if(me.codigo!=''){
+                    var url='/acta/buscarConvocatoria?buscar=' + buscar+ '&criterio=codigo';
+                    axios.get(url).then(function (response) {
+                        var respuesta=response.data;
+                        me.arrayTempConvocatoria = respuesta.convocatoria;
+                        if(me.arrayTempConvocatoria.length>0){
+                            var url='/acta/buscarConvocatoriaActa';
+                            axios.get(url).then(function (response) {
+                                var respuesta=response.data;
+                                var convocatoriasV = respuesta.convocatorias;
+                                var cont=0;
+                                for (var j = 0; j < convocatoriasV.length; j++) {
+                                    if(me.arrayTempConvocatoria[0].id==convocatoriasV[j].id){
+                                        me.arrayTempConvocatoria=[];
+                                        me.codigoVerifi='Código inválido';
+                                        Swal.fire({
+                                            title: 'Error...',
+                                            text: 'Esta convocatoria ya tiene su acta definida!',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }else{
+                                        me.codigoVerifi='Código valido';
+                                    }
                                 }
-                            }
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        })
-                    }else{
-                        me.codigoVerifi='Código inválido';
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            })
+                        }else{
+                            me.codigoVerifi='Código inválido';
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                /*
+                }else{
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'Debe ingresar un código de acta!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+                */
             },
             registrarConvocatoria(){
                 if(this.validarConvocatoria()){
@@ -1464,6 +1766,10 @@
                 me.arrayDetalleActa=[];
                 me.arraySelectConvocatoria=[];
                 me.arraySelectOrdendia=[];
+            },
+            mostrarModal(){
+                let me=this;
+                me.valModal=true;
             },
             ocultarDetalleActa(){
                 this.listado=1;
@@ -1596,7 +1902,16 @@
                 this.descripcionActa='';
                 this.arrayPersonaB=[];
                 this.arrayCheckbox=[];
-                this.arraySelectCheckbox=[];
+                this.arrayCheckboxSelect=[];
+                this.arrayResolucionVista=[];
+            },
+            cerrarModalResolucion(){
+                //this.modal=0;
+                this.tituloModal = '';
+                this.descripcionActa='';
+                this.arrayCheckbox=[];
+                this.arrayCheckboxSelect=[];
+                this.arrayResolucionVista=[];
             },
             abrirModal(){
                 this.tituloModal='';
@@ -1611,10 +1926,39 @@
                 this.tituloModal = 'Seleccione uno o varios usuarios';
             },
             abrirModalDescripcion(index){
-                this.tituloModal = 'Ingrese descripción';
-                this.descripcionActa='';
-                this.llenarCheckbox(index);
-                this.valBoolean=false;
+                if(this.codigo!=''){
+                    this.valModal=true;
+                    this.tituloModal = 'Ingrese descripción';
+                    this.descripcionActa='';
+                    this.llenarCheckbox(index);
+                    this.valBoolean=false;
+                    this.idordendia=index;
+                }else{
+                    this.valModal=false;
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'Debe ingresar un código de acta!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            abrirModalResolucion(index){
+                if(this.codigo!=''){
+                    this.valModal=true;
+                    this.tituloModal = 'Ingrese una o varias resoluciones';
+                    this.descripcionResolucion='';
+                    this.llenarCheckbox(index);
+                    this.arrayResolucionVista=[];
+                }else{
+                    this.valModal=false;
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'Debe ingresar un código de acta!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             }
         },
         mounted() {
@@ -1645,6 +1989,11 @@
     @media (min-width: 900px){
         .btnagregar{
             margin-top: 1.7rem;
+        }
+        .btnagregarR{
+            font-size: 20px;
+            margin-top: 0.1rem;
+            height: 88px;
         }
     }
 </style>

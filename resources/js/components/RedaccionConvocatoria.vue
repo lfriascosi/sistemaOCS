@@ -210,14 +210,15 @@
                                                 <input v-model="detalle.nombre" type="text" value="" class="form-control">
                                             </td>
                                             <td style="vertical-align:middle;" v-text="detalle.invitado"></td>
-                                            <td width="1" align="center"  style="vertical-align:middle;">
+                                            <td v-if="detalle.invitado!='Ninguno'" width="1" align="center"  style="vertical-align:middle;">
                                                 <input type="file" :id="'archivoInput'+detalle.nro" class="form-control-file" accept="application/*">
                                             </td>
+                                            <td v-else style="vertical-align:middle;">Ninguno</td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
                                         <tr>
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 No hay orden del día agregada
                                             </td>
                                         </tr>
@@ -677,7 +678,9 @@
                 var url = 'convocatoria/buscarPersona?filtro='+me.docUser;
                 axios.get(url).then(function (response) {
                     var respuesta=response.data;
+                    console.log(me.arrayUser);
                     me.arrayUser=respuesta.personas;
+                    console.log(me.arrayUser);
 
                     if (me.arrayUser.length>0) {
                         me.docUser=me.arrayUser[0]['numeroIdentificacion'];
@@ -777,27 +780,32 @@
                 me.arrayOrdenDia.forEach(od => {
                     var cadena= 'archivoInput'+od.nro;
                     var archivoExt = document.getElementById(cadena);
-                    var archivo= archivoExt.files[0];
-                    if(archivo!=null){
-                        me.arrayArchivo.push({
-                            file: archivo
-                        });
-                        od.nomdoc=archivo.name;
-                    }else{
-                        od.nomdoc='';
+                    try {
+                        var archivo= archivoExt.files[0];
+                        if(archivo!=undefined){
+                            me.arrayArchivo.push({
+                                file: archivo
+                            });
+                            od.nomdoc=archivo.name;
+                        }else{
+                            od.nomdoc='';
+                        }
+                    } catch (error) {
                     }
                 });
-                const formDataDoc = new FormData();
-                var cont=0;
-                me.arrayArchivo.forEach(element => {
-                    formDataDoc.append(cont,element.file);
-                    cont+=1;
-                });
-                axios.post('/convocatoria/storeArchivo',formDataDoc)
-                .then(function (response) {
-                }).catch(function (error) {
-                    console.log(error);
-                })
+                if(me.arrayArchivo.length){
+                    const formDataDoc = new FormData();
+                    var cont=0;
+                    me.arrayArchivo.forEach(element => {
+                        formDataDoc.append(cont,element.file);
+                        cont+=1;
+                    });
+                    axios.post('/convocatoria/storeArchivo',formDataDoc)
+                    .then(function (response) {
+                    }).catch(function (error) {
+                        console.log(error);
+                    })
+                }
             },
             agregarOrdendia(){
                 let me=this;
@@ -945,6 +953,7 @@
                         //Guardar Convocatoria
                         let me=this;
                         me.guardarArchivos();
+                        
                         axios.post('/convocatoria/registrar',{
                             'titulo' : this.titulo,
                             'codigo' : this.codigo,
