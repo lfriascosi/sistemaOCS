@@ -5118,6 +5118,7 @@ __webpack_require__.r(__webpack_exports__);
             'data_persona': _this.arrayPersona,
             'data_persona_invitada': _this.arrayPersonaInv
           }).then(function (response) {
+            me.EnvioCorreo();
             me.listado = 1;
             me.listarConvocatoria(1, '', 'codigo');
             me.titulo = '';
@@ -5129,7 +5130,8 @@ __webpack_require__.r(__webpack_exports__);
             me.arrayPersonaInv = [];
             swalWithBootstrapButtons.fire('Guardada!', 'La convocatoria ha sido guardada.', 'success');
           })["catch"](function (error) {
-            console.log(error);
+            // smsError=error;
+            // console.log(error);
             swalWithBootstrapButtons.fire('Ocurrió un conflicto', 'El código de la convocatoria ya existe.', 'error');
           }); //
         } else if (
@@ -5138,6 +5140,37 @@ __webpack_require__.r(__webpack_exports__);
           swalWithBootstrapButtons.fire('Cancelada', 'La convocatoria todavía no fue guardada.', 'error');
         }
       });
+    },
+    EnvioCorreo: function EnvioCorreo() {
+      try {
+        axios.post('/convocatoria/storeEmail', {
+          'titulo': this.titulo,
+          'codigo': this.codigo,
+          'descripcion': this.descripcion,
+          'data_persona': this.arrayPersona
+        }).then(function (response) {})["catch"](function (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ocurrió un conflicto',
+            text: 'Un usuario OCS no cuenta con un correo existente.'
+          });
+        });
+
+        if (this.arrayPersonaInv.length > 0) {
+          axios.post('/convocatoria/storeEmailInv', {
+            'titulo': this.titulo,
+            'codigo': this.codigo,
+            'descripcion': this.descripcion,
+            'data_persona_invitada': this.arrayPersonaInv
+          }).then(function (response) {})["catch"](function (error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Ocurrió un conflicto',
+              text: 'Un usuario OCS no cuenta con un correo existente.'
+            });
+          });
+        }
+      } catch (error) {}
     },
     validarConvocatoria: function validarConvocatoria() {
       this.errorConvocatoria = 0;
@@ -5158,6 +5191,9 @@ __webpack_require__.r(__webpack_exports__);
       me.descripcion = '';
       me.arrayOrdenDia = [];
       me.arrayPersona = [];
+      me.arrayDetalle = [];
+      me.arrayDetalleEnvio = [];
+      me.arrayDetalleInvitado = [];
     },
     ocultarDetalleConvocatoria: function ocultarDetalleConvocatoria() {
       this.listado = 1;
@@ -5307,7 +5343,7 @@ __webpack_require__.r(__webpack_exports__);
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de inactivar este punto de la orden diá?',
+        title: 'Esta seguro de inactivar este punto de la orden día?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Aceptar!',
@@ -5319,7 +5355,8 @@ __webpack_require__.r(__webpack_exports__);
           axios.put('/convocatoria/inactivar', {
             'id': id
           }).then(function (response) {
-            //Obtener datos de la Onden dia
+            me.envioCorreoConf(id, idconvocatoria); //Obtener datos de la Onden dia
+
             var url = '/convocatoria/obtenerOrdenDias?id=' + idconvocatoria;
             axios.get(url).then(function (response) {
               me.arrayDetalle = [];
@@ -5348,7 +5385,7 @@ __webpack_require__.r(__webpack_exports__);
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de activar este punto de la orden diá?',
+        title: 'Esta seguro de activar este punto de la orden día?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Aceptar!',
@@ -5361,6 +5398,7 @@ __webpack_require__.r(__webpack_exports__);
             'id': id
           }).then(function (response) {
             //Obtener datos de la Onden dia
+            me.envioCorreoConf(id, idconvocatoria);
             var url = '/convocatoria/obtenerOrdenDias?id=' + idconvocatoria;
             axios.get(url).then(function (response) {
               me.arrayDetalle = [];
@@ -5376,6 +5414,22 @@ __webpack_require__.r(__webpack_exports__);
         } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel) {}
+      });
+    },
+    envioCorreoConf: function envioCorreoConf(id, idconvocatoria) {
+      axios.post('/convocatoria/storeEmailConf', {
+        'titulo': this.titulo,
+        'codigo': this.codigo,
+        'descripcion': this.descripcion,
+        'id': id,
+        'idConvocatoria': idconvocatoria,
+        'data_persona_invitada': this.arrayDetalleInvitado
+      }).then(function (response) {})["catch"](function (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un conflicto',
+          text: 'El usuario no cuenta con un correo existente.'
+        });
       });
     }
   },
@@ -45882,13 +45936,13 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: _vm.personaUser == "",
-                                  expression: "personaUser==''"
+                                  value: _vm.arrayPersona.length < 1,
+                                  expression: "arrayPersona.length<1"
                                 }
                               ],
                               staticStyle: { color: "red" }
                             },
-                            [_vm._v("(*seleccione)")]
+                            [_vm._v("(*Ingrese)")]
                           )
                         ]),
                         _vm._v(" "),
@@ -46095,8 +46149,8 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: _vm.nombre == "",
-                                  expression: "nombre==''"
+                                  value: _vm.arrayOrdenDia.length < 1,
+                                  expression: "arrayOrdenDia.length<1"
                                 }
                               ],
                               staticStyle: { color: "red" }

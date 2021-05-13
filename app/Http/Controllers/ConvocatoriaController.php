@@ -106,7 +106,7 @@ class ConvocatoriaController extends Controller
         return ['detalleorden_dias' => $detalleorden_dias];
     }
 
-    //Consulta personas segunda Base
+    // //Consulta personas segunda Base local
     public function indexP(Request $request)
     {
         //if (!$request->ajax()) return redirect('/');
@@ -119,6 +119,23 @@ class ConvocatoriaController extends Controller
         }
         return ['personas'=>$personas];
     }
+    //Consulta personas segunda Base OCS
+    // public function indexP(Request $request)
+    // {
+    //     //if (!$request->ajax()) return redirect('/');
+    //     $buscar = $request->buscar;
+    //     $criterio = $request->criterio;
+    //     if($buscar==''){
+    //         $personas = Persona::orderBy('apellidos','asc')
+    //         ->where('perfil','=','MiembroOCS')
+    //         ->orderBy('apellidos','asc')->get();
+    //     }else{
+    //         $personas = Persona::where('perfil','=','MiembroOCS')
+    //         ->where($criterio,'like','%'.$buscar.'%')
+    //         ->orderBy('apellidos','asc')->get();
+    //     }
+    //     return ['personas'=>$personas];
+    // }
     public function buscarPersona( Request $request){
         if (!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
@@ -139,6 +156,82 @@ class ConvocatoriaController extends Controller
             $nombre = $file->getClientOriginalName();
             Storage::disk('public')->put($nombre,  \File::get($file));
         }
+    }
+    public function storeEmail(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $control="MiembroOCS";
+        $codigoConvocatoria = $request->codigo;
+        $personas = $request->data_persona;
+
+        $idConvocatoria = Convocatoria::where('codigo','=',$codigoConvocatoria)
+        ->select('id')
+        ->take(1)->get();
+        $lstordendias = Ordendia::where('idconvocatoria','=',$idConvocatoria[0]['id'])
+        ->orderBy('idconvocatoria','asc')->get();
+        
+        $data = ([
+                'titulo' => $request->titulo,
+                'codigo' => $request->codigo,
+                'descripcion' => $request->descripcion,
+            ]);
+        foreach ($personas as $kep => $per) {
+            Mail::to($per['EMail'])->send(new VueMail($data, $lstordendias, $control));
+        }
+    }
+    public function storeEmailInv(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $control="MiembroINV";
+            $codigoConvocatoria = $request->codigo;
+            $personas = $request->data_persona_invitada;
+        
+
+            $idConvocatoria = Convocatoria::where('codigo','=',$codigoConvocatoria)
+            ->select('id')
+            ->take(1)->get();
+            $lstordendias = Ordendia::where('idconvocatoria','=',$idConvocatoria[0]['id'])
+            ->orderBy('idconvocatoria','asc')->get();
+
+            foreach ($personas as $kep => $per) {
+                $data = ([
+                    'titulo' => $request->titulo,
+                    'codigo' => $request->codigo,
+                    'descripcion' => $request->descripcion,
+                    'numerador' => $per['idordendia'],
+                    'estado' => 'Activo'
+                ]);
+                Mail::to($per['EMail'])->send(new VueMail($data, $lstordendias, $control));
+            }
+        
+    }
+    public function storeEmailConf(Request $request){
+        $id = $request->id;
+        $idConvocatoria = $request->idConvocatoria;
+        $control="MiembroINV";
+
+        $lstordendias = Ordendia::where('idconvocatoria','=',$idConvocatoria)
+        ->orderBy('idconvocatoria','asc')->get();
+        
+        $ordenDia = Ordendia::findOrFail($request->id);
+            
+        $data = ([
+            'titulo' => $request->titulo,
+            'codigo' => $request->codigo,
+            'descripcion' => $request->descripcion,
+            'numerador' => $ordenDia->numerador,
+            'estado' => $ordenDia->estado
+        ]);
+        $personas = $request->data_persona_invitada;
+        foreach ($personas as $kep => $per) {
+            if ($ordenDia->numerador == $per['numerador']) {
+                Mail::to($per['EMail'])->send(new VueMail($data, $lstordendias, $control));
+            }
+        }
+    }
+    public function probar(Request $request){
+        print("hola");
     }
 
     /**
@@ -201,22 +294,7 @@ class ConvocatoriaController extends Controller
                         $detalleordendia->save();
                     }
                 }
-            }
-            //Envio de Correo
-            $data = ([
-                'titulo' => $request->titulo,
-                'codigo' => $request->codigo,
-                'descripcion' => $request->descripcion,
-            ]);
-            $id = $convocatoria->id;
-            $lstordendias = Ordendia::join('convocatorias','orden_dias.idconvocatoria','=','convocatorias.id')
-            ->select('orden_dias.id','orden_dias.idconvocatoria','orden_dias.numerador','orden_dias.nombre','orden_dias.nomdoc','orden_dias.estado','orden_dias.condicion')
-            ->where('orden_dias.idconvocatoria','=',$id)
-            ->orderBy('orden_dias.id','asc')->get();
-            foreach ($personas as $kep => $per) {
-                Mail::to($per['EMail'])->send(new VueMail($data, $lstordendias));
-            }
-            
+            }           
             
             @DB::commit();
         } catch (Exception $e) {

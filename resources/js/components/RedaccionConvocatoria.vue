@@ -116,7 +116,7 @@
                         <div class="form-group row border">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Usuario <span style="color:red;" v-show="personaUser==''">(*seleccione)</span></label>
+                                    <label>Usuario <span style="color:red;" v-show="arrayPersona.length<1">(*Ingrese)</span></label>
                                     <div class="form-inline">
                                         <input type="text" class="form-control" v-model="docUser" @keyup.enter="buscarPersona()" placeholder="Ingrese cédula">
                                         <button @click="abrirModal()" class="btn- btn-primary" title="Buscar Persona"  data-toggle="modal" data-target="#modalPersona">⋮</button>
@@ -170,7 +170,7 @@
                         <div class="form-group row border">
                             <div class="col-md-10">
                                 <div class="form-group">
-                                    <label>Nombre <span style="color:red;" v-show="nombre==''">(*Ingrese)</span></label>
+                                    <label>Nombre <span style="color:red;" v-show="arrayOrdenDia.length<1">(*Ingrese)</span></label>
                                     <input type="text" @keyup.enter="agregarOrdendia()" placeholder="Ingrese el nombre del punto de la orden del día" class="form-control" v-model="nombre">
                                 </div>
                             </div>
@@ -949,7 +949,6 @@
                     reverseButtons: false
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        
                         //Guardar Convocatoria
                         let me=this;
                         me.guardarArchivos();
@@ -962,6 +961,7 @@
                             'data_persona' : this.arrayPersona,
                             'data_persona_invitada' : this.arrayPersonaInv,
                         }).then(function (response) {
+                            me.EnvioCorreo();
                             me.listado=1;
                             me.listarConvocatoria(1,'','codigo');
                             me.titulo = '';
@@ -972,17 +972,18 @@
                             me.arrayPersona=[];
                             me.arrayPersonaInv=[];
                             swalWithBootstrapButtons.fire(
-                            'Guardada!',
-                            'La convocatoria ha sido guardada.',
-                            'success'
-                        )
+                                'Guardada!',
+                                'La convocatoria ha sido guardada.',
+                                'success'
+                            )
                         }).catch(function (error) {
-                            console.log(error);
+                            // smsError=error;
+                            // console.log(error);
                             swalWithBootstrapButtons.fire(
                                 'Ocurrió un conflicto',
                                 'El código de la convocatoria ya existe.',
                                 'error'
-                            )
+                            );
                         })
                         //
                     } else if (
@@ -996,6 +997,41 @@
                         )
                     }
                 })
+            },
+            EnvioCorreo(){
+                try {
+                    axios.post('/convocatoria/storeEmail',{
+                            'titulo' : this.titulo,
+                            'codigo' : this.codigo,
+                            'descripcion' : this.descripcion,
+                            'data_persona' : this.arrayPersona
+                    }).then(function (response) {
+                    }).catch(function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ocurrió un conflicto',
+                            text: 'Un usuario OCS no cuenta con un correo existente.'
+                        })
+                    });
+                    if (this.arrayPersonaInv.length>0) {
+                        axios.post('/convocatoria/storeEmailInv',{
+                            'titulo' : this.titulo,
+                            'codigo' : this.codigo,
+                            'descripcion' : this.descripcion,
+                            'data_persona_invitada' : this.arrayPersonaInv
+                        }).then(function (response) {
+                        }).catch(function (error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ocurrió un conflicto',
+                                text: 'Un usuario OCS no cuenta con un correo existente.'
+                            })
+                        });
+                    }
+                } catch (error) {
+                    
+                }
+                
             },
             validarConvocatoria(){
                 this.errorConvocatoria=0;
@@ -1017,6 +1053,9 @@
                 me.descripcion = '';
                 me.arrayOrdenDia=[];
                 me.arrayPersona=[];
+                me.arrayDetalle=[];
+                me.arrayDetalleEnvio=[];
+                me.arrayDetalleInvitado=[];
             },
             ocultarDetalleConvocatoria(){
                 this.listado=1;
@@ -1161,7 +1200,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Esta seguro de inactivar este punto de la orden diá?',
+                title: 'Esta seguro de inactivar este punto de la orden día?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Aceptar!',
@@ -1173,6 +1212,7 @@
                     axios.put('/convocatoria/inactivar',{
                         'id' : id
                     }).then(function (response) {
+                        me.envioCorreoConf(id,idconvocatoria);
                         //Obtener datos de la Onden dia
                         var url='/convocatoria/obtenerOrdenDias?id='+idconvocatoria;
                         axios.get(url).then(function (response) {
@@ -1209,7 +1249,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Esta seguro de activar este punto de la orden diá?',
+                title: 'Esta seguro de activar este punto de la orden día?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Aceptar!',
@@ -1222,6 +1262,7 @@
                         'id' : id
                     }).then(function (response) {
                         //Obtener datos de la Onden dia
+                        me.envioCorreoConf(id,idconvocatoria);
                         var url='/convocatoria/obtenerOrdenDias?id='+idconvocatoria;
                         axios.get(url).then(function (response) {
                             me.arrayDetalle=[];
@@ -1246,6 +1287,23 @@
                     
                 }
                 })
+            },
+            envioCorreoConf(id,idconvocatoria){
+                axios.post('/convocatoria/storeEmailConf',{
+                            'titulo' : this.titulo,
+                            'codigo' : this.codigo,
+                            'descripcion' : this.descripcion,
+                            'id' : id,
+                            'idConvocatoria' : idconvocatoria,
+                            'data_persona_invitada' : this.arrayDetalleInvitado
+                    }).then(function (response) {
+                    }).catch(function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ocurrió un conflicto',
+                            text: 'El usuario no cuenta con un correo existente.'
+                        })
+                    });
             },
         },
         mounted() {

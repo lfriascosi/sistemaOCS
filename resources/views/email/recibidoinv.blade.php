@@ -21,9 +21,14 @@
 </head>
 
 <body>
-    <h2 align="center">{{$data['titulo']}}</h2>
-    <h2 align="center">CONVOCATORIA Nro {{$data['codigo']}}</h2>
-    <p align="justify">{{$data['descripcion']}}</p>
+	<h3 align="left">Estimado(a):</h3>
+    <p align="justify">Ha sido(a) invitado(a) a la siguiente convocatoria en el punto del orden del día número <b>{{$data['numerador']}}</b>:<br/>
+    <b>Título:</b> {{$data['titulo']}}<br/>
+    <b>Código:</b> {{$data['codigo']}}<br/>
+    <b>Descripción:</b> {{$data['descripcion']}}<br/>
+    <b>Estado:</b> {{$data['estado']}}<br/>
+    </p>
+    
     <h3 align="center">Orden del día</h3>
     <table id="t01" ALIGN="center">
         <thead>

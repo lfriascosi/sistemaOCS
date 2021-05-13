@@ -31,6 +31,10 @@ Route::get('/convocatoria/obtenerDetalles','App\Http\Controllers\ConvocatoriaCon
 Route::get('/convocatoria/obtenerOrdenDias','App\Http\Controllers\ConvocatoriaController@obtenerOrdenDias');
 //Listado Detalle Orden dia
 Route::get('/convocatoria/obtenerDetalleOrdenDias','App\Http\Controllers\ConvocatoriaController@obtenerDetalleOrdenDias');
+//Envio de Correos
+Route::post('/convocatoria/storeEmail','App\Http\Controllers\ConvocatoriaController@storeEmail');
+Route::post('/convocatoria/storeEmailInv','App\Http\Controllers\ConvocatoriaController@storeEmailInv');
+Route::post('/convocatoria/storeEmailConf','App\Http\Controllers\ConvocatoriaController@storeEmailConf');
 //Activar o Inactivcar Orden dia
 Route::put('/convocatoria/activar','App\Http\Controllers\ConvocatoriaController@activar');
 Route::put('/convocatoria/inactivar','App\Http\Controllers\ConvocatoriaController@inactivar');
@@ -55,3 +59,5 @@ Route::get('/acta/buscarConvocatoriaActa','App\Http\Controllers\ActaController@b
 
 //Correo
 Route::post('/email/send','MailController@send');
+
+Route::get('/convocatoria/probar','App\Http\Controllers\ConvocatoriaController@probar');

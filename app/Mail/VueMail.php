@@ -18,10 +18,12 @@ class VueMail extends Mailable
      */
     public $data;
     public $lstordendias;
-    public function __construct($data,$lstordendias)
+    public $control;
+    public function __construct($data,$lstordendias,$control)
     {
         $this->data =$data;
         $this->lstordendias =$lstordendias;
+        $this->control =$control;
     }
 
     /**
@@ -31,9 +33,17 @@ class VueMail extends Mailable
      */
     public function build()
     {
-        return $this->from('robot@ist17dejulio.edu.ec','Sistema OCS')
+        if ($this->control=="MiembroOCS") {
+            return $this->from('robot@ist17dejulio.edu.ec','Sistema OCS')
                     ->view('email.recibido')
                     ->subject('Notificación del Sitema OCS')
                     ->with($this->data,$this->lstordendias);
+        }
+        if ($this->control=="MiembroINV") {
+            return $this->from('robot@ist17dejulio.edu.ec','Sistema OCS')
+                    ->view('email.recibidoinv')
+                    ->subject('Notificación del Sitema OCS')
+                    ->with($this->data,$this->lstordendias);
+        }
     }
 }

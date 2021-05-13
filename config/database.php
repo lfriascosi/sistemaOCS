@@ -63,6 +63,7 @@ return [
             ]) : [],
         ],
         //Editado
+            //Mysql2
         'mysql2' => [
             'driver' => env('DB_CONNECTION_SECOND'),
             'host' => env('DB_HOST_SECOND', '127.0.0.1'),
@@ -78,6 +79,7 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+            // Mysql OCS
         'mysqlocs' => [
             'driver' => env('DB_CONNECTION_OCS'),
             'host' => env('DB_HOST_OCS', '116.202.169.235'),

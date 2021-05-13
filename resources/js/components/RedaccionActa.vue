@@ -662,7 +662,7 @@
             </div>
         </div>
         <!--Fin del modal-->
-        <!--Inicio del modal Persona agregar/actualizar-->
+        <!--Inicio del modal Persona agregar-->
         <div class="modal fade" id="modalPersona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
