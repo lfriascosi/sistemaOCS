@@ -4716,6 +4716,385 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4729,43 +5108,43 @@ __webpack_require__.r(__webpack_exports__);
       arrayPersona: [],
       arrayPersonaB: [],
       arrayPersonaInv: [],
-      codigo: '',
-      titulo: '',
-      descripcion: '',
-      estado: '',
-      cedulaRedactor: '',
-      apellidoRedactor: '',
-      nombreRedactor: '',
-      emailRedactor: '',
-      perfilRedactor: '',
-      nombre: '',
-      docUser: '',
-      personaUser: '',
-      emailPersona: '',
-      perfilPersona: '',
+      codigo: "",
+      titulo: "",
+      descripcion: "",
+      estado: "",
+      cedulaRedactor: "",
+      apellidoRedactor: "",
+      nombreRedactor: "",
+      emailRedactor: "",
+      perfilRedactor: "",
+      nombre: "",
+      docUser: "",
+      personaUser: "",
+      emailPersona: "",
+      perfilPersona: "",
       errorConvocatoria: 0,
       errorMostrarMsjConvocatoria: [],
       tipoAccionInv: 0,
       idordendia: 0,
-      idVal: '',
+      idVal: "",
       arrayArchivo: [],
       //Fin
       listado: 1,
-      tituloModal: '',
+      tituloModal: "",
       tipoAccion: 0,
       pagination: {
-        'total': 0,
-        'current_page': 0,
-        'per_page': 0,
-        'last_page': 0,
-        'from': 0,
-        'to': 0
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
       },
       offset: 3,
-      criterio: 'codigo',
-      buscar: '',
-      criterioA: 'apellidos',
-      buscarA: ''
+      criterio: "codigo",
+      buscar: "",
+      criterioA: "apellidos",
+      buscarA: ""
     };
   },
   computed: {
@@ -4802,7 +5181,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     listarConvocatoria: function listarConvocatoria(page, buscar, criterio) {
       var me = this;
-      var url = '/convocatoria?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+      var url = "/convocatoria?page=" + page + "&buscar=" + buscar + "&criterio=" + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayConvocatoria = respuesta.convocatorias.data;
@@ -4813,7 +5192,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     buscarPersona: function buscarPersona() {
       var me = this;
-      var url = 'convocatoria/buscarPersona?filtro=' + me.docUser;
+      var url = "convocatoria/buscarPersona?filtro=" + me.docUser;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         console.log(me.arrayUser);
@@ -4821,12 +5200,12 @@ __webpack_require__.r(__webpack_exports__);
         console.log(me.arrayUser);
 
         if (me.arrayUser.length > 0) {
-          me.docUser = me.arrayUser[0]['numeroIdentificacion'];
-          me.personaUser = me.arrayUser[0]['apellidos'] + ' ' + me.arrayUser[0]['nombres'];
-          me.perfilPersona = me.arrayUser[0]['perfil'];
-          me.emailPersona = me.arrayUser[0]['EMail'];
+          me.docUser = me.arrayUser[0]["numeroIdentificacion"];
+          me.personaUser = me.arrayUser[0]["apellidos"] + " " + me.arrayUser[0]["nombres"];
+          me.perfilPersona = me.arrayUser[0]["perfil"];
+          me.emailPersona = me.arrayUser[0]["EMail"];
         } else {
-          me.personaUser = 'No existe persona';
+          me.personaUser = "No existe persona";
         }
       })["catch"](function (error) {
         console.log(error);
@@ -4906,7 +5285,7 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var i = 0; i < me.arrayOrdenDia.length; i++) {
         if (me.arrayOrdenDia[i].nro == id) {
-          me.arrayOrdenDia[i].invitado = 'Ninguno';
+          me.arrayOrdenDia[i].invitado = "Ninguno";
         }
       }
 
@@ -4926,7 +5305,7 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       me.arrayArchivo = [];
       me.arrayOrdenDia.forEach(function (od) {
-        var cadena = 'archivoInput' + od.nro;
+        var cadena = "archivoInput" + od.nro;
         var archivoExt = document.getElementById(cadena);
 
         try {
@@ -4938,7 +5317,7 @@ __webpack_require__.r(__webpack_exports__);
             });
             od.nomdoc = archivo.name;
           } else {
-            od.nomdoc = '';
+            od.nomdoc = "";
           }
         } catch (error) {}
       });
@@ -4950,7 +5329,7 @@ __webpack_require__.r(__webpack_exports__);
           formDataDoc.append(cont, element.file);
           cont += 1;
         });
-        axios.post('/convocatoria/storeArchivo', formDataDoc).then(function (response) {})["catch"](function (error) {
+        axios.post("/convocatoria/storeArchivo", formDataDoc).then(function (response) {})["catch"](function (error) {
           console.log(error);
         });
       }
@@ -4958,27 +5337,27 @@ __webpack_require__.r(__webpack_exports__);
     agregarOrdendia: function agregarOrdendia() {
       var me = this;
 
-      if (me.nombre == '') {
+      if (me.nombre == "") {
         Swal.fire({
-          title: 'Error...',
-          text: 'Ingrese algun nombre del punto de la orden del día!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Ingrese algun nombre del punto de la orden del día!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       } else {
         if (me.encuentra(me.nombre)) {
           Swal.fire({
-            title: 'Error...',
-            text: 'Ese nombre ya se encuentra agregado!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+            title: "Error...",
+            text: "Ese nombre ya se encuentra agregado!",
+            icon: "error",
+            confirmButtonText: "OK"
           });
         } else {
           me.arrayOrdenDia.push({
             nro: me.arrayOrdenDia.length + 1,
             nombre: me.nombre,
-            invitado: 'Ninguno',
-            nomdoc: ''
+            invitado: "Ninguno",
+            nomdoc: ""
           });
           me.nombre = "";
         }
@@ -4988,30 +5367,30 @@ __webpack_require__.r(__webpack_exports__);
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var me = this;
 
-      if (me.encuentraPersonaInv(data['numeroIdentificacion'])) {
+      if (me.encuentraPersonaInv(data["numeroIdentificacion"])) {
         Swal.fire({
-          title: 'Error...',
-          text: 'La perona ya se encuentra invitada a este punto de la orden del dia!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "La perona ya se encuentra invitada a este punto de la orden del dia!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       } else {
         me.arrayPersonaInv.push({
           idordendia: me.idordendia,
-          cedula: data['numeroIdentificacion'],
-          nombre: data['apellidos'] + ' ' + data['nombres'],
-          EMail: data['EMail'],
-          perfil: data['perfil']
+          cedula: data["numeroIdentificacion"],
+          nombre: data["apellidos"] + " " + data["nombres"],
+          EMail: data["EMail"],
+          perfil: data["perfil"]
         });
-        var invitados = '';
+        var invitados = "";
 
         for (var i = 0; i < me.arrayOrdenDia.length; i++) {
           if (me.arrayOrdenDia[i].nro == me.idordendia) {
-            if (me.arrayOrdenDia[i].invitado != 'Ninguno') {
-              invitados += ', ' + data['apellidos'] + ' ' + data['nombres'];
+            if (me.arrayOrdenDia[i].invitado != "Ninguno") {
+              invitados += ", " + data["apellidos"] + " " + data["nombres"];
               me.arrayOrdenDia[i].invitado += invitados;
             } else {
-              invitados = data['apellidos'] + ' ' + data['nombres'];
+              invitados = data["apellidos"] + " " + data["nombres"];
               me.arrayOrdenDia[i].invitado = invitados;
             }
 
@@ -5023,20 +5402,20 @@ __webpack_require__.r(__webpack_exports__);
     agregarPersona: function agregarPersona() {
       var me = this;
 
-      if (me.personaUser == '' || me.personaUser == 'No existe persona') {
+      if (me.personaUser == "" || me.personaUser == "No existe persona") {
         Swal.fire({
-          title: 'Error...',
-          text: 'Ingrese la cédula de una persona válida!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Ingrese la cédula de una persona válida!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       } else {
         if (me.encuentraPersona(me.docUser)) {
           Swal.fire({
-            title: 'Error...',
-            text: 'La persona ya se encuentra agregado!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+            title: "Error...",
+            text: "La persona ya se encuentra agregado!",
+            icon: "error",
+            confirmButtonText: "OK"
           });
           me.docUser = "";
           me.personaUser = "";
@@ -5056,26 +5435,26 @@ __webpack_require__.r(__webpack_exports__);
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var me = this;
 
-      if (me.encuentraPersona(data['numeroIdentificacion'])) {
+      if (me.encuentraPersona(data["numeroIdentificacion"])) {
         Swal.fire({
-          title: 'Error...',
-          text: 'La perona ya se encuentra agregado!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "La perona ya se encuentra agregado!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
         me.buscarA = "";
       } else {
         me.arrayPersona.push({
-          cedula: data['numeroIdentificacion'],
-          nombre: data['apellidos'] + ' ' + data['nombres'],
-          EMail: data['EMail'],
-          perfil: data['perfil']
+          cedula: data["numeroIdentificacion"],
+          nombre: data["apellidos"] + " " + data["nombres"],
+          EMail: data["EMail"],
+          perfil: data["perfil"]
         });
       }
     },
     listarPersona: function listarPersona(buscar, criterio) {
       var me = this;
-      var url = '/convocatoria/personas?buscar=' + buscar + '&criterio=' + criterio;
+      var url = "/convocatoria/personas?buscar=" + buscar + "&criterio=" + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayPersonaB = respuesta.personas;
@@ -5092,81 +5471,81 @@ __webpack_require__.r(__webpack_exports__);
 
       var swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
         },
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: '¿Está seguro(a) de guardar la convocatoria?',
+        title: "¿Está seguro(a) de guardar la convocatoria?",
         text: "No se podra revertir esto!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Si, Guardar',
-        cancelButtonText: 'No, Cancelar',
+        confirmButtonText: "Si, Guardar",
+        cancelButtonText: "No, Cancelar",
         reverseButtons: false
       }).then(function (result) {
         if (result.isConfirmed) {
           //Guardar Convocatoria
           var me = _this;
           me.guardarArchivos();
-          axios.post('/convocatoria/registrar', {
-            'titulo': _this.titulo,
-            'codigo': _this.codigo,
-            'descripcion': _this.descripcion,
-            'data_ordendia': _this.arrayOrdenDia,
-            'data_persona': _this.arrayPersona,
-            'data_persona_invitada': _this.arrayPersonaInv
+          axios.post("/convocatoria/registrar", {
+            titulo: _this.titulo,
+            codigo: _this.codigo,
+            descripcion: _this.descripcion,
+            data_ordendia: _this.arrayOrdenDia,
+            data_persona: _this.arrayPersona,
+            data_persona_invitada: _this.arrayPersonaInv
           }).then(function (response) {
             me.EnvioCorreo();
             me.listado = 1;
-            me.listarConvocatoria(1, '', 'codigo');
-            me.titulo = '';
-            me.codigo = '';
-            me.descripcion = '';
+            me.listarConvocatoria(1, "", "codigo");
+            me.titulo = "";
+            me.codigo = "";
+            me.descripcion = "";
             me.arrayConvocatoria = [];
             me.arrayOrdenDia = [];
             me.arrayPersona = [];
             me.arrayPersonaInv = [];
-            swalWithBootstrapButtons.fire('Guardada!', 'La convocatoria ha sido guardada.', 'success');
+            swalWithBootstrapButtons.fire("Guardada!", "La convocatoria ha sido guardada.", "success");
           })["catch"](function (error) {
             // smsError=error;
             // console.log(error);
-            swalWithBootstrapButtons.fire('Ocurrió un conflicto', 'El código de la convocatoria ya existe.', 'error');
+            swalWithBootstrapButtons.fire("Ocurrió un conflicto", "El código de la convocatoria ya existe.", "error");
           }); //
         } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('Cancelada', 'La convocatoria todavía no fue guardada.', 'error');
+          swalWithBootstrapButtons.fire("Cancelada", "La convocatoria todavía no fue guardada.", "error");
         }
       });
     },
     EnvioCorreo: function EnvioCorreo() {
       try {
-        axios.post('/convocatoria/storeEmail', {
-          'titulo': this.titulo,
-          'codigo': this.codigo,
-          'descripcion': this.descripcion,
-          'data_persona': this.arrayPersona
+        axios.post("/convocatoria/storeEmail", {
+          titulo: this.titulo,
+          codigo: this.codigo,
+          descripcion: this.descripcion,
+          data_persona: this.arrayPersona
         }).then(function (response) {})["catch"](function (error) {
           Swal.fire({
-            icon: 'error',
-            title: 'Ocurrió un conflicto',
-            text: 'Un usuario OCS no cuenta con un correo existente.'
+            icon: "error",
+            title: "Ocurrió un conflicto",
+            text: "Un usuario OCS no cuenta con un correo existente."
           });
         });
 
         if (this.arrayPersonaInv.length > 0) {
-          axios.post('/convocatoria/storeEmailInv', {
-            'titulo': this.titulo,
-            'codigo': this.codigo,
-            'descripcion': this.descripcion,
-            'data_persona_invitada': this.arrayPersonaInv
+          axios.post("/convocatoria/storeEmailInv", {
+            titulo: this.titulo,
+            codigo: this.codigo,
+            descripcion: this.descripcion,
+            data_persona_invitada: this.arrayPersonaInv
           }).then(function (response) {})["catch"](function (error) {
             Swal.fire({
-              icon: 'error',
-              title: 'Ocurrió un conflicto',
-              text: 'Un usuario OCS no cuenta con un correo existente.'
+              icon: "error",
+              title: "Ocurrió un conflicto",
+              text: "Un usuario OCS no cuenta con un correo existente."
             });
           });
         }
@@ -5186,9 +5565,9 @@ __webpack_require__.r(__webpack_exports__);
     mostrarDetalleConvocatoria: function mostrarDetalleConvocatoria() {
       var me = this;
       this.listado = 0;
-      me.titulo = '';
-      me.codigo = '';
-      me.descripcion = '';
+      me.titulo = "";
+      me.codigo = "";
+      me.descripcion = "";
       me.arrayOrdenDia = [];
       me.arrayPersona = [];
       me.arrayDetalle = [];
@@ -5203,31 +5582,31 @@ __webpack_require__.r(__webpack_exports__);
       this.arrayOrdenDia = [];
       this.arrayPersonaInv = [];
       this.errorMostrarMsjConvocatoria = [];
-      this.titulo = '';
-      this.codigo = '';
-      this.descripcion = '';
-      this.estado = '';
-      this.cedulaRedactor = '';
-      this.apellidoRedactor = '';
-      this.nombreRedactor = '';
-      this.emailRedactor = '';
-      this.perfilRedactor = '';
+      this.titulo = "";
+      this.codigo = "";
+      this.descripcion = "";
+      this.estado = "";
+      this.cedulaRedactor = "";
+      this.apellidoRedactor = "";
+      this.nombreRedactor = "";
+      this.emailRedactor = "";
+      this.perfilRedactor = "";
       this.errorConvocatoria = 0;
     },
     ordenarPersonaInv: function ordenarPersonaInv() {
       var me = this;
       var arrayTemp = [];
       var cont = 0;
-      var text = '';
+      var text = "";
 
       for (var i = 0; i < me.arrayDetalleInvitado.length; i++) {
         cont = 0;
-        text = '';
+        text = "";
 
         for (var j = 0; j < me.arrayDetalleInvitado.length; j++) {
           if (me.arrayDetalleInvitado[i].numeroIdentificacion == me.arrayDetalleInvitado[j].numeroIdentificacion) {
             if (cont > 0) {
-              text += ', ';
+              text += ", ";
             }
 
             cont++;
@@ -5269,25 +5648,25 @@ __webpack_require__.r(__webpack_exports__);
       this.listado = 2; //Obtener datos de la convocatoria
 
       var arrayConvocatoriaT = [];
-      var url = '/convocatoria/obtenerCabecera?id=' + id;
+      var url = "/convocatoria/obtenerCabecera?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         arrayConvocatoriaT = respuesta.convocatoria;
-        me.titulo = arrayConvocatoriaT[0]['titulo'];
-        me.codigo = arrayConvocatoriaT[0]['codigo'];
-        me.descripcion = arrayConvocatoriaT[0]['descripcion'];
-        me.estado = arrayConvocatoriaT[0]['estado']; //Ver redactor
+        me.titulo = arrayConvocatoriaT[0]["titulo"];
+        me.codigo = arrayConvocatoriaT[0]["codigo"];
+        me.descripcion = arrayConvocatoriaT[0]["descripcion"];
+        me.estado = arrayConvocatoriaT[0]["estado"]; //Ver redactor
 
-        me.cedulaRedactor = arrayConvocatoriaT[0]['iduser'];
-        me.apellidoRedactor = arrayConvocatoriaT[0]['apellidos'];
-        me.nombreRedactor = arrayConvocatoriaT[0]['nombres'];
-        me.emailRedactor = arrayConvocatoriaT[0]['EMail'];
-        me.perfilRedactor = arrayConvocatoriaT[0]['perfil'];
+        me.cedulaRedactor = arrayConvocatoriaT[0]["iduser"];
+        me.apellidoRedactor = arrayConvocatoriaT[0]["apellidos"];
+        me.nombreRedactor = arrayConvocatoriaT[0]["nombres"];
+        me.emailRedactor = arrayConvocatoriaT[0]["EMail"];
+        me.perfilRedactor = arrayConvocatoriaT[0]["perfil"];
       })["catch"](function (error) {
         console.log(error);
       }); //Obtener datos de la Onden dia
 
-      var url = '/convocatoria/obtenerOrdenDias?id=' + id;
+      var url = "/convocatoria/obtenerOrdenDias?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayDetalle = respuesta.orden_dias;
@@ -5295,7 +5674,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       }); //Obtener datos de las personas enviadas la convocatoria
 
-      var url = '/convocatoria/obtenerDetalles?id=' + id;
+      var url = "/convocatoria/obtenerDetalles?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayDetalleEnvio = respuesta.detalles;
@@ -5303,7 +5682,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       }); //Obtener datos de las personas invitadas al punto Orden dia
 
-      var url = '/convocatoria/obtenerDetalleOrdenDias?id=' + id;
+      var url = "/convocatoria/obtenerDetalleOrdenDias?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayDetalleInvitado = respuesta.detalleorden_dias;
@@ -5313,8 +5692,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     cerrarModal: function cerrarModal() {
-      this.tituloModal = '';
-      this.buscarA = '';
+      this.tituloModal = "";
+      this.buscarA = "";
       this.arrayUser = [];
       this.arrayPersonaB = [];
       this.tipoAccionInv = 0;
@@ -5324,12 +5703,12 @@ __webpack_require__.r(__webpack_exports__);
       this.arrayPersonaB = [];
       this.arrayUser = [];
       this.modal = 1;
-      this.tituloModal = 'Seleccione uno o varios usuarios';
+      this.tituloModal = "Seleccione uno o varios usuarios";
     },
     abrirModalInvitado: function abrirModalInvitado(id) {
       this.idordendia = id + 1;
       this.arrayUser = [];
-      this.tituloModal = 'Seleccione uno o varios usuarios';
+      this.tituloModal = "Seleccione uno o varios usuarios";
       this.tipoAccionInv = 1;
     },
     inactivarOrdendia: function inactivarOrdendia(id, idconvocatoria) {
@@ -5337,27 +5716,27 @@ __webpack_require__.r(__webpack_exports__);
 
       var swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
         },
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de inactivar este punto de la orden día?',
-        icon: 'warning',
+        title: "Esta seguro de inactivar este punto de la orden día?",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar!',
+        confirmButtonText: "Aceptar!",
+        cancelButtonText: "Cancelar!",
         reverseButtons: true
       }).then(function (result) {
         if (result.isConfirmed) {
           var me = _this2;
-          axios.put('/convocatoria/inactivar', {
-            'id': id
+          axios.put("/convocatoria/inactivar", {
+            id: id
           }).then(function (response) {
             me.envioCorreoConf(id, idconvocatoria); //Obtener datos de la Onden dia
 
-            var url = '/convocatoria/obtenerOrdenDias?id=' + idconvocatoria;
+            var url = "/convocatoria/obtenerOrdenDias?id=" + idconvocatoria;
             axios.get(url).then(function (response) {
               me.arrayDetalle = [];
               var respuesta = response.data;
@@ -5365,7 +5744,7 @@ __webpack_require__.r(__webpack_exports__);
             })["catch"](function (error) {
               console.log(error);
             });
-            swalWithBootstrapButtons.fire('Desactivado!', 'El punto de la orden diá ha sido inactivado con éxito.', 'success');
+            swalWithBootstrapButtons.fire("Desactivado!", "El punto de la orden diá ha sido inactivado con éxito.", "success");
           })["catch"](function (error) {
             console.log(error);
           });
@@ -5379,27 +5758,27 @@ __webpack_require__.r(__webpack_exports__);
 
       var swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
         },
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de activar este punto de la orden día?',
-        icon: 'warning',
+        title: "Esta seguro de activar este punto de la orden día?",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar!',
+        confirmButtonText: "Aceptar!",
+        cancelButtonText: "Cancelar!",
         reverseButtons: true
       }).then(function (result) {
         if (result.isConfirmed) {
           var me = _this3;
-          axios.put('/convocatoria/activar', {
-            'id': id
+          axios.put("/convocatoria/activar", {
+            id: id
           }).then(function (response) {
             //Obtener datos de la Onden dia
             me.envioCorreoConf(id, idconvocatoria);
-            var url = '/convocatoria/obtenerOrdenDias?id=' + idconvocatoria;
+            var url = "/convocatoria/obtenerOrdenDias?id=" + idconvocatoria;
             axios.get(url).then(function (response) {
               me.arrayDetalle = [];
               var respuesta = response.data;
@@ -5407,7 +5786,7 @@ __webpack_require__.r(__webpack_exports__);
             })["catch"](function (error) {
               console.log(error);
             });
-            swalWithBootstrapButtons.fire('Activado!', 'El punto de la orden diá ha sido activado con éxito.', 'success');
+            swalWithBootstrapButtons.fire("Activado!", "El punto de la orden diá ha sido activado con éxito.", "success");
           })["catch"](function (error) {
             console.log(error);
           });
@@ -5417,18 +5796,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     envioCorreoConf: function envioCorreoConf(id, idconvocatoria) {
-      axios.post('/convocatoria/storeEmailConf', {
-        'titulo': this.titulo,
-        'codigo': this.codigo,
-        'descripcion': this.descripcion,
-        'id': id,
-        'idConvocatoria': idconvocatoria,
-        'data_persona_invitada': this.arrayDetalleInvitado
+      axios.post("/convocatoria/storeEmailConf", {
+        titulo: this.titulo,
+        codigo: this.codigo,
+        descripcion: this.descripcion,
+        id: id,
+        idConvocatoria: idconvocatoria,
+        data_persona_invitada: this.arrayDetalleInvitado
       }).then(function (response) {})["catch"](function (error) {
         Swal.fire({
-          icon: 'error',
-          title: 'Ocurrió un conflicto',
-          text: 'El usuario no cuenta con un correo existente.'
+          icon: "error",
+          title: "Ocurrió un conflicto",
+          text: "El usuario no cuenta con un correo existente."
         });
       });
     }
@@ -9899,7 +10278,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width: 900px){\n.btnagregar{\n        margin-top: 1.7rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n.modal-content {\r\n  width: 100% !important;\r\n  position: absolute !important;\n}\n.mostrar {\r\n  display: list-item !important;\r\n  opacity: 1 !important;\r\n  position: absolute !important;\r\n  background-color: #3c29297a !important;\n}\n.div-error {\r\n  display: flex;\r\n  justify-content: center;\n}\n.text-error {\r\n  color: red !important;\r\n  font-weight: bold;\n}\n@media (min-width: 900px) {\n.btnagregar {\r\n    margin-top: 1.7rem;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -45417,7 +45796,7 @@ var render = function() {
         [
           _c("div", { staticClass: "card-header" }, [
             _c("i", { staticClass: "fa fa-align-justify" }),
-            _vm._v("Convocatorias\n                "),
+            _vm._v("Convocatorias\n        "),
             _c(
               "button",
               {
@@ -45431,7 +45810,7 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "icon-plus" }),
-                _vm._v(" Nueva\n                ")
+                _vm._v(" Nueva\n        ")
               ]
             )
           ]),
@@ -45549,7 +45928,7 @@ var render = function() {
                           },
                           [
                             _c("i", { staticClass: "fa fa-search" }),
-                            _vm._v("Buscar\n                            ")
+                            _vm._v("Buscar\n                ")
                           ]
                         ),
                         _vm._v(" "),
@@ -45569,7 +45948,7 @@ var render = function() {
                           },
                           [
                             _c("i", { staticClass: "fa fa-list" }),
-                            _vm._v(" Lista\n                            ")
+                            _vm._v(" Lista\n                ")
                           ]
                         )
                       ])
@@ -45791,7 +46170,7 @@ var render = function() {
                                 name: "show",
                                 rawName: "v-show",
                                 value: _vm.titulo == "",
-                                expression: "titulo==''"
+                                expression: "titulo == ''"
                               }
                             ],
                             staticStyle: { color: "red" }
@@ -45837,7 +46216,7 @@ var render = function() {
                                 name: "show",
                                 rawName: "v-show",
                                 value: _vm.codigo == "",
-                                expression: "codigo==''"
+                                expression: "codigo == ''"
                               }
                             ],
                             staticStyle: { color: "red" }
@@ -45884,7 +46263,7 @@ var render = function() {
                                   name: "show",
                                   rawName: "v-show",
                                   value: _vm.descripcion == "",
-                                  expression: "descripcion==''"
+                                  expression: "descripcion == ''"
                                 }
                               ],
                               staticStyle: { color: "red" }
@@ -45928,7 +46307,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-8" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", [
-                          _vm._v("Usuario "),
+                          _vm._v("Usuario\n                  "),
                           _c(
                             "span",
                             {
@@ -45937,7 +46316,7 @@ var render = function() {
                                   name: "show",
                                   rawName: "v-show",
                                   value: _vm.arrayPersona.length < 1,
-                                  expression: "arrayPersona.length<1"
+                                  expression: "arrayPersona.length < 1"
                                 }
                               ],
                               staticStyle: { color: "red" }
@@ -46002,7 +46381,11 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("⋮")]
+                            [
+                              _vm._v(
+                                "\n                    ⋮\n                  "
+                              )
+                            ]
                           ),
                           _vm._v(" "),
                           _c("input", {
@@ -46141,7 +46524,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-10" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", [
-                          _vm._v("Nombre "),
+                          _vm._v("Nombre\n                  "),
                           _c(
                             "span",
                             {
@@ -46150,7 +46533,7 @@ var render = function() {
                                   name: "show",
                                   rawName: "v-show",
                                   value: _vm.arrayOrdenDia.length < 1,
-                                  expression: "arrayOrdenDia.length<1"
+                                  expression: "arrayOrdenDia.length < 1"
                                 }
                               ],
                               staticStyle: { color: "red" }
@@ -46271,9 +46654,7 @@ var render = function() {
                                             })
                                           ]
                                         ),
-                                        _vm._v(
-                                          " \n                                            "
-                                        ),
+                                        _vm._v(" \n                      "),
                                         _c(
                                           "button",
                                           {
@@ -46466,7 +46847,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Cerrar")]
+                        [_vm._v("\n                Cerrar\n              ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -46480,7 +46861,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Registrar Convocatoria")]
+                        [
+                          _vm._v(
+                            "\n                Registrar Convocatoria\n              "
+                          )
+                        ]
                       )
                     ])
                   ])
@@ -46518,7 +46903,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -46637,7 +47022,11 @@ var render = function() {
                                                 "vertical-align": "middle"
                                               }
                                             },
-                                            [_vm._v("Ninguno")]
+                                            [
+                                              _vm._v(
+                                                "\n                      Ninguno\n                    "
+                                              )
+                                            ]
                                           )
                                         : _c(
                                             "td",
@@ -46723,7 +47112,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -46802,7 +47191,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -46865,7 +47254,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -46927,7 +47316,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Cerrar")]
+                        [_vm._v("\n                Cerrar\n              ")]
                       )
                     ])
                   ])
@@ -47094,7 +47483,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-search" }),
-                          _vm._v("\n                                    Buscar")
+                          _vm._v(" Buscar\n                ")
                         ]
                       )
                     ])
@@ -47223,7 +47612,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Cerrar")]
+                  [_vm._v("\n            Cerrar\n          ")]
                 )
               ])
             ])
@@ -47387,7 +47776,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-search" }),
-                          _vm._v("\n                                    Buscar")
+                          _vm._v(" Buscar\n                ")
                         ]
                       )
                     ])
@@ -47516,7 +47905,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Cerrar")]
+                  [_vm._v("\n            Cerrar\n          ")]
                 )
               ])
             ])
@@ -47567,9 +47956,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                No hay convocatorias agregadas\n                            "
-        )
+        _vm._v("No hay convocatorias agregadas")
       ])
     ])
   },
@@ -47597,9 +47984,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "5" } }, [
-        _vm._v(
-          "\n                                            No hay personas agregadas\n                                        "
-        )
+        _vm._v("No hay personas agregadas")
       ])
     ])
   },
@@ -47627,9 +48012,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "5" } }, [
-        _vm._v(
-          "\n                                            No hay orden del día agregada\n                                        "
-        )
+        _vm._v("No hay orden del día agregada")
       ])
     ])
   },
@@ -47679,9 +48062,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "5" } }, [
-        _vm._v(
-          "\n                                            No hay orden del dia agregados\n                                        "
-        )
+        _vm._v("No hay orden del dia agregados")
       ])
     ])
   },
@@ -47719,9 +48100,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No hay usuarios enviados\n                                        "
-        )
+        _vm._v("No hay usuarios enviados")
       ])
     ])
   },
@@ -47753,9 +48132,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "4" } }, [
-        _vm._v(
-          "\n                                            No hay usuarios enviados\n                                        "
-        )
+        _vm._v("No hay usuarios enviados")
       ])
     ])
   },
@@ -47808,11 +48185,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No existe usuario\n                                        "
-        )
-      ])
+      _c("td", { attrs: { colspan: "6" } }, [_vm._v("No existe usuario")])
     ])
   },
   function() {
@@ -47840,11 +48213,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No existe usuario\n                                        "
-        )
-      ])
+      _c("td", { attrs: { colspan: "6" } }, [_vm._v("No existe usuario")])
     ])
   }
 ]
