@@ -2830,6 +2830,489 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -2844,15 +3327,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       arrayPersona: [],
       arrayPersonaB: [],
       arrayPersonaInv: [],
-      nombre: '',
-      docUser: '',
-      personaUser: '',
-      emailPersona: '',
-      perfilPersona: '',
+      nombre: "",
+      docUser: "",
+      personaUser: "",
+      emailPersona: "",
+      perfilPersona: "",
       errorActa: 0,
       errorMostrarMsjActa: [],
       tipoAccionInv: 0,
-      idordendia: '',
+      idordendia: "",
       //Inicio
       arrayActa: [],
       arrayDetalleActa: [],
@@ -2867,30 +3350,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       arrayResolucion: [],
       arrayResolucionVista: [],
       arrayVistaOrdendia: [],
-      codigoConvocatoria: '',
-      codigoVerifi: '',
-      codigo: '',
-      titulo: '',
-      descripcion: '',
-      descripcionActa: '',
-      estado: '',
-      cedulaRedactor: '',
-      apellidoRedactor: '',
-      nombreRedactor: '',
-      emailRedactor: '',
-      perfilRedactor: '',
+      codigoConvocatoria: "",
+      codigoVerifi: "",
+      codigo: "",
+      titulo: "",
+      descripcion: "",
+      descripcionActa: "",
+      estado: "",
+      cedulaRedactor: "",
+      apellidoRedactor: "",
+      nombreRedactor: "",
+      emailRedactor: "",
+      perfilRedactor: "",
       valBoolean: false,
-      aidConvocatoriaActa: '',
+      aidConvocatoriaActa: "",
       valModal: false,
-      descripcionResolucion: ''
-    }, _defineProperty(_ref, "descripcionResolucion", ''), _defineProperty(_ref, "listado", 1), _defineProperty(_ref, "modal", 0), _defineProperty(_ref, "tituloModal", ''), _defineProperty(_ref, "tipoAccion", 0), _defineProperty(_ref, "pagination", {
-      'total': 0,
-      'current_page': 0,
-      'per_page': 0,
-      'last_page': 0,
-      'from': 0,
-      'to': 0
-    }), _defineProperty(_ref, "offset", 3), _defineProperty(_ref, "criterio", 'codigo'), _defineProperty(_ref, "buscar", ''), _defineProperty(_ref, "criterioA", 'codigo'), _defineProperty(_ref, "buscarA", ''), _defineProperty(_ref, "criterioP", 'apellidos'), _defineProperty(_ref, "buscarP", ''), _ref;
+      descripcionResolucion: ""
+    }, _defineProperty(_ref, "descripcionResolucion", ""), _defineProperty(_ref, "listado", 1), _defineProperty(_ref, "modal", 0), _defineProperty(_ref, "tituloModal", ""), _defineProperty(_ref, "tipoAccion", 0), _defineProperty(_ref, "pagination", {
+      total: 0,
+      current_page: 0,
+      per_page: 0,
+      last_page: 0,
+      from: 0,
+      to: 0
+    }), _defineProperty(_ref, "offset", 3), _defineProperty(_ref, "criterio", "codigo"), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "criterioA", "codigo"), _defineProperty(_ref, "buscarA", ""), _defineProperty(_ref, "criterioP", "apellidos"), _defineProperty(_ref, "buscarP", ""), _ref;
   },
   computed: {
     isActived: function isActived() {
@@ -2925,7 +3408,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     mayus: function mayus() {
       var me = this;
 
-      if (me.codigo != '') {
+      if (me.codigo != "") {
         me.codigo = me.codigo.toUpperCase();
       }
     }
@@ -2933,7 +3416,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     listarActa: function listarActa(page, buscar, criterio) {
       var me = this;
-      var url = '/acta?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+      var url = "/acta?page=" + page + "&buscar=" + buscar + "&criterio=" + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayActa = respuesta.actas.data;
@@ -2944,7 +3427,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     listarPersona: function listarPersona(buscar, criterio) {
       var me = this;
-      var url = '/convocatoria/personas?buscar=' + buscar + '&criterio=' + criterio;
+      var url = "/convocatoria/personas?buscar=" + buscar + "&criterio=" + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayPersonaB = respuesta.personas;
@@ -2954,18 +3437,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     buscarPersona: function buscarPersona() {
       var me = this;
-      var url = 'convocatoria/buscarPersona?filtro=' + me.docUser;
+      var url = "convocatoria/buscarPersona?filtro=" + me.docUser;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayUser = respuesta.personas;
 
         if (me.arrayUser.length > 0) {
-          me.docUser = me.arrayUser[0]['numeroIdentificacion'];
-          me.personaUser = me.arrayUser[0]['apellidos'] + ' ' + me.arrayUser[0]['nombres'];
-          me.perfilPersona = me.arrayUser[0]['perfil'];
-          me.emailPersona = me.arrayUser[0]['EMail'];
+          me.docUser = me.arrayUser[0]["numeroIdentificacion"];
+          me.personaUser = me.arrayUser[0]["apellidos"] + " " + me.arrayUser[0]["nombres"];
+          me.perfilPersona = me.arrayUser[0]["perfil"];
+          me.emailPersona = me.arrayUser[0]["EMail"];
         } else {
-          me.personaUser = 'No existe persona';
+          me.personaUser = "No existe persona";
         }
       })["catch"](function (error) {
         console.log(error);
@@ -3003,8 +3486,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       me.arrayResolucionVista.splice(index, 1);
       /*for (var i = 0; i < me.arrayOrdenDia.length; i++) {
-          me.arrayOrdenDia[i].nro=i+1;
-      }*/
+                    me.arrayOrdenDia[i].nro=i+1;
+                }*/
     },
     eliminarPersona: function eliminarPersona(index) {
       var me = this;
@@ -3025,7 +3508,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
 
       for (var i = 0; i < me.arrayResolucion.length; i++) {
-        me.arrayResolucion[i].codigo = '';
+        me.arrayResolucion[i].codigo = "";
       }
     },
     ordenarCodigoResol: function ordenarCodigoResol() {
@@ -3033,8 +3516,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       me.codigo = me.codigo.toUpperCase();
       var pos = me.codigo.length - 2;
-      var cadCe = '';
-      var codigoVal = '';
+      var cadCe = "";
+      var codigoVal = "";
       var contV = 0;
       var contC = 0;
       var contV2 = false;
@@ -3071,12 +3554,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var contador = contC - contC2 + me.arrayResolucionVista.length + 1;
 
       if (contador < 9) {
-        cadCe = '/00';
+        cadCe = "/00";
       } else {
-        cadCe = '/0';
+        cadCe = "/0";
       }
 
-      if (me.codigo.includes('-A', pos)) {
+      if (me.codigo.includes("-A", pos)) {
         codigoVal = me.codigo.slice(0, pos) + cadCe + contador;
       } else {
         codigoVal = me.codigo + cadCe + contador;
@@ -3098,12 +3581,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     agregarResolucion: function agregarResolucion() {
       var me = this;
 
-      if (me.descripcionResolucion == '') {
+      if (me.descripcionResolucion == "") {
         Swal.fire({
-          title: 'Error...',
-          text: 'Agrege una descripción!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Agrege una descripción!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       } else {
         if (!me.encuentraResolucion(me.descripcionResolucion)) {
@@ -3117,10 +3600,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           me.descripcionResolucion = ""; //me.llenarVistaDescripcionResolucion();
         } else {
           Swal.fire({
-            title: 'Error...',
-            text: 'La descripción ya existe!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+            title: "Error...",
+            text: "La descripción ya existe!",
+            icon: "error",
+            confirmButtonText: "OK"
           });
         }
       }
@@ -3128,13 +3611,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     agregarPersona: function agregarPersona() {
       var me = this;
 
-      if (me.personaUser != '') {
+      if (me.personaUser != "") {
         if (me.encuentraPersona(me.docUser)) {
           Swal.fire({
-            title: 'Error...',
-            text: 'La persona ya se encuentra agregado!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+            title: "Error...",
+            text: "La persona ya se encuentra agregado!",
+            icon: "error",
+            confirmButtonText: "OK"
           });
           me.docUser = "";
           me.personaUser = "";
@@ -3154,20 +3637,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var me = this;
 
-      if (me.encuentraPersona(data['numeroIdentificacion'])) {
+      if (me.encuentraPersona(data["numeroIdentificacion"])) {
         Swal.fire({
-          title: 'Error...',
-          text: 'La perona ya se encuentra agregado!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "La perona ya se encuentra agregado!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
         me.buscarA = "";
       } else {
         me.arrayPersona.push({
-          cedula: data['numeroIdentificacion'],
-          nombre: data['apellidos'] + ' ' + data['nombres'],
-          EMail: data['EMail'],
-          perfil: data['perfil']
+          cedula: data["numeroIdentificacion"],
+          nombre: data["apellidos"] + " " + data["nombres"],
+          EMail: data["EMail"],
+          perfil: data["perfil"]
         });
       }
     },
@@ -3175,29 +3658,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var me = this;
 
-      if (me.codigo != '') {
+      if (me.codigo != "") {
         if (me.arraySelectConvocatoria.length > 0) {
           Swal.fire({
-            title: 'Error...',
-            text: 'Solo se puede seleccionar una convocatoria!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+            title: "Error...",
+            text: "Solo se puede seleccionar una convocatoria!",
+            icon: "error",
+            confirmButtonText: "OK"
           });
           me.buscarA = "";
         } else {
           me.arraySelectConvocatoria.push({
-            id: data['id'],
-            titulo: data['titulo'],
-            codigo: data['codigo'],
-            descripcion: data['descripcion'],
-            estado: data['estado'],
-            iduser: data['iduser'],
-            apellidos: data['apellidos'],
-            nombres: data['nombres'],
-            EMail: data['EMail'],
-            perfil: data['perfil']
+            id: data["id"],
+            titulo: data["titulo"],
+            codigo: data["codigo"],
+            descripcion: data["descripcion"],
+            estado: data["estado"],
+            iduser: data["iduser"],
+            apellidos: data["apellidos"],
+            nombres: data["nombres"],
+            EMail: data["EMail"],
+            perfil: data["perfil"]
           });
-          var url = '/convocatoria/obtenerOrdenDias?id=' + me.arraySelectConvocatoria[0]['id'];
+          var url = "/convocatoria/obtenerOrdenDias?id=" + me.arraySelectConvocatoria[0]["id"];
           axios.get(url).then(function (response) {
             var respuesta = response.data;
             me.arraySelectOrdendia = respuesta.orden_dias;
@@ -3208,31 +3691,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       } else {
         Swal.fire({
-          title: 'Error...',
-          text: 'Debe ingresar un código de acta!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Debe ingresar un código de acta!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       }
     },
     agregarConvocatoria: function agregarConvocatoria() {
       var me = this;
 
-      if (me.codigoVerifi == '' || me.codigoVerifi == 'Código inválido') {
+      if (me.codigoVerifi == "" || me.codigoVerifi == "Código inválido") {
         Swal.fire({
-          title: 'Error...',
-          text: 'Ingrese un código válido de convocatoria!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Ingrese un código válido de convocatoria!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       } else {
         //if(me.codigo!=''){
         if (me.arraySelectConvocatoria.length == 0) {
           me.arraySelectConvocatoria = me.arrayTempConvocatoria;
           me.arrayTempConvocatoria = [];
-          me.codigoConvocatoria = '';
-          me.codigoVerifi = '';
-          var url = '/convocatoria/obtenerOrdenDias?id=' + me.arraySelectConvocatoria[0]['id'];
+          me.codigoConvocatoria = "";
+          me.codigoVerifi = "";
+          var url = "/convocatoria/obtenerOrdenDias?id=" + me.arraySelectConvocatoria[0]["id"];
           axios.get(url).then(function (response) {
             var respuesta = response.data;
             me.arraySelectOrdendia = respuesta.orden_dias;
@@ -3242,22 +3725,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         } else {
           Swal.fire({
-            title: 'Error...',
-            text: 'Solo se puede seleccionar una convocatoria!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+            title: "Error...",
+            text: "Solo se puede seleccionar una convocatoria!",
+            icon: "error",
+            confirmButtonText: "OK"
           });
         }
         /*
-        }else{
-        Swal.fire({
-            title: 'Error...',
-            text: 'Debe ingresar un código de acta!',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-        }
-        */
+                    }else{
+                        Swal.fire({
+                            title: 'Error...',
+                            text: 'Debe ingresar un código de acta!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                    */
 
       }
     },
@@ -3266,34 +3749,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       me.arraySelectConvocatoria = [];
       me.arraySelectOrdendia = [];
       me.arrayVistaOrdendia = [];
-      me.codigoVerifi = '';
+      me.codigoVerifi = "";
     },
     combinarDescripcion: function combinarDescripcion() {
       var me = this;
       var arrayTemp = [];
-      var idT = '';
-      var numeradorT = '';
-      var nombreT = '';
-      var descripcionT = '';
+      var idT = "";
+      var numeradorT = "";
+      var nombreT = "";
+      var descripcionT = "";
       var cont = 0;
       var cont2 = 0;
-      var cade = '';
+      var cade = "";
 
       for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
         cont = 0;
-        idT = '';
-        numeradorT = '';
-        nombreT = '';
-        descripcionT = '';
+        idT = "";
+        numeradorT = "";
+        nombreT = "";
+        descripcionT = "";
 
         for (var j = 0; j < me.arrayVistaOrdendia.length; j++) {
-          if (me.arrayVistaOrdendia[i].descripcion != 'Ninguna' && me.arrayVistaOrdendia[i].descripcion == me.arrayVistaOrdendia[j].descripcion) {
+          if (me.arrayVistaOrdendia[i].descripcion != "Ninguna" && me.arrayVistaOrdendia[i].descripcion == me.arrayVistaOrdendia[j].descripcion) {
             cont++;
 
             if (cont > 1) {
-              idT += ',';
-              numeradorT += ',';
-              nombreT += ',';
+              idT += ",";
+              numeradorT += ",";
+              nombreT += ",";
             }
 
             idT += me.arrayVistaOrdendia[j].idordendia;
@@ -3307,20 +3790,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (!me.buscarD(idT, arrayTemp)) {
             var arrayId = idT.split(",");
             cont2 = 0;
-            cade = '';
+            cade = "";
 
             for (var q = 0; q < me.arrayResolucion.length; q++) {
               if (arrayId[0] == me.arrayResolucion[q].idordendia) {
                 if (cont2 > 0) {
-                  cade += ',';
+                  cade += ",";
                 } else {
                   me.codigo = me.codigo.toUpperCase();
                   var pos = me.codigo.length - 2;
 
-                  if (me.codigo.includes('-A', pos)) {
-                    cade += me.codigo.slice(0, pos) + '/(';
+                  if (me.codigo.includes("-A", pos)) {
+                    cade += me.codigo.slice(0, pos) + "/(";
                   } else {
-                    cade += me.codigo + '/(';
+                    cade += me.codigo + "/(";
                   }
                 }
 
@@ -3329,37 +3812,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               }
             }
 
-            if (cade == '') {
-              cade = 'Ninguna';
+            if (cade == "") {
+              cade = "Ninguna";
             } else {
-              cade += ')';
+              cade += ")";
             }
 
             arrayTemp.push({
               idordendia: idT,
               numerador: numeradorT,
               nombre: nombreT,
-              nombrealternativo: '',
+              nombrealternativo: "",
               descripcion: descripcionT,
               resolucion: cade
             });
           }
         } else {
           cont2 = 0;
-          cade = '';
+          cade = "";
 
           for (var q = 0; q < me.arrayResolucion.length; q++) {
             if (me.arrayVistaOrdendia[i].idordendia == me.arrayResolucion[q].idordendia) {
               if (cont2 > 0) {
-                cade += ',';
+                cade += ",";
               } else {
                 me.codigo = me.codigo.toUpperCase();
                 var pos = me.codigo.length - 2;
 
-                if (me.codigo.includes('-A', pos)) {
-                  cade += me.codigo.slice(0, pos) + '/(';
+                if (me.codigo.includes("-A", pos)) {
+                  cade += me.codigo.slice(0, pos) + "/(";
                 } else {
-                  cade += me.codigo + '/(';
+                  cade += me.codigo + "/(";
                 }
               }
 
@@ -3368,17 +3851,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
 
-          if (cade == '') {
-            cade = 'Ninguna';
+          if (cade == "") {
+            cade = "Ninguna";
           } else {
-            cade += ')';
+            cade += ")";
           }
 
           arrayTemp.push({
             idordendia: me.arrayVistaOrdendia[i].idordendia,
             numerador: me.arrayVistaOrdendia[i].numerador,
             nombre: me.arrayVistaOrdendia[i].nombre,
-            nombrealternativo: '',
+            nombrealternativo: "",
             descripcion: me.arrayVistaOrdendia[i].descripcion,
             resolucion: cade
           });
@@ -3394,12 +3877,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       for (var i = 0; i < me.arraySelectOrdendia.length; i++) {
         me.arrayVistaOrdendia.push({
-          idordendia: me.arraySelectOrdendia[i]['id'] + '',
-          numerador: me.arraySelectOrdendia[i]['numerador'] + '',
-          nombre: me.arraySelectOrdendia[i]['nombre'],
-          nombrealternativo: '',
-          descripcion: 'Ninguna',
-          resolucion: 'Ninguna'
+          idordendia: me.arraySelectOrdendia[i]["id"] + "",
+          numerador: me.arraySelectOrdendia[i]["numerador"] + "",
+          nombre: me.arraySelectOrdendia[i]["nombre"],
+          nombrealternativo: "",
+          descripcion: "Ninguna",
+          resolucion: "Ninguna"
         });
       }
     },
@@ -3407,7 +3890,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var me = this;
       me.inicializarOrdenDiaSelect();
       var cont = 0;
-      var cade = '';
+      var cade = "";
 
       for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
         for (var j = 0; j < me.arrayDescripcion.length; j++) {
@@ -3417,20 +3900,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         cont = 0;
-        cade = '';
+        cade = "";
 
         for (var q = 0; q < me.arrayResolucion.length; q++) {
           if (me.arrayVistaOrdendia[i].idordendia == me.arrayResolucion[q].idordendia) {
             if (cont > 0) {
-              cade += ',';
+              cade += ",";
             } else {
               me.codigo = me.codigo.toUpperCase();
               var pos = me.codigo.length - 2;
 
-              if (me.codigo.includes('-A', pos)) {
-                cade += me.codigo.slice(0, pos) + '/(';
+              if (me.codigo.includes("-A", pos)) {
+                cade += me.codigo.slice(0, pos) + "/(";
               } else {
-                cade += me.codigo + '/(';
+                cade += me.codigo + "/(";
               }
             }
 
@@ -3439,20 +3922,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
 
-        if (cade != '') {
-          me.arrayVistaOrdendia[i].resolucion = cade + ')';
+        if (cade != "") {
+          me.arrayVistaOrdendia[i].resolucion = cade + ")";
         }
       }
     },
     guardarDescripcion: function guardarDescripcion() {
       var me = this;
 
-      if (me.descripcionActa == '') {
+      if (me.descripcionActa == "") {
         Swal.fire({
-          title: 'Error...',
-          text: 'Debe de ingresar una descripción!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Debe de ingresar una descripción!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       } else {
         if (me.arrayCheckboxSelect.length > 0) {
@@ -3475,7 +3958,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   me.arrayDescripcion.push({
                     idordendia: me.arrayVistaOrdendia[j].idordendia,
                     descripcion: me.descripcionActa,
-                    nombrealternativo: ''
+                    nombrealternativo: ""
                   });
                 }
               }
@@ -3485,7 +3968,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         me.llenarVistaDescripcionResolucion();
         me.combinarDescripcion();
-        me.descripcionActa = '';
+        me.descripcionActa = "";
         me.arrayCheckbox = [];
         me.arrayCheckboxSelect = [];
       }
@@ -3572,7 +4055,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     editarDescripcion: function editarDescripcion(id) {
       var me = this;
-      me.tituloModal = 'Editar descripción';
+      me.tituloModal = "Editar descripción";
       me.valBoolean = false;
       me.arrayCheckbox = [];
       me.arrayCheckboxSelect = [];
@@ -3586,7 +4069,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     editarResolucion: function editarResolucion(id) {
       var me = this;
-      me.tituloModal = 'Editar resolción';
+      me.tituloModal = "Editar resolción";
       me.arrayResolucionVista = [];
       me.arrayCheckbox = [];
       me.arrayCheckboxSelect = [];
@@ -3620,17 +4103,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       me.arrayCheckbox = [];
       me.arrayCheckboxSelect = [];
       var arrayId = [];
-      var cadenaId = '';
+      var cadenaId = "";
       var arrayNro = [];
-      var cadenaNro = '';
+      var cadenaNro = "";
 
       for (var i = 0; i < me.arrayVistaOrdendia.length; i++) {
         if (me.arrayVistaOrdendia[i].idordendia == id) {
-          cadenaId = id + '';
+          cadenaId = id + "";
           arrayId = cadenaId.split(",");
 
           if (arrayId.length > 1) {
-            cadenaNro = me.arrayVistaOrdendia[i]['numerador'] + '';
+            cadenaNro = me.arrayVistaOrdendia[i]["numerador"] + "";
             arrayNro = cadenaNro.split(",");
 
             for (var j = 0; j < arrayId.length; j++) {
@@ -3642,16 +4125,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           } else {
             me.arrayCheckboxSelect.push({
               id: me.arrayVistaOrdendia[i].idordendia,
-              numerador: me.arrayVistaOrdendia[i]['numerador']
+              numerador: me.arrayVistaOrdendia[i]["numerador"]
             });
           }
         } else {
-          if (me.arrayVistaOrdendia[i]['descripcion'] == 'Ninguna') {
-            cadenaId = me.arrayVistaOrdendia[i].idordendia + '';
+          if (me.arrayVistaOrdendia[i]["descripcion"] == "Ninguna") {
+            cadenaId = me.arrayVistaOrdendia[i].idordendia + "";
             arrayId = cadenaId.split(",");
 
             if (arrayId.length > 1) {
-              cadenaNro = me.arrayVistaOrdendia[i]['numerador'] + '';
+              cadenaNro = me.arrayVistaOrdendia[i]["numerador"] + "";
               arrayNro = cadenaNro.split(",");
 
               for (var j = 0; j < arrayId.length; j++) {
@@ -3663,7 +4146,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             } else {
               me.arrayCheckbox.push({
                 id: me.arrayVistaOrdendia[i].idordendia,
-                numerador: me.arrayVistaOrdendia[i]['numerador']
+                numerador: me.arrayVistaOrdendia[i]["numerador"]
               });
             }
           }
@@ -3672,7 +4155,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     buscarComa: function buscarComa(val) {
       var sw = 0;
-      var cadena = val + '';
+      var cadena = val + "";
       var r = cadena.indexOf(",");
 
       if (r < 0) {
@@ -3711,7 +4194,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var me = this;
       var convocatorias = [];
       var convocatoriasV = [];
-      var url = '/acta/buscarConvocatoriaActa';
+      var url = "/acta/buscarConvocatoriaActa";
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         convocatoriasV = respuesta.convocatorias;
@@ -3727,28 +4210,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             if (buscar.toUpperCase() == convocatoriasV[j].codigo.toUpperCase()) {
               Swal.fire({
-                title: 'Error...',
-                text: 'Esta convocatoria ya tiene su acta definida!',
-                icon: 'error',
-                confirmButtonText: 'OK'
+                title: "Error...",
+                text: "Esta convocatoria ya tiene su acta definida!",
+                icon: "error",
+                confirmButtonText: "OK"
               });
             }
 
             if (buscar.toUpperCase() == convocatoriasV[j].titulo.toUpperCase()) {
               Swal.fire({
-                title: 'Error...',
-                text: 'Esta convocatoria ya tiene su acta definida!',
-                icon: 'error',
-                confirmButtonText: 'OK'
+                title: "Error...",
+                text: "Esta convocatoria ya tiene su acta definida!",
+                icon: "error",
+                confirmButtonText: "OK"
               });
             }
 
             if (buscar.toUpperCase() == convocatoriasV[j].descripcion.toUpperCase()) {
               Swal.fire({
-                title: 'Error...',
-                text: 'Esta convocatoria ya tiene su acta definida!',
-                icon: 'error',
-                confirmButtonText: 'OK'
+                title: "Error...",
+                text: "Esta convocatoria ya tiene su acta definida!",
+                icon: "error",
+                confirmButtonText: "OK"
               });
             }
           }
@@ -3777,8 +4260,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     listarConvocatoriaS: function listarConvocatoriaS(buscar, criterio) {
       var me = this;
 
-      if (buscar != '') {
-        var url = '/acta/buscarConvocatorias?buscar=' + buscar + '&criterio=' + criterio;
+      if (buscar != "") {
+        var url = "/acta/buscarConvocatorias?buscar=" + buscar + "&criterio=" + criterio;
         axios.get(url).then(function (response) {
           var respuesta = response.data;
           me.arrayListConvocatoria = me.verificarConvocatorias(respuesta.convocatorias, buscar);
@@ -3788,23 +4271,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         me.arrayListConvocatoria = [];
         Swal.fire({
-          title: 'Error...',
-          text: 'Ingrese un texto de busqueda!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Ingrese un texto de busqueda!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       }
     },
     buscarConvocatoriaI: function buscarConvocatoriaI(buscar) {
       var me = this; //if(me.codigo!=''){
 
-      var url = '/acta/buscarConvocatoria?buscar=' + buscar + '&criterio=codigo';
+      var url = "/acta/buscarConvocatoria?buscar=" + buscar + "&criterio=codigo";
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayTempConvocatoria = respuesta.convocatoria;
 
         if (me.arrayTempConvocatoria.length > 0) {
-          var url = '/acta/buscarConvocatoriaActa';
+          var url = "/acta/buscarConvocatoriaActa";
           axios.get(url).then(function (response) {
             var respuesta = response.data;
             var convocatoriasV = respuesta.convocatorias;
@@ -3813,36 +4296,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             for (var j = 0; j < convocatoriasV.length; j++) {
               if (me.arrayTempConvocatoria[0].id == convocatoriasV[j].id) {
                 me.arrayTempConvocatoria = [];
-                me.codigoVerifi = 'Código inválido';
+                me.codigoVerifi = "Código inválido";
                 Swal.fire({
-                  title: 'Error...',
-                  text: 'Esta convocatoria ya tiene su acta definida!',
-                  icon: 'error',
-                  confirmButtonText: 'OK'
+                  title: "Error...",
+                  text: "Esta convocatoria ya tiene su acta definida!",
+                  icon: "error",
+                  confirmButtonText: "OK"
                 });
               } else {
-                me.codigoVerifi = 'Código valido';
+                me.codigoVerifi = "Código valido";
               }
             }
           })["catch"](function (error) {
             console.log(error);
           });
         } else {
-          me.codigoVerifi = 'Código inválido';
+          me.codigoVerifi = "Código inválido";
         }
       })["catch"](function (error) {
         console.log(error);
       });
       /*
-      }else{
-          Swal.fire({
-              title: 'Error...',
-              text: 'Debe ingresar un código de acta!',
-              icon: 'error',
-              confirmButtonText: 'OK'
-          });
-      }
-      */
+                }else{
+                    Swal.fire({
+                        title: 'Error...',
+                        text: 'Debe ingresar un código de acta!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+                */
     },
     registrarConvocatoria: function registrarConvocatoria() {
       var _this = this;
@@ -3853,37 +4336,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
         },
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: '¿Está seguro(a) de guardar la convocatoria?',
+        title: "¿Está seguro(a) de guardar la convocatoria?",
         text: "No se podra revertir esto!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Si, Guardar',
-        cancelButtonText: 'No, Cancelar',
+        confirmButtonText: "Si, Guardar",
+        cancelButtonText: "No, Cancelar",
         reverseButtons: false
       }).then(function (result) {
         if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire('Guardada!', 'La convocatoria ha sido guardada.', 'success'); //Guardar Convocatoria
+          swalWithBootstrapButtons.fire("Guardada!", "La convocatoria ha sido guardada.", "success"); //Guardar Convocatoria
 
           var me = _this;
-          axios.post('/convocatoria/registrar', {
-            'titulo': _this.titulo,
-            'codigo': _this.codigo,
-            'descripcion': _this.descripcion,
-            'data_ordendia': _this.arrayOrdenDia,
-            'data_persona': _this.arrayPersona,
-            'data_persona_invitada': _this.arrayPersonaInv
+          axios.post("/convocatoria/registrar", {
+            titulo: _this.titulo,
+            codigo: _this.codigo,
+            descripcion: _this.descripcion,
+            data_ordendia: _this.arrayOrdenDia,
+            data_persona: _this.arrayPersona,
+            data_persona_invitada: _this.arrayPersonaInv
           }).then(function (response) {
             me.listado = 1;
-            me.listarConvocatoria(1, '', 'codigo');
-            me.titulo = '';
-            me.codigo = '';
-            me.descripcion = '';
+            me.listarConvocatoria(1, "", "codigo");
+            me.titulo = "";
+            me.codigo = "";
+            me.descripcion = "";
             me.arrayConvocatoria = [];
             me.arrayOrdenDia = [];
             me.arrayPersona = [];
@@ -3894,7 +4377,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('Cancelada', 'La convocatoria todavía no fue guardada.', 'error');
+          swalWithBootstrapButtons.fire("Cancelada", "La convocatoria todavía no fue guardada.", "error");
         }
       });
     },
@@ -3912,16 +4395,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     mostrarDetalleActa: function mostrarDetalleActa() {
       var me = this;
       this.listado = 0;
-      me.titulo = '';
-      me.codigo = '';
-      me.descripcion = '';
+      me.titulo = "";
+      me.codigo = "";
+      me.descripcion = "";
       me.arrayDetalleActa = [];
       me.arraySelectConvocatoria = [];
       me.arraySelectOrdendia = [];
-    },
-    mostrarModal: function mostrarModal() {
-      var me = this;
-      me.valModal = true;
     },
     ocultarDetalleActa: function ocultarDetalleActa() {
       this.listado = 1;
@@ -3932,31 +4411,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.arraySelectOrdendia = [];
       this.arrayPersona = [];
       this.arrayPersonaB = [];
-      this.titulo = '';
-      this.codigo = '';
-      this.descripcion = '';
-      this.estado = '';
-      this.cedulaRedactor = '';
-      this.apellidoRedactor = '';
-      this.nombreRedactor = '';
-      this.emailRedactor = '';
-      this.perfilRedactor = '';
+      this.titulo = "";
+      this.codigo = "";
+      this.descripcion = "";
+      this.estado = "";
+      this.cedulaRedactor = "";
+      this.apellidoRedactor = "";
+      this.nombreRedactor = "";
+      this.emailRedactor = "";
+      this.perfilRedactor = "";
       this.errorActa = 0;
     },
     ordenarPersonaInv: function ordenarPersonaInv() {
       var me = this;
       var arrayTemp = [];
       var cont = 0;
-      var text = '';
+      var text = "";
 
       for (var i = 0; i < me.arrayDetalleInvitado.length; i++) {
         cont = 0;
-        text = '';
+        text = "";
 
         for (var j = 0; j < me.arrayDetalleInvitado.length; j++) {
           if (me.arrayDetalleInvitado[i].numeroIdentificacion == me.arrayDetalleInvitado[j].numeroIdentificacion) {
             if (cont > 0) {
-              text += ', ';
+              text += ", ";
             }
 
             cont++;
@@ -3998,35 +4477,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.listado = 2; //Obtener datos de la convocatoria
 
       var arrayActaT = [];
-      var url = '/acta/obtenerCabecera?id=' + id;
+      var url = "/acta/obtenerCabecera?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         arrayActaT = respuesta.acta;
-        me.titulo = arrayActaT[0]['titulo'];
-        me.codigo = arrayActaT[0]['codigo'];
-        me.descripcion = arrayActaT[0]['descripcion'];
-        me.estado = arrayActaT[0]['estado']; //Ver redactor
+        me.titulo = arrayActaT[0]["titulo"];
+        me.codigo = arrayActaT[0]["codigo"];
+        me.descripcion = arrayActaT[0]["descripcion"];
+        me.estado = arrayActaT[0]["estado"]; //Ver redactor
 
-        me.cedulaRedactor = arrayActaT[0]['iduser'];
-        me.apellidoRedactor = arrayActaT[0]['apellidos'];
-        me.nombreRedactor = arrayActaT[0]['nombres'];
-        me.emailRedactor = arrayActaT[0]['EMail'];
-        me.perfilRedactor = arrayActaT[0]['perfil'];
+        me.cedulaRedactor = arrayActaT[0]["iduser"];
+        me.apellidoRedactor = arrayActaT[0]["apellidos"];
+        me.nombreRedactor = arrayActaT[0]["nombres"];
+        me.emailRedactor = arrayActaT[0]["EMail"];
+        me.perfilRedactor = arrayActaT[0]["perfil"];
       })["catch"](function (error) {
         console.log(error);
       }); //Otener Id Convocatoria
 
-      var url = '/acta/obtenerIdConvocatoria?id=' + id;
+      var url = "/acta/obtenerIdConvocatoria?id=" + id;
       var arrayIdTem = [];
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         arrayIdTem = respuesta.idConvocatoria;
-        me.aidConvocatoriaActa = arrayIdTem[0]['idconvocatoria'];
+        me.aidConvocatoriaActa = arrayIdTem[0]["idconvocatoria"];
       })["catch"](function (error) {
         console.log(error);
       }); //Obtener datos de la Onden dia
 
-      var url = '/convocatoria/obtenerOrdenDias?id=' + id;
+      var url = "/convocatoria/obtenerOrdenDias?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayDetalle = respuesta.orden_dias;
@@ -4034,7 +4513,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(error);
       }); //Obtener datos de las personas enviadas la convocatoria
 
-      var url = '/convocatoria/obtenerDetalles?id=' + id;
+      var url = "/convocatoria/obtenerDetalles?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayDetalleEnvio = respuesta.detalles;
@@ -4042,7 +4521,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(error);
       }); //Obtener datos de las personas invitadas al punto Orden dia
 
-      var url = '/convocatoria/obtenerDetalleOrdenDias?id=' + id;
+      var url = "/convocatoria/obtenerDetalleOrdenDias?id=" + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayDetalleInvitado = respuesta.detalleorden_dias;
@@ -4053,8 +4532,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     cerrarModal: function cerrarModal() {
       this.modal = 0;
-      this.tituloModal = '';
-      this.descripcionActa = '';
+      this.tituloModal = "";
+      this.descripcionActa = "";
       this.arrayPersonaB = [];
       this.arrayCheckbox = [];
       this.arrayCheckboxSelect = [];
@@ -4062,56 +4541,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     cerrarModalResolucion: function cerrarModalResolucion() {
       //this.modal=0;
-      this.tituloModal = '';
-      this.descripcionActa = '';
+      this.tituloModal = "";
+      this.descripcionActa = "";
       this.arrayCheckbox = [];
       this.arrayCheckboxSelect = [];
       this.arrayResolucionVista = [];
     },
     abrirModal: function abrirModal() {
-      this.tituloModal = '';
-      this.buscarA = '';
+      this.tituloModal = "";
+      this.buscarA = "";
       this.arrayListConvocatoria = [];
-      this.tituloModal = 'Seleccione una convocatoria';
+      this.tituloModal = "Seleccione una convocatoria";
     },
     abrirModalPersona: function abrirModalPersona() {
       this.arrayPersonaB = [];
-      this.tituloModal = '';
-      this.buscarP = '';
-      this.tituloModal = 'Seleccione uno o varios usuarios';
+      this.tituloModal = "";
+      this.buscarP = "";
+      this.tituloModal = "Seleccione uno o varios usuarios";
     },
     abrirModalDescripcion: function abrirModalDescripcion(index) {
-      if (this.codigo != '') {
+      if (this.codigo != "") {
         this.valModal = true;
-        this.tituloModal = 'Ingrese descripción';
-        this.descripcionActa = '';
+        this.tituloModal = "Ingrese descripción";
+        this.descripcionActa = "";
         this.llenarCheckbox(index);
         this.valBoolean = false;
         this.idordendia = index;
       } else {
         this.valModal = false;
         Swal.fire({
-          title: 'Error...',
-          text: 'Debe ingresar un código de acta!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Debe ingresar un código de acta!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       }
     },
     abrirModalResolucion: function abrirModalResolucion(index) {
-      if (this.codigo != '') {
+      if (this.codigo != "") {
         this.valModal = true;
-        this.tituloModal = 'Ingrese una o varias resoluciones';
-        this.descripcionResolucion = '';
+        this.tituloModal = "Ingrese una o varias resoluciones";
+        this.descripcionResolucion = "";
         this.llenarCheckbox(index);
         this.arrayResolucionVista = [];
       } else {
         this.valModal = false;
         Swal.fire({
-          title: 'Error...',
-          text: 'Debe ingresar un código de acta!',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error...",
+          text: "Debe ingresar un código de acta!",
+          icon: "error",
+          confirmButtonText: "OK"
         });
       }
     }
@@ -10259,7 +10738,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width: 900px){\n.btnagregar{\n        margin-top: 1.7rem;\n}\n.btnagregarR{\n        font-size: 20px;\n        margin-top: 0.1rem;\n        height: 88px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.modal-content {\r\n  width: 100% !important;\r\n  position: absolute !important;\n}\n.mostrar {\r\n  display: list-item !important;\r\n  opacity: 1 !important;\r\n  position: absolute !important;\r\n  background-color: #3c29297a !important;\n}\n.div-error {\r\n  display: flex;\r\n  justify-content: center;\n}\n.text-error {\r\n  color: red !important;\r\n  font-weight: bold;\n}\n@media (min-width: 900px) {\n.btnagregar {\r\n    margin-top: 1.7rem;\n}\n.btnagregarR {\r\n    font-size: 20px;\r\n    margin-top: 0.1rem;\r\n    height: 88px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -42594,7 +43073,7 @@ var render = function() {
         [
           _c("div", { staticClass: "card-header" }, [
             _c("i", { staticClass: "fa fa-align-justify" }),
-            _vm._v("Actas\n                "),
+            _vm._v("Actas\n        "),
             _c(
               "button",
               {
@@ -42608,28 +43087,7 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "icon-plus" }),
-                _vm._v(" Nueva\n                ")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-secondary",
-                attrs: {
-                  type: "button",
-                  "data-toggle": "modal",
-                  "data-target": "#modalResolucion"
-                },
-                on: {
-                  click: function($event) {
-                    return _vm.mostrarModal()
-                  }
-                }
-              },
-              [
-                _c("i", { staticClass: "icon-plus" }),
-                _vm._v(" Detalle\n                ")
+                _vm._v(" Nueva\n        ")
               ]
             )
           ]),
@@ -42740,7 +43198,7 @@ var render = function() {
                           },
                           [
                             _c("i", { staticClass: "fa fa-search" }),
-                            _vm._v("Buscar\n                            ")
+                            _vm._v("Buscar\n                ")
                           ]
                         ),
                         _vm._v(" "),
@@ -42760,7 +43218,7 @@ var render = function() {
                           },
                           [
                             _c("i", { staticClass: "fa fa-list" }),
-                            _vm._v(" Lista\n                            ")
+                            _vm._v(" Lista\n                ")
                           ]
                         )
                       ])
@@ -42972,7 +43430,7 @@ var render = function() {
                                 name: "show",
                                 rawName: "v-show",
                                 value: _vm.titulo == "",
-                                expression: "titulo==''"
+                                expression: "titulo == ''"
                               }
                             ],
                             staticStyle: { color: "red" }
@@ -43018,7 +43476,7 @@ var render = function() {
                                 name: "show",
                                 rawName: "v-show",
                                 value: _vm.codigo == "",
-                                expression: "codigo==''"
+                                expression: "codigo == ''"
                               }
                             ],
                             staticStyle: { color: "red" }
@@ -43068,7 +43526,7 @@ var render = function() {
                                   name: "show",
                                   rawName: "v-show",
                                   value: _vm.descripcion == "",
-                                  expression: "descripcion==''"
+                                  expression: "descripcion == ''"
                                 }
                               ],
                               staticStyle: { color: "red" }
@@ -43111,7 +43569,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-8" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", [
-                          _vm._v("Convocatoria "),
+                          _vm._v("Convocatoria\n                  "),
                           _c(
                             "span",
                             {
@@ -43188,7 +43646,11 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("⋮")]
+                            [
+                              _vm._v(
+                                "\n                    ⋮\n                  "
+                              )
+                            ]
                           ),
                           _vm._v(" "),
                           _c("input", {
@@ -43333,7 +43795,7 @@ var render = function() {
                   _c("b", [_vm._v("Orden del día")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -43623,7 +44085,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-8" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", [
-                          _vm._v("Usuario "),
+                          _vm._v("Usuario\n                  "),
                           _c(
                             "span",
                             {
@@ -43632,7 +44094,7 @@ var render = function() {
                                   name: "show",
                                   rawName: "v-show",
                                   value: _vm.personaUser == "",
-                                  expression: "personaUser==''"
+                                  expression: "personaUser == ''"
                                 }
                               ],
                               staticStyle: { color: "red" }
@@ -43697,7 +44159,11 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("⋮")]
+                            [
+                              _vm._v(
+                                "\n                    ⋮\n                  "
+                              )
+                            ]
                           ),
                           _vm._v(" "),
                           _c("input", {
@@ -43875,7 +44341,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Cerrar")]
+                        [_vm._v("\n                Cerrar\n              ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -43889,7 +44355,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Registrar Acta")]
+                        [
+                          _vm._v(
+                            "\n                Registrar Acta\n              "
+                          )
+                        ]
                       )
                     ])
                   ])
@@ -43927,7 +44397,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -43971,7 +44441,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -44050,7 +44520,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -44113,7 +44583,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
-                    _vm._v(" \n                        "),
+                    _vm._v("\n             \n            "),
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -44175,7 +44645,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Cerrar")]
+                        [_vm._v("\n                Cerrar\n              ")]
                       )
                     ])
                   ])
@@ -44341,7 +44811,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-search" }),
-                          _vm._v("\n                                    Buscar")
+                          _vm._v(" Buscar\n                ")
                         ]
                       )
                     ])
@@ -44455,7 +44925,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Cerrar")]
+                  [_vm._v("\n            Cerrar\n          ")]
                 )
               ])
             ])
@@ -44558,7 +45028,7 @@ var render = function() {
                                 }
                               })
                             ]),
-                            _vm._v(" \n                            "),
+                            _vm._v("\n                 \n                "),
                             _c(
                               "div",
                               {
@@ -44790,7 +45260,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Cerrar")]
+                        [_vm._v("\n              Cerrar\n            ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -44804,7 +45274,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Guardar")]
+                        [_vm._v("\n              Guardar\n            ")]
                       )
                     ])
                   ])
@@ -45038,7 +45508,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Cerrar")]
+                        [_vm._v("\n              Cerrar\n            ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -45052,7 +45522,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Guardar")]
+                        [_vm._v("\n              Guardar\n            ")]
                       )
                     ])
                   ])
@@ -45218,7 +45688,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-search" }),
-                          _vm._v("\n                                    Buscar")
+                          _vm._v(" Buscar\n                ")
                         ]
                       )
                     ])
@@ -45347,7 +45817,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Cerrar")]
+                  [_vm._v("\n            Cerrar\n          ")]
                 )
               ])
             ])
@@ -45397,11 +45867,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                No hay actas agregadas\n                            "
-        )
-      ])
+      _c("td", { attrs: { colspan: "6" } }, [_vm._v("No hay actas agregadas")])
     ])
   },
   function() {
@@ -45430,9 +45896,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No hay convocatoria seleccionada\n                                        "
-        )
+        _vm._v("No hay convocatoria seleccionada")
       ])
     ])
   },
@@ -45468,7 +45932,7 @@ var staticRenderFns = [
             staticStyle: { "vertical-align": "middle" },
             attrs: { rowspan: "2" }
           },
-          [_vm._v("Descripción")]
+          [_vm._v("\n                      Descripción\n                    ")]
         ),
         _vm._v(" "),
         _c(
@@ -45477,7 +45941,7 @@ var staticRenderFns = [
             staticStyle: { "vertical-align": "middle" },
             attrs: { rowspan: "2" }
           },
-          [_vm._v("Resolución")]
+          [_vm._v("\n                      Resolución\n                    ")]
         )
       ]),
       _vm._v(" "),
@@ -45494,9 +45958,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No hay orden del día agregada\n                                        "
-        )
+        _vm._v("No hay orden del día agregada")
       ])
     ])
   },
@@ -45524,9 +45986,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "5" } }, [
-        _vm._v(
-          "\n                                            No hay personas agregadas\n                                        "
-        )
+        _vm._v("No hay personas agregadas")
       ])
     ])
   },
@@ -45570,9 +46030,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "4" } }, [
-        _vm._v(
-          "\n                                            No hay orden del dia agregados\n                                        "
-        )
+        _vm._v("No hay orden del dia agregados")
       ])
     ])
   },
@@ -45610,9 +46068,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No hay usuarios enviados\n                                        "
-        )
+        _vm._v("No hay usuarios enviados")
       ])
     ])
   },
@@ -45644,9 +46100,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "4" } }, [
-        _vm._v(
-          "\n                                            No hay usuarios enviados\n                                        "
-        )
+        _vm._v("No hay usuarios enviados")
       ])
     ])
   },
@@ -45700,9 +46154,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No existe convocatoria habilitada\n                                        "
-        )
+        _vm._v("No existe convocatoria habilitada")
       ])
     ])
   },
@@ -45726,9 +46178,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { attrs: { colspan: "4" } }, [
-        _vm._v(
-          "\n                                                No hay resoluciones agregadas\n                                            "
-        )
+        _vm._v("No hay resoluciones agregadas")
       ])
     ])
   },
@@ -45757,11 +46207,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "6" } }, [
-        _vm._v(
-          "\n                                            No existe usuario\n                                        "
-        )
-      ])
+      _c("td", { attrs: { colspan: "6" } }, [_vm._v("No existe usuario")])
     ])
   }
 ]
