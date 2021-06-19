@@ -20,7 +20,8 @@ class CreateResolucionesTable extends Migration
             $table->integer('idacta')->unsigned();
             $table->foreign('idacta')->references('id')->on('actas')->onDelete('cascade');
             $table->string('codigo',50);
-            $table->string('descripcion',1000);
+            $table->string('nombrealternativo',200)->nullable();
+            $table->text('descripcion');
             $table->timestamps();
         });
     }

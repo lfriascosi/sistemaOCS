@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Resolucion extends Model
 {
     protected $table = 'resoluciones';
-    protected $fillable = ['iddetalleacta','codigo','descripcion'];
+    protected $fillable = [
+        'idordendia',
+        'idacta',
+        'codigo',
+        'nombrealternativo',
+        'descripcion'
+    ];
 }

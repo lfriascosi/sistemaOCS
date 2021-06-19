@@ -16,9 +16,9 @@ class CreateActasTable extends Migration
         Schema::create('actas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('iduser',11);
-            $table->string('titulo',100);
+            $table->string('titulo',200);
             $table->string('codigo',50)->unique();
-            $table->string('descripcion',1000);
+            $table->text('descripcion');
             $table->string('estado',30);
             $table->boolean('condicion')->default(0);
             $table->timestamps();

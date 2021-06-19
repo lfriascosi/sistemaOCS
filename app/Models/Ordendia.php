@@ -7,11 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Ordendia extends Model
 {
     protected $table = 'orden_dias';
-    protected $fillable = ['idconvocatoria','numerador','nombre','condicion'];
+    protected $fillable = [
+        'idconvocatoria',
+        'numerador',
+        'nombre',
+        'nomdoc',
+        'estado',
+        'condicion'
+    ];
 
     public $timestamps = false;
     
     public function convocatoria(){
-        return $this->belongsTo('App\Convocatoria');
+        return $this->belongsTo('App\Models\Convocatoria');
     }
 }

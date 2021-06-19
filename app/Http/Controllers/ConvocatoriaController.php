@@ -230,9 +230,6 @@ class ConvocatoriaController extends Controller
             }
         }
     }
-    public function probar(Request $request){
-        print("hola");
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -361,5 +358,31 @@ class ConvocatoriaController extends Controller
         $ordenDia = Ordendia::findOrFail($request->id);
         $ordenDia->estado = 'Inactivo';
         $ordenDia->save();
+    }
+
+    public function probarEmail(Request $request)
+    {
+        //if (!$request->ajax()) return redirect('/');
+        $control="MiembroOCS";
+        //$codigoConvocatoria = 'IST-17J-OCS-SO-2020-008-C';
+        $codigoConvocatoria = 'P';
+        //$personas = $request->data_persona;
+
+        $idConvocatoria = Convocatoria::where('codigo','=',$codigoConvocatoria)
+        ->select('id')
+        ->take(1)->get();
+        $lstordendias = Ordendia::where('idconvocatoria','=',$idConvocatoria[0]['id'])
+        ->orderBy('idconvocatoria','asc')->get();
+        // dd($lstordendias);
+        $data = ([
+                'titulo' => '$request->titulo',
+                'codigo' => '$request->codigo',
+                'descripcion' => '$request->descripcion',
+            ]);
+        // foreach ($personas as $kep => $per) {
+        //     Mail::to($per['EMail'])->send(new VueMail($data, $lstordendias, $control));
+        // }
+        
+        Mail::to('drixio@outlook.es')->send(new VueMail($data, $lstordendias, $control));
     }
 }

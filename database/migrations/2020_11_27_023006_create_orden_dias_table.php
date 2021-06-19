@@ -18,8 +18,8 @@ class CreateOrdenDiasTable extends Migration
             $table->integer('idconvocatoria')->unsigned();
             $table->foreign('idconvocatoria')->references('id')->on('convocatorias')->onDelete('cascade');
             $table->integer('numerador');
-            $table->string('nombre',100);
-            $table->string('nomdoc',100)->nullable();
+            $table->text('nombre');
+            $table->text('nomdoc')->nullable();
             $table->string('estado',30);
             $table->boolean('condicion')->default(0);
         });

@@ -20,7 +20,7 @@ class CreateDetalleActasTable extends Migration
             $table->integer('idordendia')->unsigned();
             $table->foreign('idordendia')->references('id')->on('orden_dias')->onDelete('cascade');
             $table->string('nombrealternativo',100)->nullable();
-            $table->string('descripcion',1000);
+            $table->text('descripcion');
         });
     }
 

@@ -383,7 +383,7 @@
                           data-toggle="modal"
                           data-target="#modalPersona"
                         >
-                          <i class="icon-plus"></i>
+                          <i class="icon-user-follow"></i>
                         </button>
                         <button
                           v-if="detalle.invitado != 'Ninguno'"
@@ -1410,6 +1410,7 @@ export default {
           })
           .then(function (response) {})
           .catch(function (error) {
+            console.log(error);
             Swal.fire({
               icon: "error",
               title: "Ocurrió un conflicto",

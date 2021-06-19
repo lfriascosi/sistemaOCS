@@ -44,6 +44,11 @@ Route::post('/convocatoria/storeArchivo','App\Http\Controllers\ConvocatoriaContr
 
 //ACTA
 Route::get('/acta','App\Http\Controllers\ActaController@index');
+Route::post('/acta/registrar','App\Http\Controllers\ActaController@store');
+//Descripciones
+Route::get('/acta/obtenerDescripcion','App\Http\Controllers\ActaController@obtenerDescripcion');
+//Resoluciones
+Route::get('/acta/obtenerResolucion','App\Http\Controllers\ActaController@obtenerResolucion');
 //Cabecera
 Route::get('/acta/obtenerCabecera','App\Http\Controllers\ActaController@obtenerCabecera');
 //Listado Orden dia
@@ -56,8 +61,5 @@ Route::get('/acta/buscarConvocatoria','App\Http\Controllers\ActaController@busca
 Route::get('/acta/buscarConvocatorias','App\Http\Controllers\ActaController@buscarConvocatorias');
 //Buscar Convocatorias con Actas
 Route::get('/acta/buscarConvocatoriaActa','App\Http\Controllers\ActaController@buscarConvocatoriaActa');
-
-//Correo
-Route::post('/email/send','MailController@send');
-
-Route::get('/convocatoria/probar','App\Http\Controllers\ConvocatoriaController@probar');
+//Buscar Firmas con Actas
+Route::get('/acta/obtenerFirma','App\Http\Controllers\ActaController@obtenerFirma');

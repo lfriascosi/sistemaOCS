@@ -15,6 +15,6 @@ class Convocatoria extends Model
         'estado'
     ];
     public function ordendias(){
-        return $this->hasMany('App\Ordendia');
+        return $this->hasMany('App\Models\Ordendia');
     }
 }

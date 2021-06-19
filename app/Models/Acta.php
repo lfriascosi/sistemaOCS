@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Acta extends Model
 {
-    protected $fillable = ['titulo','codigo','descripcion','condicion'];
+    protected $fillable = [
+        'iduser',
+        'titulo',
+        'codigo',
+        'descripcion',
+        'estado',
+        'condicion'
+    ];
+    public function detalleactas(){
+        return $this->hasMany('App\Models\Detalleacta');
+    }
 }
