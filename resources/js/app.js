@@ -4,7 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+//require('./bootstrap');
+window._ = require('lodash');
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Vue = require('vue');
 
@@ -29,6 +32,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('redaccion-convocatoria', require('./components/RedaccionConvocatoria.vue').default);
 Vue.component('redaccion-acta', require('./components/RedaccionActa.vue').default);
 
+Vue.config.productionTip = false;
 const app = new Vue({
     el: '#app',
     data :{
