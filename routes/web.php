@@ -11,10 +11,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Route::get('/', function () {
+//     return view('auth_ocs/login_ocs');
+// });
 Route::get('/', function () {
-    return view('contenido/contenido');
+    return view('auth_ocs/login_ocs');
 });
+
+Route::get('/main', function () {
+    return view('contenido/contenido');
+})->name('main');
 
 //CONVOCATORIA
 Route::get('/convocatoria','App\Http\Controllers\ConvocatoriaController@index');

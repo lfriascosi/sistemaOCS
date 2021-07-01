@@ -42,7 +42,7 @@
                         <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Cerrar sesión</a>
                     </div>
                 </li>
-            </ul>
+            </ul>&nbsp;&nbsp;&nbsp;
         </header>
 
         <div class="app-body">

@@ -6107,6 +6107,11 @@ body {
 .img-avatar {
   border-radius: 50em; }
 
+  .img-logo {
+    border-radius: 50em;
+    width: 60px;
+    height: 60px; }
+
 .avatar {
   position: relative;
   display: inline-block;
