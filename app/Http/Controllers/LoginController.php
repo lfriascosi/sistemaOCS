@@ -26,8 +26,9 @@ class LoginController extends Controller
         if(count($session_temp)>0){
             $session = Persona::where('EMail',$email)->where('numeroIdentificacion',$clave)->get();
             if(count($session)>0){
-                $request->session()->put('user_id',$session[0]->numeroIdentificacion);
-                $request->session()->put('user_name',$session[0]->apellidos);
+                // $request->session()->put('user_id',$session[0]->numeroIdentificacion);
+                // $request->session()->put('user_name',$session[0]->apellidos);
+                $request->session()->put('user_array',$session);
                 return redirect('/main');
             }else{
                 return redirect('/')
@@ -47,23 +48,25 @@ class LoginController extends Controller
     }
     public function protect(Request $request)
     {
-        if($request->session()->get('user_id')=="" || $request->session()->get('user_name')==""){
+        // if($request->session()->get('user_id')=="" || $request->session()->get('user_name')==""){
+        if($request->session()->get('user_array')==""){
             return redirect('/');
         }else{
-            $user_name = $request->session()->get('user_name');
+            $user_name = $request->session()->get('user_array.0.apellidos');
             $capsule = array('user_name'=>$user_name);
             return view('/contenido/contenido')->with($capsule);
         }
     }
     public function logout(Request $request)
     {
-        $request->session()->forget('user_id');
-        $request->session()->forget('user_name');
+        // $request->session()->forget('user_id');
+        //  $request->session()->forget('user_name');
+        $request->session()->forget('user_array');
         return redirect('/');
     }
     public function datos(Request $request){
 
-        $cedula=$request->session()->get('user_id');
+        $cedula=$request->session()->get('user_array.0.numeroIdentificacion');
         $persona = Persona::where('numeroIdentificacion',$cedula)->get();
         return ['personas' => $persona];
     }
