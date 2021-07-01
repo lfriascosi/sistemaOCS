@@ -32,7 +32,7 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary px-4">Acceder</button>
+                                <button type="submit" class="btn btn-primary px-5"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;&nbsp;Iniciar sesión</button>
                             </div>
                         </div>
                     </div>

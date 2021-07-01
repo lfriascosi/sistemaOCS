@@ -31,6 +31,8 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('redaccion-convocatoria', require('./components/RedaccionConvocatoria.vue').default);
 Vue.component('redaccion-acta', require('./components/RedaccionActa.vue').default);
+Vue.component('baner', require('./components/Baner.vue').default);
+Vue.component('perfil', require('./components/Perfil.vue').default);
 
 Vue.config.productionTip = false;
 const app = new Vue({

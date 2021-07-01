@@ -1,7 +1,10 @@
 @extends('principal')
 @section('contenido')
     <template v-if="menu==0">
-        <example-component></example-component>
+        <baner></baner>
+    </template>
+    <template v-if="menu==10">
+        <perfil></perfil>
     </template>
     <template v-if="menu==1">
         <redaccion-convocatoria></redaccion-convocatoria>

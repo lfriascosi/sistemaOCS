@@ -14,13 +14,18 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('auth_ocs/login_ocs');
 // });
-Route::get('/', function () {
-    return view('auth_ocs/login_ocs');
-});
+Route::post('/logear','App\Http\Controllers\LoginController@login');
+Route::get('/invitado','App\Http\Controllers\LoginController@invitado');
+Route::post('/logout','App\Http\Controllers\LoginController@logout')->name('logout');
+Route::get('/datospersona','App\Http\Controllers\LoginController@datos');
+///////////////////////
+Route::get('/','App\Http\Controllers\LoginController@index');
 
-Route::get('/main', function () {
-    return view('contenido/contenido');
-})->name('main');
+Route::get('/main','App\Http\Controllers\LoginController@protect')->name('main');
+
+// Route::get('/main', function () {
+//     return view('contenido/contenido');
+// })->name('main');
 
 //CONVOCATORIA
 Route::get('/convocatoria','App\Http\Controllers\ConvocatoriaController@index');

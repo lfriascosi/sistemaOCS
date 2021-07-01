@@ -2,7 +2,10 @@
     <nav class="sidebar-nav">
         <ul class="nav">
             <li @click="menu=0" class="nav-item">
-                <a class="nav-link active" href="#"><i class="icon-screen-desktop"></i> Escritorio</a>
+                <a class="nav-link active" href="#"><i class="icon-screen-desktop"></i>Escritorio</a>
+            </li>
+            <li @click="menu=10" class="nav-item">
+                <a class="nav-link active" href="#"><i class="icon-user"></i>Perfil</a>
             </li>
             <li class="nav-title">
                 Actividades

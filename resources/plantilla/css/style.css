@@ -6107,10 +6107,14 @@ body {
 .img-avatar {
   border-radius: 50em; }
 
-  .img-logo {
-    border-radius: 50em;
-    width: 60px;
-    height: 60px; }
+.img-logo {
+border-radius: 50em;
+width: 25%;
+height: 25%; }
+.img-logo-s {
+border-radius: 50em;
+width: 50%;
+height: 50%; }
 
 .avatar {
   position: relative;

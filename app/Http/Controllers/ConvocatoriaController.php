@@ -258,8 +258,8 @@ class ConvocatoriaController extends Controller
             $detalleordendias = $request->data_persona_invitada;
 
             $convocatoria = new Convocatoria();
-            $convocatoria->iduser = '0401541727';
-            //$convocatoria->iduser = \Auth::user()->num_documento;
+            // $convocatoria->iduser = '0401541727';
+            $convocatoria->iduser = $request->session()->get('user_id');
             $convocatoria->titulo = $request->titulo;
             $convocatoria->codigo = $request->codigo;
             $convocatoria->descripcion = $request->descripcion;

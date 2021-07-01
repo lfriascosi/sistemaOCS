@@ -21,25 +21,32 @@
     <div id="app">
         <header class="app-header navbar">
             <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="img/logo.png"></a>
             <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false">
                         <img src="img/avatar.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                        <span class="d-md-down-none">admin </span>
+                        <span class="d-md-down-none">{{$user_name}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-header text-center">
-                            <strong>Cuenta</strong>
+                            <strong >Cuenta</strong>
                         </div>
-                        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Perfil</a>
-                        <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Cerrar sesión</a>
+                        <a class="dropdown-item text-center" href="#" @click="menu=10"><i class="fa fa-user"></i> Perfil</a>
+                        <a class="dropdown-item text-center" href="{{ route('logout') }}" 
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fa fa-sign-out"></i> Cerrar sesión
+                            <form role="form" data-toggle="validator" id="logout-form" action="{{ route('logout') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            </form>
+                        </a>
                     </div>
                 </li>
             </ul>&nbsp;&nbsp;&nbsp;
@@ -52,7 +59,7 @@
             <!-- /Fin del contenido principal -->
         </div>
     </div>
-    
+
 
     <footer class="app-footer">
         <span>Riascos Fabricio &copy; 2020</span>
