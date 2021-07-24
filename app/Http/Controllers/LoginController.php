@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Persona;
+use Redirect;
+use Session;
 
 class LoginController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->session()->get('user_id')=="" || $request->session()->get('user_name')==""){
-            return view('auth_ocs/login_ocs');
+        if(Session::has('user_array')){
+            return Redirect::to('/main');
         }else{
-            $user_name = $request->session()->get('user_name');
-            $capsule = array('user_name'=>$user_name);
-            return view('/contenido/contenido')->with($capsule);
+            return view('auth_ocs/login_ocs');
         }
         
     }
@@ -49,7 +49,7 @@ class LoginController extends Controller
     public function protect(Request $request)
     {
         // if($request->session()->get('user_id')=="" || $request->session()->get('user_name')==""){
-        if($request->session()->get('user_array')==""){
+        if($request->session()->get('user_array')==null){
             return redirect('/');
         }else{
             $user_name = $request->session()->get('user_array.0.apellidos');
@@ -65,7 +65,6 @@ class LoginController extends Controller
         return redirect('/');
     }
     public function datos(Request $request){
-
         $cedula=$request->session()->get('user_array.0.numeroIdentificacion');
         $persona = Persona::where('numeroIdentificacion',$cedula)->get();
         return ['personas' => $persona];

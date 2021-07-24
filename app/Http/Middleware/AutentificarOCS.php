@@ -17,7 +17,7 @@ class AutentificarOCS
     public function handle(Request $request, Closure $next)
     {
         // if($request->session()->get('user_id')=="" || $request->session()->get('user_name')==""){
-        if($request->session()->get('user_array')==""){
+        if($request->session()->get('user_array')==null){
             return redirect('/');
         }else{
             return $next($request);

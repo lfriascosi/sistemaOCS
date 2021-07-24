@@ -259,7 +259,7 @@ class ConvocatoriaController extends Controller
 
             $convocatoria = new Convocatoria();
             // $convocatoria->iduser = '0401541727';
-            $convocatoria->iduser = $request->session()->get('user_id');
+            $convocatoria->iduser = $request->session()->get('user_array.0.numeroIdentificacion');
             $convocatoria->titulo = $request->titulo;
             $convocatoria->codigo = $request->codigo;
             $convocatoria->descripcion = $request->descripcion;

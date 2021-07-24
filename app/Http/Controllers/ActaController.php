@@ -119,7 +119,7 @@ class ActaController extends Controller
             $acta = new Acta();
             // $acta->iduser = '0401541727';
             //$acta->iduser = \Auth::user()->num_documento;
-            $acta->iduser = $request->session()->get('user_id');
+            $acta->iduser = $request->session()->get('user_array.0.numeroIdentificacion');
             $acta->titulo = $request->titulo;
             $acta->codigo = $request->codigo;
             $acta->descripcion = $request->descripcion;
